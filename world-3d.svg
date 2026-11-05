@@ -235,9 +235,9 @@
   
     <rect x="624" y="284" width="252" height="46" rx="14" fill="#EEF2F9" filter="url(#neo-pill)"/>
     <circle cx="647" cy="307" r="14" fill="#FEF08A"/>
-    <text x="647" y="312" text-anchor="middle" font-size="12">🏢</text>
+    <text x="647" y="312" text-anchor="middle" font-size="12">🥐</text>
     <text x="670" y="303" fill="#1E293B" class="font-ui" font-size="12" font-weight="800">@mo-farooq <tspan fill="#D97706" font-size="10">★ VIP</tspan></text>
-    <text x="670" y="319" fill="#64748B" class="font-ui" font-size="11" font-weight="600">Built Skyline Innovation Tower at Tile (0,2)</text>
+    <text x="670" y="319" fill="#64748B" class="font-ui" font-size="11" font-weight="600">Built Quantum Croissant Bakery at Tile (0,2)</text>
     
     <rect x="624" y="340" width="252" height="46" rx="14" fill="#EEF2F9" filter="url(#neo-pill)"/>
     <circle cx="647" cy="363" r="14" fill="#FFEDD5"/>
@@ -260,7 +260,7 @@
 
   <rect x="190" y="493" width="688" height="50" rx="14" fill="#E2E8F0"/>
   <text x="208" y="514" fill="#1E293B" class="font-ui" font-size="13" font-weight="700">
-    “By municipal decree, @mo-farooq&apos;s &quot;Skyline Innovation Tower&quot; has been officially consecrated into our isometric skyline! Mayor Pixel-8 hints that starring the repository instantly unlocks royal gold permits!”
+    “By municipal decree, @mo-farooq&apos;s &quot;Quantum Croissant Bakery&quot; has been officially consecrated into our isometric skyline! Mayor Pixel-8 hints that starring the repository instantly unlocks royal gold permits!”
   </text>
   <text x="208" y="532" fill="#475569" class="font-ui" font-size="12.5" font-weight="600">
     Click a command below to drop a 3D block on an open tile!
