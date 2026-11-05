@@ -11,7 +11,8 @@ const SVG_OUTPUT = path.join(ROOT_DIR, 'world-3d.svg');
 export function renderWorldSvg(stateData) {
   const { gridSize = 6, mayor = {}, stats = {}, cells = [] } = stateData;
 
-  const occupiedCells = cells.filter(c => c.type && c.type !== 'empty');
+  // Filter occupied building cells (exclude empty and terrain)
+  const occupiedCells = cells.filter(c => c.type && c.type !== 'empty' && c.type !== 'river' && c.type !== 'elevation');
   const totalBuildings = occupiedCells.length;
   const buildersSet = new Set(occupiedCells.map(c => c.builder).filter(Boolean));
   const buildersCount = Math.max(buildersSet.size, 1);
@@ -25,11 +26,11 @@ export function renderWorldSvg(stateData) {
     })
     .slice(0, 3);
 
-  // Defaults if fewer than 3
+  // Fallbacks if fewer than 3
   const defaultDrops = [
+    { builder: 'mo-farooq', emoji: '🥐', type: 'bakery', name: 'Quantum Croissant Bakery', row: 0, col: 2, isVip: true },
     { builder: 'alex_dev', emoji: '🏢', type: 'tower', name: 'Gold Skyscraper', row: 3, col: 1, isVip: true },
-    { builder: 'priya_codes', emoji: '☕', type: 'cafe', name: '3D Chai Hub', row: 4, col: 4, isVip: false },
-    { builder: 'rohan_ml', emoji: '🌲', type: 'park', name: 'Voxel Pine', row: 3, col: 5, isVip: false }
+    { builder: 'priya_codes', emoji: '☕', type: 'cafe', name: '3D Chai Hub', row: 4, col: 4, isVip: false }
   ];
 
   while (recentDrops.length < 3) {
@@ -60,7 +61,32 @@ export function renderWorldSvg(stateData) {
     `;
   });
 
-  const announcement = escapeXml(mayor.announcement || 'Tile (1,1) just upgraded to an AI Citadel after Farooq’s commit streak! Click a command below to drop a 3D block on an open tile!');
+  // Calculate pixel coordinates for 6x6 isometric grid:
+  // Origin: top corner of island (304, 195)
+  // Step vectors: dx = 30, dy = 15
+  function getTileCenter(row, col) {
+    const cx = 304 + (col - row) * 30;
+    const cy = 195 + (col + row + 1) * 15;
+    return { cx, cy };
+  }
+
+  // Sort occupied cells by isometric depth: (row + col) ascending
+  const sortedOccupied = [...occupiedCells].sort((a, b) => {
+    const depthA = a.row + a.col;
+    const depthB = b.row + b.col;
+    if (depthA !== depthB) return depthA - depthB;
+    return a.row - b.row;
+  });
+
+  // Render dynamic buildings from the state
+  let dynamicBuildingsSvg = '';
+  for (const cell of sortedOccupied) {
+    const { row, col, type, name, builder, level = 1, emoji = '' } = cell;
+    const { cx, cy } = getTileCenter(row, col);
+    dynamicBuildingsSvg += renderDynamicVoxel(cx, cy, type, name, builder, level, emoji, row, col) + '\n';
+  }
+
+  const announcement = escapeXml(mayor.announcement || 'Tile (1,1) upgraded to AI Citadel! Click a button below to lay your 3D voxel cornerstone on the live canvas.');
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 580" width="100%" height="100%">
   <defs>
@@ -151,18 +177,17 @@ export function renderWorldSvg(stateData) {
     <g class="iso-world" filter="url(#iso-shadow)">
 
       <!-- 1. BASE ISOMETRIC PLATFORM -->
-      <!-- Top Grass Deck -->
       <polygon points="304,195 484,285 304,375 124,285" fill="#6EE7B7" stroke="#34D399" stroke-width="1"/>
 
-      <!-- Left Earth/Clay Wall (Thickness = 26px) -->
+      <!-- Left Earth/Clay Wall -->
       <polygon points="124,285 304,375 304,401 124,311" fill="#F59E0B"/>
       <polygon points="124,298 304,388 304,401 124,311" fill="#D97706"/>
 
-      <!-- Right Earth/Clay Wall (Darker Shade for 3D Depth) -->
+      <!-- Right Earth/Clay Wall -->
       <polygon points="304,375 484,285 484,311 304,401" fill="#B45309"/>
       <polygon points="304,388 484,298 484,311 304,401" fill="#92400E"/>
 
-      <!-- 2. ISOMETRIC CONTRIBUTION GRID LINES (6x6 Tiles, step dx=30, dy=15) -->
+      <!-- 2. ISOMETRIC CONTRIBUTION GRID LINES (6x6 Tiles) -->
       <g stroke="#10B981" stroke-width="1" opacity="0.45">
         <line x1="274" y1="210" x2="454" y2="300"/>
         <line x1="244" y1="225" x2="424" y2="315"/>
@@ -176,104 +201,32 @@ export function renderWorldSvg(stateData) {
         <line x1="454" y1="270" x2="274" y2="360"/>
       </g>
 
-      <!-- 3. ISOMETRIC RIVER TILES (Row C=3 cutting across island) -->
+      <!-- 3. ISOMETRIC RIVER TILES + WATERFALL -->
       <polygon points="244,255 274,270 244,285 214,270" fill="#38BDF8"/>
       <polygon points="274,270 304,285 274,300 244,285" fill="#38BDF8"/>
       <polygon points="304,285 334,300 304,315 274,300" fill="#0284C7"/>
       <polygon points="334,300 364,315 334,330 304,315" fill="#38BDF8"/>
       <polygon points="214,270 244,285 214,300 184,285" fill="#38BDF8"/>
       <polygon points="184,285 214,300 184,315 154,300" fill="#7DD3FC"/>
-      <!-- Waterfall cascading down Left Cliff -->
+      <!-- Waterfall -->
       <polygon points="154,300 184,315 184,341 154,326" fill="#38BDF8"/>
       <polygon points="162,304 176,311 176,337 162,330" fill="#E0F2FE" opacity="0.8"/>
 
       <!-- 4. GREEN COMMIT ELEVATION BLOCKS -->
-      <!-- Back-Top Block (0,1) - Height 18 -->
       <g>
         <polygon points="274,192 304,207 274,222 244,207" fill="#86EFAC"/>
         <polygon points="244,207 274,222 274,240 244,225" fill="#22C55E"/>
         <polygon points="274,222 304,207 304,225 274,240" fill="#15803D"/>
       </g>
-      <!-- Mid-Left Block (0,2) - Height 32 -->
       <g>
         <polygon points="244,193 274,208 244,223 214,208" fill="#4ADE80"/>
         <polygon points="214,208 244,223 244,255 214,240" fill="#16A34A"/>
         <polygon points="244,223 274,208 274,240 244,255" fill="#14532D"/>
       </g>
 
-      <!-- 5. 3D AI RESEARCH CITADEL (Tile 1,1) -->
-      <g>
-        <polygon points="274,165 304,180 304,255 274,240" fill="#8B5CF6"/>
-        <polygon points="304,180 334,165 334,240 304,255" fill="#5B21B6"/>
-        <polygon points="304,150 334,165 304,180 274,165" fill="#C4B5FD"/>
-        <polygon points="282,182 296,189 296,199 282,192" fill="#FEF08A"/>
-        <polygon points="282,202 296,209 296,219 282,212" fill="#FEF08A"/>
-        <polygon points="312,189 326,182 326,192 312,199" fill="#FDE047"/>
-        <polygon points="312,209 326,202 326,212 312,219" fill="#FDE047"/>
+      <!-- 5. DYNAMIC CITIZEN BUILDINGS ON 6x6 GRID -->
+      ${dynamicBuildingsSvg}
 
-        <!-- Tier 2 Mini Voxel Core on Roof -->
-        <polygon points="289,145 304,152.5 304,168 289,160.5" fill="#38BDF8"/>
-        <polygon points="304,152.5 319,145 319,160.5 304,168" fill="#0284C7"/>
-        <polygon points="304,137.5 319,145 304,152.5 289,145" fill="#BAE6FD"/>
-
-        <!-- Floating Hologram Cube -->
-        <g class="floating-holo">
-          <polygon points="304,112 314,117 304,122 294,117" fill="#FEF08A"/>
-          <polygon points="294,117 304,122 304,134 294,129" fill="#F59E0B"/>
-          <polygon points="304,122 314,117 314,129 304,134" fill="#B45309"/>
-        </g>
-        <rect x="260" y="84" width="88" height="18" rx="9" fill="#1E293B" opacity="0.9"/>
-        <text x="304" y="96.5" text-anchor="middle" fill="#BAE6FD" class="font-ui" font-size="9.5" font-weight="800">🧠 AI Citadel Lv.5</text>
-      </g>
-
-      <!-- 6. VIP GOLDEN STARGAZER SKYSCRAPER (Tile 3,1) -->
-      <g>
-        <polygon points="334,180 364,195 364,255 334,240" fill="#FBBF24"/>
-        <polygon points="364,195 394,180 394,240 364,255" fill="#D97706"/>
-        <polygon points="364,165 394,180 364,195 334,180" fill="#FEF08A"/>
-        <polygon points="340,195 358,204 358,212 340,203" fill="#FFFFFF" opacity="0.8"/>
-        <polygon points="340,213 358,222 358,230 340,221" fill="#FFFFFF" opacity="0.8"/>
-        <rect x="330" y="138" width="68" height="18" rx="9" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
-        <text x="364" y="150.5" text-anchor="middle" fill="#B45309" class="font-ui" font-size="9.5" font-weight="800">★ @alex_dev</text>
-      </g>
-
-      <!-- 7. FRONTEND DESIGN STUDIO (Tile 2,4) -->
-      <g>
-        <polygon points="244,270 274,285 274,330 244,315" fill="#FB7185"/>
-        <polygon points="274,285 304,270 304,315 274,330" fill="#E11D48"/>
-        <polygon points="274,255 304,270 274,285 244,270" fill="#FECDD3"/>
-        <polygon points="274,261 292,270 274,279 256,270" fill="#38BDF8"/>
-        <polygon points="252,284 268,292 268,306 252,298" fill="#FEF08A"/>
-        <polygon points="280,292 296,284 296,298 280,306" fill="#FFE4E6"/>
-      </g>
-
-      <!-- 8. 24/7 CHAI & CODE HUB (Tile 4,4) -->
-      <g>
-        <polygon points="304,317 334,332 334,360 304,345" fill="#F97316"/>
-        <polygon points="334,332 364,317 364,345 334,360" fill="#C2410C"/>
-        <polygon points="334,302 364,317 334,332 304,317" fill="#FFEDD5"/>
-        <rect x="302" y="276" width="64" height="17" rx="8" fill="#FFFFFF" opacity="0.92"/>
-        <text x="334" y="288" text-anchor="middle" fill="#C2410C" class="font-ui" font-size="9" font-weight="800">☕ Chai Hub</text>
-      </g>
-
-      <!-- 9. 3D VOXEL PINE TREES -->
-      <!-- Tree 1 at Tile (3,5) -->
-      <g>
-        <polygon points="298,350 304,353 304,363 298,360" fill="#92400E"/>
-        <polygon points="304,353 310,350 310,360 304,363" fill="#78350F"/>
-        <polygon points="304,322 318,329 304,336 290,329" fill="#6EE7B7"/>
-        <polygon points="290,329 304,336 304,354 290,347" fill="#10B981"/>
-        <polygon points="304,336 318,329 318,347 304,354" fill="#047857"/>
-      </g>
-
-      <!-- Tree 2 at Tile (5,2) -->
-      <g>
-        <polygon points="418,260 424,263 424,273 418,270" fill="#92400E"/>
-        <polygon points="424,263 430,260 430,270 424,273" fill="#78350F"/>
-        <polygon points="424,232 438,239 424,246 410,239" fill="#86EFAC"/>
-        <polygon points="410,239 424,246 424,264 410,257" fill="#22C55E"/>
-        <polygon points="424,246 438,239 438,257 424,264" fill="#15803D"/>
-      </g>
     </g>
 
     <!-- Viewport HUD Pills -->
@@ -312,6 +265,92 @@ export function renderWorldSvg(stateData) {
     Click a command below to drop a 3D block on an open tile!
   </text>
 </svg>`;
+}
+
+// Render dynamic 3D Voxel building at given isometric coordinate
+function renderDynamicVoxel(cx, cy, type, name, builder, level = 1, emoji = '', row = 0, col = 0) {
+  // If pine tree / park
+  if (type === 'park' || type === 'tree') {
+    return `
+    <!-- 3D Voxel Pine at Tile (${row},${col}) -->
+    <g class="voxel-block" data-tile="${row},${col}">
+      <polygon points="${cx - 6},${cy - 10} ${cx},${cy - 7} ${cx},${cy + 3} ${cx - 6},${cy}" fill="#92400E"/>
+      <polygon points="${cx},${cy - 7} ${cx + 6},${cy - 10} ${cx + 6},${cy} ${cx},${cy + 3}" fill="#78350F"/>
+      <polygon points="${cx},${cy - 38} ${cx + 14},${cy - 31} ${cx},${cy - 24} ${cx - 14},${cy - 31}" fill="#6EE7B7"/>
+      <polygon points="${cx - 14},${cy - 31} ${cx},${cy - 24} ${cx},${cy - 6} ${cx - 14},${cy - 13}" fill="#10B981"/>
+      <polygon points="${cx},${cy - 24} ${cx + 14},${cy - 31} ${cx + 14},${cy - 13} ${cx},${cy - 6}" fill="#047857"/>
+    </g>`;
+  }
+
+  // Heights per building
+  let h = 50;
+  if (type === 'citadel' || type === 'townhall') h = 75;
+  if (type === 'tower' || type === 'skyscraper') h = 60;
+  if (type === 'bakery') h = 48;
+  if (type === 'cafe') h = 42;
+  if (type === 'studio') h = 45;
+
+  const roofY = cy - h;
+
+  // Colors per type
+  const palettes = {
+    citadel: { top: '#C4B5FD', left: '#8B5CF6', right: '#5B21B6', tagBg: '#1E293B', tagTxt: '#BAE6FD', defaultEmoji: '🧠' },
+    townhall: { top: '#C4B5FD', left: '#8B5CF6', right: '#5B21B6', tagBg: '#1E293B', tagTxt: '#BAE6FD', defaultEmoji: '🏛️' },
+    tower: { top: '#FEF08A', left: '#FBBF24', right: '#D97706', tagBg: '#FEF3C7', tagTxt: '#B45309', defaultEmoji: '🏢' },
+    skyscraper: { top: '#FEF08A', left: '#FBBF24', right: '#D97706', tagBg: '#FEF3C7', tagTxt: '#B45309', defaultEmoji: '🏢' },
+    bakery: { top: '#FED7AA', left: '#F97316', right: '#C2410C', tagBg: '#FFEDD5', tagTxt: '#9A3412', defaultEmoji: '🥐' },
+    cafe: { top: '#99F6E4', left: '#14B8A6', right: '#0F766E', tagBg: '#CCFBF1', tagTxt: '#115E59', defaultEmoji: '☕' },
+    arcade: { top: '#FBCFE8', left: '#EC4899', right: '#BE185D', tagBg: '#FCE7F3', tagTxt: '#831843', defaultEmoji: '🎮' },
+    datacenter: { top: '#BAE6FD', left: '#0EA5E9', right: '#0369A1', tagBg: '#E0F2FE', tagTxt: '#075985', defaultEmoji: '🤖' },
+    spaceport: { top: '#CBD5E1', left: '#64748B', right: '#334155', tagBg: '#F1F5F9', tagTxt: '#1E293B', defaultEmoji: '🚀' },
+    observatory: { top: '#C7D2FE', left: '#6366F1', right: '#4338CA', tagBg: '#EEF2FF', tagTxt: '#3730A3', defaultEmoji: '🔭' },
+    studio: { top: '#FECDD3', left: '#FB7185', right: '#E11D48', tagBg: '#FFE4E6', tagTxt: '#9F1239', defaultEmoji: '🎨' },
+    house: { top: '#FECDD3', left: '#FB7185', right: '#E11D48', tagBg: '#FFE4E6', tagTxt: '#9F1239', defaultEmoji: '🏠' }
+  };
+
+  const pal = palettes[type] || palettes.tower;
+
+  // Geometry:
+  // Base floor corners: (cx - 30, cy), (cx, cy + 15), (cx + 30, cy), (cx, cy - 15)
+  // Roof corners: (cx - 30, roofY), (cx, roofY + 15), (cx + 30, roofY), (cx, roofY - 15)
+  const leftWall = `${cx - 30},${roofY} ${cx},${roofY + 15} ${cx},${cy + 15} ${cx - 30},${cy}`;
+  const rightWall = `${cx},${roofY + 15} ${cx + 30},${roofY} ${cx + 30},${cy} ${cx},${cy + 15}`;
+  const roof = `${cx},${roofY - 15} ${cx + 30},${roofY} ${cx},${roofY + 15} ${cx - 30},${roofY}`;
+
+  // Lit windows
+  const windows = `
+    <polygon points="${cx - 22},${roofY + 17} ${cx - 8},${roofY + 24} ${cx - 8},${roofY + 34} ${cx - 22},${roofY + 27}" fill="#FEF08A"/>
+    <polygon points="${cx + 8},${roofY + 24} ${cx + 22},${roofY + 17} ${cx + 22},${roofY + 27} ${cx + 8},${roofY + 34}" fill="#FDE047"/>
+  `;
+
+  // Floating Hologram Cube
+  const holo = `
+    <g class="floating-holo">
+      <polygon points="${cx},${roofY - 38} ${cx + 10},${roofY - 33} ${cx},${roofY - 28} ${cx - 10},${roofY - 33}" fill="#FEF08A"/>
+      <polygon points="${cx - 10},${roofY - 33} ${cx},${roofY - 28} ${cx},${roofY - 16} ${cx - 10},${roofY - 21}" fill="#F59E0B"/>
+      <polygon points="${cx},${roofY - 28} ${cx + 10},${roofY - 33} ${cx + 10},${roofY - 21} ${cx},${roofY - 16}" fill="#B45309"/>
+    </g>
+  `;
+
+  const isVip = level > 1;
+  const tagText = isVip ? `★ @${escapeXml(builder)}` : `${emoji || pal.defaultEmoji} @${escapeXml(builder)}`;
+  const tagWidth = Math.max(tagText.length * 6.8 + 18, 68);
+
+  const tag = `
+    <rect x="${cx - tagWidth / 2}" y="${roofY - 66}" width="${tagWidth}" height="18" rx="9" fill="${pal.tagBg}" stroke="${isVip ? '#F59E0B' : 'none'}" stroke-width="1.5" opacity="0.95"/>
+    <text x="${cx}" y="${roofY - 53.5}" text-anchor="middle" fill="${pal.tagTxt}" class="font-ui" font-size="9.5" font-weight="800">${tagText}</text>
+  `;
+
+  return `
+  <!-- Building at Tile (${row},${col}) -->
+  <g class="voxel-block" data-tile="${row},${col}">
+    <polygon points="${leftWall}" fill="${pal.left}"/>
+    <polygon points="${rightWall}" fill="${pal.right}"/>
+    <polygon points="${roof}" fill="${pal.top}"/>
+    ${windows}
+    ${holo}
+    ${tag}
+  </g>`;
 }
 
 function escapeXml(unsafe) {

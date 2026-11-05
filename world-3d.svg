@@ -87,18 +87,17 @@
     <g class="iso-world" filter="url(#iso-shadow)">
 
       <!-- 1. BASE ISOMETRIC PLATFORM -->
-      <!-- Top Grass Deck -->
       <polygon points="304,195 484,285 304,375 124,285" fill="#6EE7B7" stroke="#34D399" stroke-width="1"/>
 
-      <!-- Left Earth/Clay Wall (Thickness = 26px) -->
+      <!-- Left Earth/Clay Wall -->
       <polygon points="124,285 304,375 304,401 124,311" fill="#F59E0B"/>
       <polygon points="124,298 304,388 304,401 124,311" fill="#D97706"/>
 
-      <!-- Right Earth/Clay Wall (Darker Shade for 3D Depth) -->
+      <!-- Right Earth/Clay Wall -->
       <polygon points="304,375 484,285 484,311 304,401" fill="#B45309"/>
       <polygon points="304,388 484,298 484,311 304,401" fill="#92400E"/>
 
-      <!-- 2. ISOMETRIC CONTRIBUTION GRID LINES (6x6 Tiles, step dx=30, dy=15) -->
+      <!-- 2. ISOMETRIC CONTRIBUTION GRID LINES (6x6 Tiles) -->
       <g stroke="#10B981" stroke-width="1" opacity="0.45">
         <line x1="274" y1="210" x2="454" y2="300"/>
         <line x1="244" y1="225" x2="424" y2="315"/>
@@ -112,104 +111,151 @@
         <line x1="454" y1="270" x2="274" y2="360"/>
       </g>
 
-      <!-- 3. ISOMETRIC RIVER TILES (Row C=3 cutting across island) -->
+      <!-- 3. ISOMETRIC RIVER TILES + WATERFALL -->
       <polygon points="244,255 274,270 244,285 214,270" fill="#38BDF8"/>
       <polygon points="274,270 304,285 274,300 244,285" fill="#38BDF8"/>
       <polygon points="304,285 334,300 304,315 274,300" fill="#0284C7"/>
       <polygon points="334,300 364,315 334,330 304,315" fill="#38BDF8"/>
       <polygon points="214,270 244,285 214,300 184,285" fill="#38BDF8"/>
       <polygon points="184,285 214,300 184,315 154,300" fill="#7DD3FC"/>
-      <!-- Waterfall cascading down Left Cliff -->
+      <!-- Waterfall -->
       <polygon points="154,300 184,315 184,341 154,326" fill="#38BDF8"/>
       <polygon points="162,304 176,311 176,337 162,330" fill="#E0F2FE" opacity="0.8"/>
 
       <!-- 4. GREEN COMMIT ELEVATION BLOCKS -->
-      <!-- Back-Top Block (0,1) - Height 18 -->
       <g>
         <polygon points="274,192 304,207 274,222 244,207" fill="#86EFAC"/>
         <polygon points="244,207 274,222 274,240 244,225" fill="#22C55E"/>
         <polygon points="274,222 304,207 304,225 274,240" fill="#15803D"/>
       </g>
-      <!-- Mid-Left Block (0,2) - Height 32 -->
       <g>
         <polygon points="244,193 274,208 244,223 214,208" fill="#4ADE80"/>
         <polygon points="214,208 244,223 244,255 214,240" fill="#16A34A"/>
         <polygon points="244,223 274,208 274,240 244,255" fill="#14532D"/>
       </g>
 
-      <!-- 5. 3D AI RESEARCH CITADEL (Tile 1,1) -->
-      <g>
-        <polygon points="274,165 304,180 304,255 274,240" fill="#8B5CF6"/>
-        <polygon points="304,180 334,165 334,240 304,255" fill="#5B21B6"/>
-        <polygon points="304,150 334,165 304,180 274,165" fill="#C4B5FD"/>
-        <polygon points="282,182 296,189 296,199 282,192" fill="#FEF08A"/>
-        <polygon points="282,202 296,209 296,219 282,212" fill="#FEF08A"/>
-        <polygon points="312,189 326,182 326,192 312,199" fill="#FDE047"/>
-        <polygon points="312,209 326,202 326,212 312,219" fill="#FDE047"/>
+      <!-- 5. DYNAMIC CITIZEN BUILDINGS ON 6x6 GRID -->
+      
+    <!-- 3D Voxel Pine at Tile (0,0) -->
+    <g class="voxel-block" data-tile="0,0">
+      <polygon points="298,200 304,203 304,213 298,210" fill="#92400E"/>
+      <polygon points="304,203 310,200 310,210 304,213" fill="#78350F"/>
+      <polygon points="304,172 318,179 304,186 290,179" fill="#6EE7B7"/>
+      <polygon points="290,179 304,186 304,204 290,197" fill="#10B981"/>
+      <polygon points="304,186 318,179 318,197 304,204" fill="#047857"/>
+    </g>
 
-        <!-- Tier 2 Mini Voxel Core on Roof -->
-        <polygon points="289,145 304,152.5 304,168 289,160.5" fill="#38BDF8"/>
-        <polygon points="304,152.5 319,145 319,160.5 304,168" fill="#0284C7"/>
-        <polygon points="304,137.5 319,145 304,152.5 289,145" fill="#BAE6FD"/>
+  <!-- Building at Tile (0,1) -->
+  <g class="voxel-block" data-tile="0,1">
+    <polygon points="304,177 334,192 334,240 304,225" fill="#F97316"/>
+    <polygon points="334,192 364,177 364,225 334,240" fill="#C2410C"/>
+    <polygon points="334,162 364,177 334,192 304,177" fill="#FED7AA"/>
+    
+    <polygon points="312,194 326,201 326,211 312,204" fill="#FEF08A"/>
+    <polygon points="342,201 356,194 356,204 342,211" fill="#FDE047"/>
+  
+    
+    <g class="floating-holo">
+      <polygon points="334,139 344,144 334,149 324,144" fill="#FEF08A"/>
+      <polygon points="324,144 334,149 334,161 324,156" fill="#F59E0B"/>
+      <polygon points="334,149 344,144 344,156 334,161" fill="#B45309"/>
+    </g>
+  
+    
+    <rect x="274" y="111" width="120" height="18" rx="9" fill="#FFEDD5" stroke="#F59E0B" stroke-width="1.5" opacity="0.95"/>
+    <text x="334" y="123.5" text-anchor="middle" fill="#9A3412" class="font-ui" font-size="9.5" font-weight="800">★ @EarlyAdopter</text>
+  
+  </g>
 
-        <!-- Floating Hologram Cube -->
-        <g class="floating-holo">
-          <polygon points="304,112 314,117 304,122 294,117" fill="#FEF08A"/>
-          <polygon points="294,117 304,122 304,134 294,129" fill="#F59E0B"/>
-          <polygon points="304,122 314,117 314,129 304,134" fill="#B45309"/>
-        </g>
-        <rect x="260" y="84" width="88" height="18" rx="9" fill="#1E293B" opacity="0.9"/>
-        <text x="304" y="96.5" text-anchor="middle" fill="#BAE6FD" class="font-ui" font-size="9.5" font-weight="800">🧠 AI Citadel Lv.5</text>
-      </g>
+  <!-- Building at Tile (0,2) -->
+  <g class="voxel-block" data-tile="0,2">
+    <polygon points="334,180 364,195 364,255 334,240" fill="#FBBF24"/>
+    <polygon points="364,195 394,180 394,240 364,255" fill="#D97706"/>
+    <polygon points="364,165 394,180 364,195 334,180" fill="#FEF08A"/>
+    
+    <polygon points="342,197 356,204 356,214 342,207" fill="#FEF08A"/>
+    <polygon points="372,204 386,197 386,207 372,214" fill="#FDE047"/>
+  
+    
+    <g class="floating-holo">
+      <polygon points="364,142 374,147 364,152 354,147" fill="#FEF08A"/>
+      <polygon points="354,147 364,152 364,164 354,159" fill="#F59E0B"/>
+      <polygon points="364,152 374,147 374,159 364,164" fill="#B45309"/>
+    </g>
+  
+    
+    <rect x="314.2" y="114" width="99.6" height="18" rx="9" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5" opacity="0.95"/>
+    <text x="364" y="126.5" text-anchor="middle" fill="#B45309" class="font-ui" font-size="9.5" font-weight="800">★ @mo-farooq</text>
+  
+  </g>
 
-      <!-- 6. VIP GOLDEN STARGAZER SKYSCRAPER (Tile 3,1) -->
-      <g>
-        <polygon points="334,180 364,195 364,255 334,240" fill="#FBBF24"/>
-        <polygon points="364,195 394,180 394,240 364,255" fill="#D97706"/>
-        <polygon points="364,165 394,180 364,195 334,180" fill="#FEF08A"/>
-        <polygon points="340,195 358,204 358,212 340,203" fill="#FFFFFF" opacity="0.8"/>
-        <polygon points="340,213 358,222 358,230 340,221" fill="#FFFFFF" opacity="0.8"/>
-        <rect x="330" y="138" width="68" height="18" rx="9" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5"/>
-        <text x="364" y="150.5" text-anchor="middle" fill="#B45309" class="font-ui" font-size="9.5" font-weight="800">★ @alex_dev</text>
-      </g>
+  <!-- Building at Tile (1,2) -->
+  <g class="voxel-block" data-tile="1,2">
+    <polygon points="304,207 334,222 334,270 304,255" fill="#F97316"/>
+    <polygon points="334,222 364,207 364,255 334,270" fill="#C2410C"/>
+    <polygon points="334,192 364,207 334,222 304,207" fill="#FED7AA"/>
+    
+    <polygon points="312,224 326,231 326,241 312,234" fill="#FEF08A"/>
+    <polygon points="342,231 356,224 356,234 342,241" fill="#FDE047"/>
+  
+    
+    <g class="floating-holo">
+      <polygon points="334,169 344,174 334,179 324,174" fill="#FEF08A"/>
+      <polygon points="324,174 334,179 334,191 324,186" fill="#F59E0B"/>
+      <polygon points="334,179 344,174 344,186 334,191" fill="#B45309"/>
+    </g>
+  
+    
+    <rect x="284.2" y="141" width="99.6" height="18" rx="9" fill="#FFEDD5" stroke="none" stroke-width="1.5" opacity="0.95"/>
+    <text x="334" y="153.5" text-anchor="middle" fill="#9A3412" class="font-ui" font-size="9.5" font-weight="800">🥐 @OctoChef</text>
+  
+  </g>
 
-      <!-- 7. FRONTEND DESIGN STUDIO (Tile 2,4) -->
-      <g>
-        <polygon points="244,270 274,285 274,330 244,315" fill="#FB7185"/>
-        <polygon points="274,285 304,270 304,315 274,330" fill="#E11D48"/>
-        <polygon points="274,255 304,270 274,285 244,270" fill="#FECDD3"/>
-        <polygon points="274,261 292,270 274,279 256,270" fill="#38BDF8"/>
-        <polygon points="252,284 268,292 268,306 252,298" fill="#FEF08A"/>
-        <polygon points="280,292 296,284 296,298 280,306" fill="#FFE4E6"/>
-      </g>
+  <!-- Building at Tile (2,2) -->
+  <g class="voxel-block" data-tile="2,2">
+    <polygon points="274,195 304,210 304,285 274,270" fill="#8B5CF6"/>
+    <polygon points="304,210 334,195 334,270 304,285" fill="#5B21B6"/>
+    <polygon points="304,180 334,195 304,210 274,195" fill="#C4B5FD"/>
+    
+    <polygon points="282,212 296,219 296,229 282,222" fill="#FEF08A"/>
+    <polygon points="312,219 326,212 326,222 312,229" fill="#FDE047"/>
+  
+    
+    <g class="floating-holo">
+      <polygon points="304,157 314,162 304,167 294,162" fill="#FEF08A"/>
+      <polygon points="294,162 304,167 304,179 294,174" fill="#F59E0B"/>
+      <polygon points="304,167 314,162 314,174 304,179" fill="#B45309"/>
+    </g>
+  
+    
+    <rect x="240.6" y="129" width="126.8" height="18" rx="9" fill="#1E293B" stroke="#F59E0B" stroke-width="1.5" opacity="0.95"/>
+    <text x="304" y="141.5" text-anchor="middle" fill="#BAE6FD" class="font-ui" font-size="9.5" font-weight="800">★ @Mayor Pixel-8</text>
+  
+  </g>
 
-      <!-- 8. 24/7 CHAI & CODE HUB (Tile 4,4) -->
-      <g>
-        <polygon points="304,317 334,332 334,360 304,345" fill="#F97316"/>
-        <polygon points="334,332 364,317 364,345 334,360" fill="#C2410C"/>
-        <polygon points="334,302 364,317 334,332 304,317" fill="#FFEDD5"/>
-        <rect x="302" y="276" width="64" height="17" rx="8" fill="#FFFFFF" opacity="0.92"/>
-        <text x="334" y="288" text-anchor="middle" fill="#C2410C" class="font-ui" font-size="9" font-weight="800">☕ Chai Hub</text>
-      </g>
+  <!-- Building at Tile (2,3) -->
+  <g class="voxel-block" data-tile="2,3">
+    <polygon points="304,243 334,258 334,300 304,285" fill="#14B8A6"/>
+    <polygon points="334,258 364,243 364,285 334,300" fill="#0F766E"/>
+    <polygon points="334,228 364,243 334,258 304,243" fill="#99F6E4"/>
+    
+    <polygon points="312,260 326,267 326,277 312,270" fill="#FEF08A"/>
+    <polygon points="342,267 356,260 356,270 342,277" fill="#FDE047"/>
+  
+    
+    <g class="floating-holo">
+      <polygon points="334,205 344,210 334,215 324,210" fill="#FEF08A"/>
+      <polygon points="324,210 334,215 334,227 324,222" fill="#F59E0B"/>
+      <polygon points="334,215 344,210 344,222 334,227" fill="#B45309"/>
+    </g>
+  
+    
+    <rect x="291" y="177" width="86" height="18" rx="9" fill="#CCFBF1" stroke="none" stroke-width="1.5" opacity="0.95"/>
+    <text x="334" y="189.5" text-anchor="middle" fill="#115E59" class="font-ui" font-size="9.5" font-weight="800">☕ @DevBean</text>
+  
+  </g>
 
-      <!-- 9. 3D VOXEL PINE TREES -->
-      <!-- Tree 1 at Tile (3,5) -->
-      <g>
-        <polygon points="298,350 304,353 304,363 298,360" fill="#92400E"/>
-        <polygon points="304,353 310,350 310,360 304,363" fill="#78350F"/>
-        <polygon points="304,322 318,329 304,336 290,329" fill="#6EE7B7"/>
-        <polygon points="290,329 304,336 304,354 290,347" fill="#10B981"/>
-        <polygon points="304,336 318,329 318,347 304,354" fill="#047857"/>
-      </g>
 
-      <!-- Tree 2 at Tile (5,2) -->
-      <g>
-        <polygon points="418,260 424,263 424,273 418,270" fill="#92400E"/>
-        <polygon points="424,263 430,260 430,270 424,273" fill="#78350F"/>
-        <polygon points="424,232 438,239 424,246 410,239" fill="#86EFAC"/>
-        <polygon points="410,239 424,246 424,264 410,257" fill="#22C55E"/>
-        <polygon points="424,246 438,239 438,257 424,264" fill="#15803D"/>
-      </g>
     </g>
 
     <!-- Viewport HUD Pills -->
