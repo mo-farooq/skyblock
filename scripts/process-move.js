@@ -11,7 +11,7 @@ const SVG_OUTPUT = path.join(ROOT_DIR, 'world-3d.svg');
 
 // Main execution flow
 async function main() {
-  console.log('🏛️  [Antigravity Town] Starting move processing...');
+  console.log('🏛️  [Community World] Starting move processing...');
 
   // 1. Parse Event Context
   const context = await getEventContext();
@@ -68,7 +68,7 @@ async function getEventContext() {
     return {
       issueTitle: process.env.MOCK_TITLE || 'Build: 🥐 Galactic Croissant Bakery',
       issueBody: process.env.MOCK_BODY || 'I would like to open a cozy bakery for all spacefarers!',
-      username: process.env.MOCK_USER || 'AntigravityPioneer',
+      username: process.env.MOCK_USER || 'CommunityBuilder',
       issueNumber: 42,
       repoOwner: 'mo-farooq',
       repoName: 'mo-farooq'
@@ -113,7 +113,7 @@ async function checkUserStar(owner, repo, username) {
       headers: {
         'Accept': 'application/vnd.github.v3+json',
         'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
-        'User-Agent': 'Antigravity-Town-Mayor'
+        'User-Agent': 'Community-World-Bot'
       }
     });
 
@@ -127,7 +127,7 @@ async function checkUserStar(owner, repo, username) {
       headers: {
         'Accept': 'application/vnd.github.v3+json',
         'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
-        'User-Agent': 'Antigravity-Town-Mayor'
+        'User-Agent': 'Community-World-Bot'
       }
     });
     if (sgRes.ok) {
@@ -150,7 +150,7 @@ async function consultGeminiMayor(context, hasStarred) {
     return fallbackMayorDecision(context.issueTitle, context.username, hasStarred);
   }
 
-  const prompt = `You are Mayor Pixel-8, the witty, eccentric, high-energy AI Mayor of Antigravity Town (a virtual 3D isometric GitHub community).
+  const prompt = `You are Mayor Pixel-8, the charismatic, witty virtual mayor of a 3D isometric GitHub Community World.
 A citizen (@${context.username}) submitted an issue to build something.
 Issue Title: "${context.issueTitle}"
 Issue Body: "${context.issueBody}"
@@ -196,9 +196,9 @@ Return ONLY a valid JSON object with keys:
       const parsed = JSON.parse(candidateText);
       return {
         buildingType: sanitizeType(parsed.buildingType),
-        buildingName: parsed.buildingName || 'Antigravity Landmark',
+        buildingName: parsed.buildingName || 'Community Landmark',
         emoji: parsed.emoji || '🏗️',
-        proclamation: parsed.proclamation || 'Another glorious monument rises in Antigravity Town!',
+        proclamation: parsed.proclamation || 'Another glorious monument rises in our community skyline!',
         mayorMood: parsed.mayorMood || 'Ecstatic'
       };
     }
@@ -239,15 +239,15 @@ function fallbackMayorDecision(title, username, hasStarred) {
     emoji = '🎮';
   } else if (lower.includes('datacenter') || lower.includes('server') || lower.includes('cloud') || lower.includes('ai')) {
     buildingType = 'datacenter';
-    buildingName = 'Gemini Neural Datacenter';
+    buildingName = 'Quantum Neural Datacenter';
     emoji = '🤖';
   } else if (lower.includes('park') || lower.includes('tree') || lower.includes('garden') || lower.includes('zen')) {
     buildingType = 'park';
-    buildingName = 'Emerald Antigravity Sanctuary';
+    buildingName = 'Emerald Pine Sanctuary';
     emoji = '🌲';
   } else if (lower.includes('rocket') || lower.includes('space') || lower.includes('launch') || lower.includes('orbit')) {
     buildingType = 'spaceport';
-    buildingName = 'Apollo-X Star Launchpad';
+    buildingName = 'Apollo-X Orbital Launchpad';
     emoji = '🚀';
   } else if (lower.includes('tower') || lower.includes('skyscraper') || lower.includes('hq') || lower.includes('office')) {
     buildingType = 'tower';
@@ -317,11 +317,11 @@ async function replyAndCloseIssue(context, mayorDecision, placement, hasStarred)
   const { repoOwner, repoName, issueNumber, username } = context;
   const token = process.env.GITHUB_TOKEN;
 
-  const commentBody = `### 🏛️ Municipal Bureau of Antigravity Town
+  const commentBody = `### 🏛️ Municipal Bureau of the Community World
 
 Greetings **@${username}**! 
 
-The AI Town Hall has ratified your construction permit. Here is the official decree:
+The Town Hall has ratified your construction permit. Here is the official decree:
 
 > 🤖 **Mayor Pixel-8 Proclaims:**  
 > *"${mayorDecision.proclamation}"*
@@ -336,7 +336,7 @@ The AI Town Hall has ratified your construction permit. Here is the official dec
 Your building has now been rendered live into the **3D Isometric Community World**! Check out the updated skyline on the [Repository Profile](https://github.com/${repoOwner}/${repoName})!
 
 ---
-*Generated autonomously by Google Antigravity & Gemini AI.*`;
+*Automated via GitHub Actions community workflow by @${repoOwner}.*`;
 
   try {
     // 1. Post Comment
@@ -346,7 +346,7 @@ Your building has now been rendered live into the **3D Isometric Community World
         'Accept': 'application/vnd.github.v3+json',
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
-        'User-Agent': 'Antigravity-Town-Mayor'
+        'User-Agent': 'Community-World-Bot'
       },
       body: JSON.stringify({ body: commentBody })
     });
@@ -358,7 +358,7 @@ Your building has now been rendered live into the **3D Isometric Community World
         'Accept': 'application/vnd.github.v3+json',
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
-        'User-Agent': 'Antigravity-Town-Mayor'
+        'User-Agent': 'Community-World-Bot'
       },
       body: JSON.stringify({
         state: 'closed',

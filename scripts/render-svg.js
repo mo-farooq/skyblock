@@ -93,7 +93,7 @@ export function renderWorldSvg(stateData) {
   const occupiedCount = cells.filter(c => c.type && c.type !== 'empty').length;
   const occupancyPercent = Math.round((occupiedCount / (gridSize * gridSize)) * 100);
 
-  const mayorAnnouncement = escapeXml(mayor.announcement || 'Antigravity Town is open for builders!');
+  const mayorAnnouncement = escapeXml(mayor.announcement || 'Welcome to the Community World! Open an issue to claim a plot.');
   const mayorMood = escapeXml(mayor.mood || 'Visionary');
   const mayorName = escapeXml(mayor.name || 'Mayor Pixel-8');
   const lastBuilder = escapeXml(stats.lastBuilder || 'Citizen');
@@ -265,7 +265,7 @@ export function renderWorldSvg(stateData) {
     <rect width="320" height="48" rx="12" class="hud-panel" />
     <circle cx="28" cy="24" r="14" fill="#3B82F6" />
     <text x="28" y="29" font-size="14" text-anchor="middle" fill="#FFFFFF">🪐</text>
-    <text x="52" y="22" class="txt-title" font-size="13" letter-spacing="0.5">ANTIGRAVITY 3D WORLD</text>
+    <text x="52" y="22" class="txt-title" font-size="13" letter-spacing="0.5">ISOMETRIC 3D WORLD</text>
     <text x="52" y="38" class="txt-body" font-size="10">GitHub Powered • 6x6 Community Grid</text>
   </g>
 

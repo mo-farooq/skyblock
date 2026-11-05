@@ -1,7 +1,7 @@
 {
-  "name": "antigravity-isometric-world",
+  "name": "isometric-community-world",
   "version": "1.0.0",
-  "description": "Interactive GitHub Profile 3D Isometric Community World powered by Antigravity, GitHub Actions, and Gemini",
+  "description": "Interactive GitHub Profile 3D Isometric Community World with event-driven GitHub Actions automation and dynamic SVG rendering",
   "main": "scripts/process-move.js",
   "type": "module",
   "scripts": {
@@ -12,11 +12,11 @@
   "keywords": [
     "github-profile",
     "isometric",
-    "svg",
-    "gemini",
+    "svg-engine",
     "github-actions",
-    "antigravity"
+    "creative-coding",
+    "full-stack"
   ],
-  "author": "Farooq",
+  "author": "Mohammad Farooq",
   "license": "MIT"
 }
