@@ -9,7 +9,7 @@
     "totalBuildings": 6,
     "lastBuilder": "mo-farooq",
     "lastAction": "Built Quantum Croissant Bakery",
-    "updatedAt": "2026-11-05T21:58:28.661Z"
+    "updatedAt": "2026-11-05T22:00:11.145Z"
   },
   "cells": [
     {
@@ -39,8 +39,9 @@
       "name": "Quantum Croissant Bakery",
       "builder": "mo-farooq",
       "emoji": "🥐",
-      "level": 1,
-      "builtAt": "2026-11-05T21:58:28.661Z"
+      "level": 2,
+      "builtAt": "2026-11-05T21:58:28.661Z",
+      "upgradedAt": "2026-11-05T22:00:11.145Z"
     },
     {
       "row": 0,
