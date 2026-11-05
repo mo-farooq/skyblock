@@ -19,14 +19,14 @@ Pick a building type below to open a pre-filled GitHub Issue. The autonomous **A
 
 | Building Permit | Action Link |
 | :--- | :--- |
-| 🥐 **Artisan Bakery** | [**[ 🥐 Build a Bakery ]**](https://github.com/Farooq/Farooq/issues/new?title=Build%3A+%F0%9F%A5%90+Artisan+Bakery&body=%23%23+Citizen+Construction+Permit%0A%0AHey+Mayor+Pixel-8%2C+I+would+love+to+open+a+fresh+croissant+bakery+for+the+neighborhood%21) |
-| ☕ **Neon Coffee Lab** | [**[ ☕ Open a Coffee Lab ]**](https://github.com/Farooq/Farooq/issues/new?title=Build%3A+%E2%98%95+Neon+Coffee+Lab&body=%23%23+Citizen+Construction+Permit%0A%0APlease+approve+a+24%2F7+cyber-espresso+lab+to+keep+developers+caffeinated%21) |
-| 🎮 **Synthwave Arcade** | [**[ 🎮 Open an 80s Arcade ]**](https://github.com/Farooq/Farooq/issues/new?title=Build%3A+%F0%9F%8E%AE+80s+Synthwave+Arcade&body=%23%23+Citizen+Construction+Permit%0A%0ARequesting+a+permit+for+a+retro+arcade+cabinet+palace+with+neon+marquees%21) |
-| 🚀 **Apollo-X Spaceport** | [**[ 🚀 Build a Spaceport ]**](https://github.com/Farooq/Farooq/issues/new?title=Build%3A+%F0%9F%9A%80+Apollo-X+Spaceport&body=%23%23+Citizen+Construction+Permit%0A%0ATime+to+reach+the+stars.+Requesting+a+launchpad+for+orbital+antigravity+shuttles%21) |
-| 🌲 **Emerald Zen Park** | [**[ 🌲 Plant a Zen Park ]**](https://github.com/Farooq/Farooq/issues/new?title=Build%3A+%F0%9F%8C%B2+Emerald+Zen+Park&body=%23%23+Citizen+Construction+Permit%0A%0AWe+need+more+greenery+in+Antigravity+Town.+Planting+a+3D+isometric+pine+sanctuary%21) |
-| 🤖 **AI Neural Datacenter** | [**[ 🤖 Spin up a Datacenter ]**](https://github.com/Farooq/Farooq/issues/new?title=Build%3A+%F0%9F%A4%96+AI+Neural+Datacenter&body=%23%23+Citizen+Construction+Permit%0A%0AAllocating+a+cluster+of+Gemini-powered+server+racks+with+liquid+nitrogen+cooling%21) |
-| 🔭 **Deep Horizon Observatory** | [**[ 🔭 Build an Observatory ]**](https://github.com/Farooq/Farooq/issues/new?title=Build%3A+%F0%9F%94%AD+Deep+Horizon+Observatory&body=%23%23+Citizen+Construction+Permit%0A%0AA+high-powered+telescope+dome+to+study+distant+galaxies+from+our+github+skyline%21) |
-| 🏢 **Skyline Tower** | [**[ 🏢 Construct a Tower ]**](https://github.com/Farooq/Farooq/issues/new?title=Build%3A+%F0%9F%8F%A2+Skyline+Innovation+Tower&body=%23%23+Citizen+Construction+Permit%0A%0AErecting+a+modern+high-rise+with+a+rooftop+helipad+for+future+innovators%21) |
+| 🥐 **Artisan Bakery** | [**[ 🥐 Build a Bakery ]**](https://github.com/mo-farooq/mo-farooq/issues/new?title=Build%3A+%F0%9F%A5%90+Artisan+Bakery&body=%23%23+Citizen+Construction+Permit%0A%0AHey+Mayor+Pixel-8%2C+I+would+love+to+open+a+fresh+croissant+bakery+for+the+neighborhood%21) |
+| ☕ **Neon Coffee Lab** | [**[ ☕ Open a Coffee Lab ]**](https://github.com/mo-farooq/mo-farooq/issues/new?title=Build%3A+%E2%98%95+Neon+Coffee+Lab&body=%23%23+Citizen+Construction+Permit%0A%0APlease+approve+a+24%2F7+cyber-espresso+lab+to+keep+developers+caffeinated%21) |
+| 🎮 **Synthwave Arcade** | [**[ 🎮 Open an 80s Arcade ]**](https://github.com/mo-farooq/mo-farooq/issues/new?title=Build%3A+%F0%9F%8E%AE+80s+Synthwave+Arcade&body=%23%23+Citizen+Construction+Permit%0A%0ARequesting+a+permit+for+a+retro+arcade+cabinet+palace+with+neon+marquees%21) |
+| 🚀 **Apollo-X Spaceport** | [**[ 🚀 Build a Spaceport ]**](https://github.com/mo-farooq/mo-farooq/issues/new?title=Build%3A+%F0%9F%9A%80+Apollo-X+Spaceport&body=%23%23+Citizen+Construction+Permit%0A%0ATime+to+reach+the+stars.+Requesting+a+launchpad+for+orbital+antigravity+shuttles%21) |
+| 🌲 **Emerald Zen Park** | [**[ 🌲 Plant a Zen Park ]**](https://github.com/mo-farooq/mo-farooq/issues/new?title=Build%3A+%F0%9F%8C%B2+Emerald+Zen+Park&body=%23%23+Citizen+Construction+Permit%0A%0AWe+need+more+greenery+in+Antigravity+Town.+Planting+a+3D+isometric+pine+sanctuary%21) |
+| 🤖 **AI Neural Datacenter** | [**[ 🤖 Spin up a Datacenter ]**](https://github.com/mo-farooq/mo-farooq/issues/new?title=Build%3A+%F0%9F%A4%96+AI+Neural+Datacenter&body=%23%23+Citizen+Construction+Permit%0A%0AAllocating+a+cluster+of+Gemini-powered+server+racks+with+liquid+nitrogen+cooling%21) |
+| 🔭 **Deep Horizon Observatory** | [**[ 🔭 Build an Observatory ]**](https://github.com/mo-farooq/mo-farooq/issues/new?title=Build%3A+%F0%9F%94%AD+Deep+Horizon+Observatory&body=%23%23+Citizen+Construction+Permit%0A%0AA+high-powered+telescope+dome+to+study+distant+galaxies+from+our+github+skyline%21) |
+| 🏢 **Skyline Tower** | [**[ 🏢 Construct a Tower ]**](https://github.com/mo-farooq/mo-farooq/issues/new?title=Build%3A+%F0%9F%8F%A2+Skyline+Innovation+Tower&body=%23%23+Citizen+Construction+Permit%0A%0AErecting+a+modern+high-rise+with+a+rooftop+helipad+for+future+innovators%21) |
 
 </div>
 
@@ -94,8 +94,8 @@ If you are setting this up on your own GitHub profile repository:
    - Check **Allow GitHub Actions to create and approve pull requests**.
    - Click **Save**.
 
-3. **Update URLs in README.md**:
-   - Replace `Farooq/Farooq` in the issue links above with your own `username/repository`.
+3. **Repository URL**:
+   - Configured for `mo-farooq/mo-farooq` (the GitHub Profile repository).
 
 4. **Test Locally**:
    ```bash

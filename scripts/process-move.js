@@ -70,8 +70,8 @@ async function getEventContext() {
       issueBody: process.env.MOCK_BODY || 'I would like to open a cozy bakery for all spacefarers!',
       username: process.env.MOCK_USER || 'AntigravityPioneer',
       issueNumber: 42,
-      repoOwner: 'Farooq',
-      repoName: 'Farooq'
+      repoOwner: 'mo-farooq',
+      repoName: 'mo-farooq'
     };
   }
 
@@ -96,8 +96,8 @@ async function getEventContext() {
       issueBody: 'Coffee for the code warriors.',
       username: 'CodeTraveler',
       issueNumber: 99,
-      repoOwner: 'Farooq',
-      repoName: 'Farooq'
+      repoOwner: 'mo-farooq',
+      repoName: 'mo-farooq'
     };
   }
 }
