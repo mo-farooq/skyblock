@@ -3,13 +3,13 @@
   "mayor": {
     "name": "Mayor Pixel-8 (AI)",
     "mood": "Resourceful",
-    "announcement": "By municipal decree, @AntigravityPioneer's \"Quantum Croissant Bakery\" has been officially consecrated into our isometric skyline! Mayor Pixel-8 hints that starring the repository instantly unlocks royal gold permits!"
+    "announcement": "By municipal decree, @mo-farooq's \"Quantum Croissant Bakery\" has been officially consecrated into our isometric skyline! Mayor Pixel-8 hints that starring the repository instantly unlocks royal gold permits!"
   },
   "stats": {
-    "totalBuildings": 5,
-    "lastBuilder": "AntigravityPioneer",
+    "totalBuildings": 6,
+    "lastBuilder": "mo-farooq",
     "lastAction": "Built Quantum Croissant Bakery",
-    "updatedAt": "2026-11-05T21:54:44.791Z"
+    "updatedAt": "2026-11-05T21:58:28.661Z"
   },
   "cells": [
     {
@@ -35,7 +35,12 @@
     {
       "row": 0,
       "col": 2,
-      "type": "empty"
+      "type": "bakery",
+      "name": "Quantum Croissant Bakery",
+      "builder": "mo-farooq",
+      "emoji": "🥐",
+      "level": 1,
+      "builtAt": "2026-11-05T21:58:28.661Z"
     },
     {
       "row": 0,

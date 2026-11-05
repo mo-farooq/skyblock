@@ -192,7 +192,7 @@
   <g transform="translate(610, 25)">
     <rect width="320" height="48" rx="12" class="hud-panel" />
     <text x="20" y="21" class="txt-body" font-size="10">GRID OCCUPANCY</text>
-    <text x="20" y="38" class="txt-accent" font-size="14">5 / 36 (14%)</text>
+    <text x="20" y="38" class="txt-accent" font-size="14">6 / 36 (17%)</text>
     <line x1="160" y1="10" x2="160" y2="38" stroke="var(--hud-stroke)" stroke-width="1" />
     <text x="175" y="21" class="txt-body" font-size="10">AI MAYOR STATUS</text>
     <text x="175" y="38" class="txt-title" font-size="13">⚡ Resourceful</text>
@@ -282,10 +282,32 @@
         <polygon points="520,200 560,220 560,226 520,206" class="tile-slab-left" />
         <polygon points="560,220 600,200 600,206 560,226" class="tile-slab-right" />
         <!-- Tile Top Diamond -->
-        <polygon points="560,180 600,200 560,220 520,200" class="tile-top tile-empty" />
+        <polygon points="560,180 600,200 560,220 520,200" class="tile-top tile-occupied" />
+    </g>
+    <g class="building-group" style="cursor: pointer;">
+      <!-- Walls -->
+      <polygon points="532,158 560,172 560,214 532,200" fill="#F59E0B" />
+      <polygon points="560,172 588,158 588,200 560,214" fill="#D97706" />
+      <!-- Roof -->
+      <polygon points="560,144 588,158 560,172 532,158" fill="#FDE68A" />
+      
+      <!-- Architectural features -->
+      
+      <polygon points="560,172 580,162 580,170 560,180" fill="#EF4444" />
+      <polygon points="566,169 574,165 574,173 566,177" fill="#FFFFFF" />
+      <!-- Chimney with smoke -->
+      <polygon points="548,144 554,147 554,154 548,151" fill="#DC2626" />
+      <circle cx="551" cy="140" r="3" fill="#E2E8F0" opacity="0.7" />
+      <circle cx="553" cy="134" r="4" fill="#E2E8F0" opacity="0.4" />
     
-        <text x="560" y="204" text-anchor="middle" class="plot-label">0,2</text>
+
+      <!-- Floating Emoji Badge -->
+      <g transform="translate(560, 126)">
+        <circle cx="0" cy="0" r="11" fill="#FFFFFF" stroke="#EF4444" stroke-width="1.5" filter="url(#dropShadow)" />
+        <text x="0" y="4" font-size="11" text-anchor="middle">🥐</text>
       </g>
+    </g>
+  
 
       <g class="grid-tile" data-coord="1,1">
         <!-- Slab Depth -->
@@ -686,12 +708,12 @@
 
     <!-- Mayor Speech & Proclamation -->
     <text x="104" y="30" class="txt-title" font-size="13">Mayor Pixel-8 (AI) Proclaims:</text>
-    <text x="104" y="52" class="txt-body" font-size="12" font-style="italic">"By municipal decree, @AntigravityPioneer&apos;s &quot;Quantum Croissant Bakery&quot; has been officially consecrated into our isometric skyline! Mayor Pixel-8 hints that starring the repository instantly unlocks royal gold permits!"</text>
+    <text x="104" y="52" class="txt-body" font-size="12" font-style="italic">"By municipal decree, @mo-farooq&apos;s &quot;Quantum Croissant Bakery&quot; has been officially consecrated into our isometric skyline! Mayor Pixel-8 hints that starring the repository instantly unlocks royal gold permits!"</text>
 
     <!-- Footer Activity Status -->
     <g transform="translate(104, 76)">
       <rect width="12" height="12" rx="3" fill="#10B981" />
-      <text x="20" y="10" class="txt-body" font-size="10">Latest Architect: <tspan class="txt-title">@AntigravityPioneer</tspan> (Built Quantum Croissant Bakery)</text>
+      <text x="20" y="10" class="txt-body" font-size="10">Latest Architect: <tspan class="txt-title">@mo-farooq</tspan> (Built Quantum Croissant Bakery)</text>
     </g>
 
     <!-- Star Prompt Callout -->
