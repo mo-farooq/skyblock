@@ -1,0 +1,22 @@
+{
+  "name": "antigravity-isometric-world",
+  "version": "1.0.0",
+  "description": "Interactive GitHub Profile 3D Isometric Community World powered by Antigravity, GitHub Actions, and Gemini",
+  "main": "scripts/process-move.js",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/process-move.js",
+    "render": "node scripts/render-svg.js",
+    "test-build": "node scripts/process-move.js --mock"
+  },
+  "keywords": [
+    "github-profile",
+    "isometric",
+    "svg",
+    "gemini",
+    "github-actions",
+    "antigravity"
+  ],
+  "author": "Farooq",
+  "license": "MIT"
+}

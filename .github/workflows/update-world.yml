@@ -1,0 +1,47 @@
+name: Update Isometric World
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: world-update-queue
+  cancel-in-progress: false
+
+jobs:
+  build-and-update:
+    runs-on: ubuntu-latest
+    # Only run if the issue title starts with "Build:" or "Construct:"
+    if: startsWith(github.event.issue.title, 'Build') || startsWith(github.event.issue.title, 'build') || startsWith(github.event.issue.title, 'Construct')
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Process Move & Re-render Isometric World
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          node scripts/process-move.js
+
+      - name: Commit and Push Updated World
+        run: |
+          git config --global user.name "Antigravity AI Mayor"
+          git config --global user.email "antigravity-bot@users.noreply.github.com"
+          git add world-3d.svg data/world-state.json
+          git commit -m "🏛️ Community Build: Update isometric world for #${{ github.event.issue.number }} by @${{ github.event.issue.user.login }} [skip ci]" || echo "No changes to commit"
+          git push origin main

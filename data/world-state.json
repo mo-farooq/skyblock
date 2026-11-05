@@ -1,0 +1,218 @@
+{
+  "gridSize": 6,
+  "mayor": {
+    "name": "Mayor Pixel-8 (AI)",
+    "mood": "Resourceful",
+    "announcement": "By municipal decree, @AntigravityPioneer's \"Quantum Croissant Bakery\" has been officially consecrated into our isometric skyline! Mayor Pixel-8 hints that starring the repository instantly unlocks royal gold permits!"
+  },
+  "stats": {
+    "totalBuildings": 5,
+    "lastBuilder": "AntigravityPioneer",
+    "lastAction": "Built Quantum Croissant Bakery",
+    "updatedAt": "2026-11-05T21:54:44.791Z"
+  },
+  "cells": [
+    {
+      "row": 0,
+      "col": 0,
+      "type": "park",
+      "name": "Genesis Grove",
+      "builder": "Antigravity",
+      "emoji": "🌲",
+      "level": 1
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "type": "bakery",
+      "name": "Quantum Croissant Bakery",
+      "builder": "AntigravityPioneer",
+      "emoji": "🥐",
+      "level": 2,
+      "builtAt": "2026-11-05T21:53:54.684Z",
+      "upgradedAt": "2026-11-05T21:54:44.789Z"
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "type": "empty"
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "type": "empty"
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "type": "empty"
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "type": "empty"
+    },
+    {
+      "row": 1,
+      "col": 0,
+      "type": "empty"
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "type": "empty"
+    },
+    {
+      "row": 1,
+      "col": 2,
+      "type": "bakery",
+      "name": "Quantum Croissant",
+      "builder": "OctoChef",
+      "emoji": "🥐",
+      "level": 1
+    },
+    {
+      "row": 1,
+      "col": 3,
+      "type": "empty"
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "type": "empty"
+    },
+    {
+      "row": 1,
+      "col": 5,
+      "type": "empty"
+    },
+    {
+      "row": 2,
+      "col": 0,
+      "type": "empty"
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "type": "empty"
+    },
+    {
+      "row": 2,
+      "col": 2,
+      "type": "townhall",
+      "name": "AI Town Hall",
+      "builder": "Mayor Pixel-8",
+      "emoji": "🏛️",
+      "level": 2
+    },
+    {
+      "row": 2,
+      "col": 3,
+      "type": "cafe",
+      "name": "Cyber Roast Coffee",
+      "builder": "DevBean",
+      "emoji": "☕",
+      "level": 1
+    },
+    {
+      "row": 2,
+      "col": 4,
+      "type": "empty"
+    },
+    {
+      "row": 2,
+      "col": 5,
+      "type": "empty"
+    },
+    {
+      "row": 3,
+      "col": 0,
+      "type": "empty"
+    },
+    {
+      "row": 3,
+      "col": 1,
+      "type": "empty"
+    },
+    {
+      "row": 3,
+      "col": 2,
+      "type": "empty"
+    },
+    {
+      "row": 3,
+      "col": 3,
+      "type": "empty"
+    },
+    {
+      "row": 3,
+      "col": 4,
+      "type": "empty"
+    },
+    {
+      "row": 3,
+      "col": 5,
+      "type": "empty"
+    },
+    {
+      "row": 4,
+      "col": 0,
+      "type": "empty"
+    },
+    {
+      "row": 4,
+      "col": 1,
+      "type": "empty"
+    },
+    {
+      "row": 4,
+      "col": 2,
+      "type": "empty"
+    },
+    {
+      "row": 4,
+      "col": 3,
+      "type": "empty"
+    },
+    {
+      "row": 4,
+      "col": 4,
+      "type": "empty"
+    },
+    {
+      "row": 4,
+      "col": 5,
+      "type": "empty"
+    },
+    {
+      "row": 5,
+      "col": 0,
+      "type": "empty"
+    },
+    {
+      "row": 5,
+      "col": 1,
+      "type": "empty"
+    },
+    {
+      "row": 5,
+      "col": 2,
+      "type": "empty"
+    },
+    {
+      "row": 5,
+      "col": 3,
+      "type": "empty"
+    },
+    {
+      "row": 5,
+      "col": 4,
+      "type": "empty"
+    },
+    {
+      "row": 5,
+      "col": 5,
+      "type": "empty"
+    }
+  ]
+}
