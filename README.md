@@ -1,69 +1,80 @@
-# ⛏️ Minecraft 3D Voxel Realm
+# 🏝️ Minecraft Skyblock Multiplayer Realm
 
 <p align="center">
-  <img src="./world-3d.svg" alt="Minecraft 3D Isometric Voxel Island" width="100%" />
+  <img src="./world-3d.svg" alt="Minecraft Skyblock 3D World" width="100%" />
 </p>
 
 <div align="center">
 
-## 🎮 Quick-Craft Hotbar: Click to Place on the Live Island!
-*Click any item below to trigger a pre-filled GitHub Issue. GitHub Actions places your block on the 3D island in seconds!*
+## 🎮 Contextual Command Deck: Make Your Move!
+*Steve is currently at **Tile [1, 2]**. Click any valid button below to submit the next multiplayer move via GitHub Issues!*
 
+### 🚶 Cardinal Movement (Step to Adjacent Tile)
 <p>
-  <a href="https://github.com/mo-farooq/mo-farooq/issues/new?title=Craft%3A+%F0%9F%92%8E+Diamond+Block&body=%23%23+Minecraft+Crafting+Request%0A%0ASteve%2C+I+struck+diamonds%21+Placing+a+rare+Diamond+Block+on+the+island%21"><img src="https://img.shields.io/badge/💎_MINE_DIAMOND-00E5FF?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Mine Diamond"/></a>
+  [![Step North](https://img.shields.io/badge/⬆️_STEP_NORTH-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/mo-farooq/skyblock/issues/new?title=Move%3A+Step+North&body=Moving+Steve+North+on+the+Skyblock+Island)
   &nbsp;
-  <a href="https://github.com/mo-farooq/mo-farooq/issues/new?title=Craft%3A+%F0%9F%8F%B0+Cobblestone+Fort&body=%23%23+Minecraft+Crafting+Request%0A%0AConstructing+a+fortified+cobblestone+outpost+to+defend+against+night+raids%21"><img src="https://img.shields.io/badge/🏰_BUILD_CASTLE-9E9E9E?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Build Castle"/></a>
+  [![Step South](https://img.shields.io/badge/⬇️_STEP_SOUTH-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/mo-farooq/skyblock/issues/new?title=Move%3A+Step+South&body=Moving+Steve+South+on+the+Skyblock+Island)
   &nbsp;
-  <a href="https://github.com/mo-farooq/mo-farooq/issues/new?title=Craft%3A+%F0%9F%8C%B2+Oak+Grove&body=%23%23+Minecraft+Crafting+Request%0A%0APlanting+an+oak+sapling+to+grow+cubic+foliage+and+harvest+wood+logs%21"><img src="https://img.shields.io/badge/🌲_PLANT_OAK_TREE-4CAF50?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Plant Oak Tree"/></a>
+  [![Step East](https://img.shields.io/badge/➡️_STEP_EAST-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/mo-farooq/skyblock/issues/new?title=Move%3A+Step+East&body=Moving+Steve+East+on+the+Skyblock+Island)
   &nbsp;
-  <a href="https://github.com/mo-farooq/mo-farooq/issues/new?title=Craft%3A+%F0%9F%92%A5+Redstone+Machine&body=%23%23+Minecraft+Crafting+Request%0A%0AWiring+a+redstone+circuit+with+repeaters+and+pressure+plates%21"><img src="https://img.shields.io/badge/💥_REDSTONE_TNT-FF5252?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Redstone TNT"/></a>
+  [![Step West](https://img.shields.io/badge/⬅️_STEP_WEST-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/mo-farooq/skyblock/issues/new?title=Move%3A+Step+West&body=Moving+Steve+West+on+the+Skyblock+Island)
 </p>
 
+### 🛠️ Contextual Adjacency Actions (Active for Current Tile)
 <p>
-  <a href="https://github.com/mo-farooq/mo-farooq/issues/new?title=Craft%3A+%F0%9F%A5%90+Village+Bakery&body=%23%23+Minecraft+Crafting+Request%0A%0ACrafting+a+village+bakery+with+wheat+crops+to+keep+hunger+bars+full%21"><img src="https://img.shields.io/badge/🍞_VILLAGE_BAKERY-FFA726?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Bake Bread"/></a>
+  [![Punch Oak Tree](https://img.shields.io/badge/🪓_PUNCH_OAK_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/mo-farooq/skyblock/issues/new?title=Action%3A+Punch+Oak+Tree&body=Steve+is+beside+the+Tree%21+Harvesting+wood+logs.)
   &nbsp;
-  <a href="https://github.com/mo-farooq/mo-farooq/issues/new?title=Craft%3A+%E2%98%95+Nether+Tavern&body=%23%23+Minecraft+Crafting+Request%0A%0ASetting+up+a+brewing+stand+and+cozy+coffee+tavern+for+weary+miners%21"><img src="https://img.shields.io/badge/☕_NETHER_TAVERN-AB47BC?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Brew Potion"/></a>
+  [![Mine Cobblestone](https://img.shields.io/badge/⛏️_MINE_COBBLESTONE-78909C?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/mo-farooq/skyblock/issues/new?title=Action%3A+Mine+Cobblestone&body=Mining+fresh+cobblestone+from+the+lava%2Fwater+generator%21)
   &nbsp;
-  <a href="https://github.com/mo-farooq/mo-farooq/issues/new?title=Craft%3A+%F0%9F%8F%B9+Pillager+Watchtower&body=%23%23+Minecraft+Crafting+Request%0A%0AErecting+a+tall+wood+and+cobblestone+lookout+to+spot+the+Ender+Dragon%21"><img src="https://img.shields.io/badge/🏹_WATCHTOWER-78909C?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Erect Tower"/></a>
+  [![Bridge Planks](https://img.shields.io/badge/🪵_BRIDGE_PLANKS-D84315?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/mo-farooq/skyblock/issues/new?title=Action%3A+Bridge+Planks&body=Placing+a+wooden+plank+bridge+block+into+the+void+towards+the+Ender+Dragon%21)
   &nbsp;
-  <a href="https://github.com/mo-farooq/mo-farooq/stargazers"><img src="https://img.shields.io/badge/⭐_UNLOCK_VIP_DIAMOND-FFD700?style=for-the-badge&logoColor=black&labelColor=2B2B2B" height="38" alt="Unlock VIP"/></a>
+  [![Place Furnace](https://img.shields.io/badge/♨️_PLACE_FURNACE-455A64?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/mo-farooq/skyblock/issues/new?title=Action%3A+Place+Furnace&body=Deploying+a+stone+furnace+onto+the+island%21)
+  &nbsp;
+  [![Star for VIP Diamond](https://img.shields.io/badge/⭐_UNLOCK_VIP_DIAMOND-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838)](https://github.com/mo-farooq/skyblock/stargazers)
 </p>
+
+---
+
+### 🎒 Steve's 8-Slot Hotbar Pack
+| Slot 1 | Slot 2 | Slot 3 | Slot 4 | Slot 5 | Slot 6 | Slot 7 | Slot 8 |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **🪵 Oak Log**<br>(`x5`) | **🪵 Oak Planks**<br>(`x16`) | **🪨 Cobblestone**<br>(`x12`) | **🪚 Crafting Table**<br>(`x1`) | **♨️ Furnace**<br>(`x1`) | **🕯️ Torch**<br>(`x4`) | **🍞 Bread**<br>(`x5`) | **💎 Diamond**<br>(`x2`) |
 
 </div>
 
 > [!TIP]
-> ⭐ **Stargazer Perk**: Starring this repository unlocks **VIP Diamond & Netherite** status, giving your block rare cyan mineral gleams and special mention in Steve's realm decree!
+> ⭐ **Stargazer VIP Perk**: Starring this repository grants your next bridge placement **Luminous Cyan Diamond Block** status with special particle gleams and +50 damage to the Ender Dragon!
 
 ---
 
-## ⚡ Game Loop & Technical Architecture
+## ⚡ Architecture & Turn-Based Event Loop
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Visitor as 👤 Player
+    actor Player as 👤 Visitor
     participant GH as 🐙 GitHub Issues
     participant Action as ⚙️ GitHub Actions
     participant Engine as ⛏️ process-move.js
     participant SVG as 🎨 world-3d.svg
 
-    Visitor->>GH: Clicks [ 💎 MINE DIAMOND ] & submits Issue
+    Player->>GH: Clicks [ 🪓 PUNCH TREE ] or [ ⬆️ STEP NORTH ]
     GH->>Action: Triggers runner on issues: [opened]
-    Action->>Engine: Executes Node.js voxel placement engine
-    Engine->>GH: Checks if player starred the repository (GitHub API)
-    Engine->>SVG: Calculates 3D voxel projection & updates island
-    Engine->>GH: Posts achievement decree & closes issue
-    Action->>GH: Commits updated world-3d.svg atomically to main branch
+    Action->>Engine: Executes turn-based Skyblock movement engine
+    Engine->>Engine: Validates adjacency & updates 8-slot inventory
+    Engine->>SVG: Calculates 3D voxel projection & updates Steve position
+    Engine->>GH: Posts achievement certificate & closes issue
+    Action->>GH: Commits updated SVG and dynamic README deck to main
 ```
 
 ---
 
-## 🛠️ Technical Highlights
+## 🛠️ Engine Highlights
 
-- **Pure Voxel SVG Engine**: Renders 2:1 isometric Minecraft dirt, grass fringe, and mineral blocks purely through polygon geometry with zero raster dependencies.
-- **Steve & Alex Skeletal Keyframes**: Continuous 60 FPS CSS animations featuring idle breathing, pickaxe swinging, floating experience orbs (`.xp-orb`), and cascading water blocks.
-- **Authentic Minecraft GUI**: Ender Dragon raid meter, 10-heart health bar (`❤️❤️❤️❤️❤️`), hunger drumsticks (`🍗🍗🍗🍗🍗`), Level 42 badge, and server announcement ticker.
-- **Serverless Event-Driven State**: GitHub Actions handles turn resolution and git-syncs state atomically within 15 seconds.
+- **Pure 3D Voxel SVG**: Authentic 2:1 isometric L-shaped Skyblock island with solitary oak tree, starter chest, and cobblestone generator.
+- **Dynamic Contextual Buttons**: README buttons update in real-time depending on Steve's current coordinates.
+- **8-Slot Inventory Management**: Strict item tracking for oak logs, planks, cobblestone, furnaces, and rare diamond gems.
+- **Multiplayer Community Boss Raid**: Ender Dragon boss meter ticks down with every void bridge built toward the End dimension!
 
 ---
 
@@ -71,12 +82,12 @@ sequenceDiagram
 
 ```bash
 # Clone the repository
-git clone https://github.com/mo-farooq/mo-farooq.git
-cd mo-farooq
-
-# Run a mock simulation of crafting a diamond block
-npm run test-build
+git clone https://github.com/mo-farooq/skyblock.git
+cd skyblock
 
 # Re-render world-3d.svg
 npm run render
+
+# Test a move simulation
+npm run test-build
 ```

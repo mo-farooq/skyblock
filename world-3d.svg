@@ -1,33 +1,40 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" width="100%" height="100%">
   <defs>
     <!-- Sky Gradient -->
-    <linearGradient id="mcSky" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#5B8BF5"/>
-      <stop offset="65%" stop-color="#9BC0FF"/>
-      <stop offset="100%" stop-color="#D6E5FF"/>
+    <linearGradient id="skyVoid" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3D6CD9"/>
+      <stop offset="60%" stop-color="#7EA4F8"/>
+      <stop offset="100%" stop-color="#C2D6FF"/>
     </linearGradient>
 
     <!-- Ender Dragon Boss Bar -->
-    <linearGradient id="dragonBar" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#B000E8"/>
-      <stop offset="50%" stop-color="#E255FF"/>
-      <stop offset="100%" stop-color="#8000A8"/>
+    <linearGradient id="dragonBarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#A500D6"/>
+      <stop offset="50%" stop-color="#E352FF"/>
+      <stop offset="100%" stop-color="#7B00A0"/>
     </linearGradient>
 
-    <!-- Diamond Gleam Gradient -->
+    <!-- Diamond Gleam -->
     <linearGradient id="diamondGleam" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#E0FFFF"/>
+      <stop offset="0%" stop-color="#E8FFFF"/>
       <stop offset="50%" stop-color="#00FFFF"/>
       <stop offset="100%" stop-color="#009999"/>
     </linearGradient>
 
-    <!-- Drop Shadow for Island -->
-    <filter id="islandShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="18" stdDeviation="12" flood-color="#000000" flood-opacity="0.45"/>
+    <!-- Lava Glow -->
+    <linearGradient id="lavaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF9900"/>
+      <stop offset="60%" stop-color="#FF3300"/>
+      <stop offset="100%" stop-color="#CC1100"/>
+    </linearGradient>
+
+    <!-- Island Drop Shadow -->
+    <filter id="voidShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="16" flood-color="#000000" flood-opacity="0.5"/>
     </filter>
 
-    <clipPath id="viewportClip">
-      <rect x="20" y="88" width="880" height="380" rx="8"/>
+    <clipPath id="skyClip">
+      <rect x="20" y="86" width="880" height="388" rx="8"/>
     </clipPath>
   </defs>
 
@@ -38,38 +45,43 @@
 
     @keyframes floatIsland {
       0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
+      50% { transform: translateY(-7px); }
     }
     @keyframes armSwing {
       0%, 100% { transform: rotate(0deg); }
-      50% { transform: rotate(-25deg); }
+      50% { transform: rotate(-24deg); }
     }
-    @keyframes pulseOrb {
+    @keyframes xpOrbPulse {
       0%, 100% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.4); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 1; }
     }
-    @keyframes bossBarGlow {
-      0%, 100% { opacity: 0.95; }
-      50% { opacity: 0.8; }
+    @keyframes dragonWing {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(2deg); }
+    }
+    @keyframes steamRise {
+      0% { transform: translateY(0px); opacity: 0.8; }
+      100% { transform: translateY(-16px); opacity: 0; }
     }
 
-    .mc-island { animation: floatIsland 4.5s ease-in-out infinite; }
-    .steve-arm { animation: armSwing 1.6s ease-in-out infinite; transform-origin: 38px 46px; }
-    .xp-orb { animation: pulseOrb 1.5s infinite ease-in-out; }
-    .boss-meter { animation: bossBarGlow 2s infinite ease-in-out; }
+    .mc-island { animation: floatIsland 5s ease-in-out infinite; }
+    .steve-arm { animation: armSwing 1.6s ease-in-out infinite; transform-origin: 36px 44px; }
+    .xp-orb { animation: xpOrbPulse 1.6s infinite ease-in-out; }
+    .dragon-actor { animation: dragonWing 4s ease-in-out infinite; }
+    .steam-particle { animation: steamRise 1.8s infinite linear; }
   </style>
 
-  <!-- ================= FRAME & BACKGROUND ================= -->
-  <rect x="0" y="0" width="920" height="540" rx="12" fill="#1C1D1E"/>
-  <rect x="4" y="4" width="912" height="532" rx="10" fill="#2E3033" stroke="#121314" stroke-width="3"/>
-  <rect x="10" y="10" width="900" height="520" rx="8" fill="#18191A"/>
+  <!-- ================= FRAME ================= -->
+  <rect x="0" y="0" width="920" height="540" rx="12" fill="#18191A"/>
+  <rect x="4" y="4" width="912" height="532" rx="10" fill="#2A2B2E" stroke="#101112" stroke-width="3"/>
+  <rect x="10" y="10" width="900" height="520" rx="8" fill="#141517"/>
 
-  <!-- ================= 1. CLEAN TOP MINECRAFT HUD ================= -->
-  <rect x="20" y="18" width="880" height="58" rx="6" fill="#2B2C2E" stroke="#484A4D" stroke-width="2"/>
+  <!-- ================= 1. MINECRAFT HEADER ================= -->
+  <rect x="20" y="16" width="880" height="60" rx="6" fill="#252628" stroke="#404245" stroke-width="2"/>
 
   <!-- Steve Avatar -->
-  <g transform="translate(32, 26)">
-    <rect width="42" height="42" rx="3" fill="#151515" stroke="#000000" stroke-width="2"/>
+  <g transform="translate(32, 25)">
+    <rect width="42" height="42" rx="3" fill="#111111" stroke="#000000" stroke-width="2"/>
     <rect x="4" y="4" width="34" height="12" fill="#4A3018"/>
     <rect x="4" y="16" width="34" height="22" fill="#BD8B72"/>
     <rect x="8" y="21" width="7" height="5" fill="#FFFFFF"/>
@@ -80,334 +92,397 @@
     <rect x="14" y="32" width="14" height="3" fill="#693820"/>
   </g>
 
-  <!-- Player Title & Level -->
-  <text x="88" y="43" fill="#FFFFFF" class="font-mc" font-size="13" font-weight="700">Mohammad Farooq's Realm</text>
-  <text x="88" y="60" fill="#55FF55" class="font-mc" font-size="9.5">★ LEVEL 42 ARCHITECT • SURVIVAL MODE</text>
+  <!-- Player Title & Location -->
+  <text x="88" y="41" fill="#FFFFFF" class="font-mc" font-size="12" font-weight="700">Mohammad Farooq's Skyblock</text>
+  <text x="88" y="58" fill="#55FF55" class="font-mc" font-size="9">★ STEVE AT TILE [1, 2] • HARDCORE SURVIVAL</text>
 
-  <!-- Hearts & Food Status -->
-  <g transform="translate(560, 32)">
+  <!-- Hearts & Food -->
+  <g transform="translate(560, 30)">
     <text x="0" y="15" font-size="14">❤️❤️❤️❤️❤️</text>
     <text x="88" y="15" font-size="14">🍗🍗🍗🍗🍗</text>
-    <text x="0" y="32" fill="#FFAA00" class="font-mc" font-size="8.5">FULL HEALTH</text>
-    <text x="88" y="32" fill="#FFAA00" class="font-mc" font-size="8.5">FULL HUNGER</text>
+    <text x="0" y="32" fill="#FFAA00" class="font-mc" font-size="8">FULL HEALTH</text>
+    <text x="88" y="32" fill="#FFAA00" class="font-mc" font-size="8">FULL HUNGER</text>
   </g>
 
-  <!-- Active Blocks Pill -->
-  <g transform="translate(760, 26)">
-    <rect width="128" height="42" rx="4" fill="#1C1D1E" stroke="#55FF55" stroke-width="1.5"/>
-    <text x="64" y="19" fill="#AAAAAA" class="font-mc" font-size="7.5" text-anchor="middle">BLOCKS CRAFTED</text>
-    <text x="64" y="36" fill="#55FF55" class="font-mc" font-size="13" font-weight="700" text-anchor="middle">7 BLOCKS</text>
+  <!-- Turn Counter Badge -->
+  <g transform="translate(760, 25)">
+    <rect width="128" height="42" rx="4" fill="#18191A" stroke="#55FF55" stroke-width="1.5"/>
+    <text x="64" y="18" fill="#AAAAAA" class="font-mc" font-size="7.5" text-anchor="middle">TOTAL TURNS</text>
+    <text x="64" y="36" fill="#55FF55" class="font-mc" font-size="12" font-weight="700" text-anchor="middle">MOVE #44</text>
   </g>
 
-  <!-- ================= 2. EXPANDED 3D VIEWPORT (FULL FOCUS ON ISLAND) ================= -->
-  <rect x="20" y="88" width="880" height="380" rx="8" fill="#1B2233" stroke="#444950" stroke-width="2"/>
+  <!-- ================= 2. 3D SKYBLOCK VIEWPORT ================= -->
+  <rect x="20" y="86" width="880" height="388" rx="8" fill="#1C2333" stroke="#3D4248" stroke-width="2"/>
 
-  <g clip-path="url(#viewportClip)">
-    <!-- Sky Background -->
-    <rect x="20" y="88" width="880" height="380" fill="url(#mcSky)"/>
+  <g clip-path="url(#skyClip)">
+    <!-- Infinite Sky Background -->
+    <rect x="20" y="86" width="880" height="388" fill="url(#skyVoid)"/>
 
     <!-- Minecraft Blocky Clouds -->
-    <rect x="40" y="110" width="180" height="32" fill="#FFFFFF" opacity="0.85" rx="2"/>
-    <rect x="140" y="98" width="110" height="32" fill="#FFFFFF" opacity="0.85" rx="2"/>
-    <rect x="620" y="120" width="220" height="36" fill="#FFFFFF" opacity="0.8" rx="2"/>
-    <rect x="730" y="106" width="130" height="36" fill="#FFFFFF" opacity="0.8" rx="2"/>
+    <rect x="40" y="110" width="160" height="28" fill="#FFFFFF" opacity="0.85" rx="2"/>
+    <rect x="120" y="100" width="100" height="28" fill="#FFFFFF" opacity="0.85" rx="2"/>
+    <rect x="660" y="125" width="200" height="30" fill="#FFFFFF" opacity="0.8" rx="2"/>
+    <rect x="750" y="115" width="110" height="30" fill="#FFFFFF" opacity="0.8" rx="2"/>
 
-    <!-- Ender Dragon Boss Bar (Clean & Bold) -->
-    <g transform="translate(260, 102)">
-      <rect x="0" y="0" width="400" height="22" rx="3" fill="#101010" stroke="#333333" stroke-width="2"/>
-      <rect x="3" y="3" width="340" height="16" rx="2" fill="url(#dragonBar)" class="boss-meter"/>
-      <text x="200" y="15" text-anchor="middle" fill="#FFFFFF" class="font-mc" font-size="9" font-weight="700">⚔️ Ender Dragon — 850 / 1000 HP</text>
+    <!-- Ender Dragon Flying Silhouette -->
+    <g class="dragon-actor" transform="translate(680, 160)">
+      <!-- Dragon Body & Wings -->
+      <polygon points="0,15 35,0 70,15 45,22 0,22" fill="#181818"/>
+      <polygon points="15,10 35,-15 50,5" fill="#222222"/>
+      <polygon points="40,10 65,-12 60,8" fill="#181818"/>
+      <!-- Glowing Purple Eyes -->
+      <rect x="62" y="13" width="3" height="3" fill="#D600FF"/>
+      <rect x="66" y="13" width="3" height="3" fill="#D600FF"/>
+      <text x="35" y="35" text-anchor="middle" fill="#E352FF" class="font-mc" font-size="7">Ender Dragon</text>
     </g>
 
-    <!-- ================= THE 3D MINECRAFT VOXEL ISLAND ================= -->
-    <g class="mc-island" filter="url(#islandShadow)">
+    <!-- Ender Dragon Boss Bar Overlay -->
+    <g transform="translate(260, 98)">
+      <rect x="0" y="0" width="400" height="22" rx="3" fill="#0C0C0D" stroke="#333333" stroke-width="2"/>
+      <rect x="3" y="3" width="289" height="16" rx="2" fill="url(#dragonBarGrad)"/>
+      <text x="200" y="15" text-anchor="middle" fill="#FFFFFF" class="font-mc" font-size="8.5" font-weight="700">⚔️ Ender Dragon (850 / 1000 HP)</text>
+    </g>
 
-      <!-- 1. BASE VOXEL PLATFORM (Lush Dirt & Grass Layer) -->
-      <!-- Top Grass Surface (Isometric Diamond) -->
-      <polygon points="460,192 688,306 460,420 232,306" fill="#5B8731"/>
+    <!-- ================= THE L-SHAPED SKYBLOCK ISLAND ================= -->
+    <g class="mc-island" filter="url(#voidShadow)">
 
-      <!-- Stylized Grass Highlights -->
-      <polygon points="460,208 498,227 460,246 422,227" fill="#70A83B" opacity="0.85"/>
-      <polygon points="536,246 574,265 536,284 498,265" fill="#70A83B" opacity="0.85"/>
-      <polygon points="384,246 422,265 384,284 346,265" fill="#70A83B" opacity="0.85"/>
-      <polygon points="460,322 498,341 460,360 422,341" fill="#70A83B" opacity="0.85"/>
+      <!-- L-Island Base Cliff Extrusions (Dirt & Bedrock Layers) -->
+      <!-- Dirt Layers -->
+      <polygon points="376,263 460,305 460,335 376,293" fill="#866043"/>
+      <polygon points="460,305 586,242 586,272 460,335" fill="#694B32"/>
+      <!-- Bedrock bottom -->
+      <polygon points="376,293 460,335 460,350 376,308" fill="#4A4A4A"/>
+      <polygon points="460,335 586,272 586,287 460,350" fill="#333333"/>
 
-      <!-- Left Cliff: Rich Dirt & Overhanging Green Grass Fringe -->
-      <polygon points="232,306 460,420 460,458 232,344" fill="#866043"/>
-      <polygon points="232,344 460,458 460,480 232,366" fill="#555555"/>
-      <!-- Left Grass Fringe -->
-      <polygon points="232,306 460,420 460,432 435,426 415,435 390,427 365,434 340,427 315,434 290,426 265,433 245,425 232,318" fill="#4C7026"/>
-
-      <!-- Right Cliff: Shaded Dirt & Bedrock Layer -->
-      <polygon points="460,420 688,306 688,344 460,458" fill="#694B32"/>
-      <polygon points="460,458 688,344 688,366 460,480" fill="#3D3D3D"/>
-      <!-- Right Grass Fringe -->
-      <polygon points="460,420 688,306 688,318 665,325 645,317 620,325 595,318 570,325 545,317 520,325 495,317 475,325 460,432" fill="#3D5A1E"/>
-
-      <!-- Clean Grid Lines -->
-      <g stroke="#3E5C21" stroke-width="1.2" opacity="0.4">
-        <line x1="422" y1="211" x2="650" y2="325"/>
-        <line x1="384" y1="230" x2="612" y2="344"/>
-        <line x1="346" y1="249" x2="574" y2="363"/>
-        <line x1="308" y1="268" x2="536" y2="382"/>
-        <line x1="270" y1="287" x2="498" y2="401"/>
-        <line x1="498" y1="211" x2="270" y2="325"/>
-        <line x1="536" y1="230" x2="308" y2="344"/>
-        <line x1="574" y1="249" x2="346" y2="363"/>
-        <line x1="612" y1="268" x2="384" y2="382"/>
-        <line x1="650" y1="287" x2="422" y2="401"/>
-      </g>
-
-      <!-- 2. WATER STREAM & WATERFALL (Vivid Minecraft Blue) -->
-      <polygon points="384,268 422,287 384,306 346,287" fill="#2E6BA8" opacity="0.9"/>
-      <polygon points="422,287 460,306 422,325 384,306" fill="#2E6BA8" opacity="0.9"/>
-      <polygon points="346,287 384,306 346,325 308,306" fill="#4287D6" opacity="0.9"/>
-      <polygon points="308,306 346,325 308,344 270,325" fill="#5CA0F2" opacity="0.9"/>
-      <!-- Waterfall over edge -->
-      <polygon points="270,325 308,344 308,382 270,363" fill="#2E6BA8" opacity="0.9"/>
-      <polygon points="276,330 302,343 302,376 276,363" fill="#FFFFFF" opacity="0.7"/>
-
-      <!-- 3. CUBIC OAK WOOD TREE at Tile (4, 1) -->
-      <g>
-        <polygon points="530,285 540,290 540,318 530,313" fill="#6B5130"/>
-        <polygon points="540,290 550,285 550,313 540,318" fill="#4F3B23"/>
-        <!-- Big Cubic Oak Leaves -->
-        <polygon points="540,240 568,254 540,268 512,254" fill="#386420"/>
-        <polygon points="512,254 540,268 540,296 512,282" fill="#2A4B17"/>
-        <polygon points="540,268 568,254 568,282 540,296" fill="#1E3810"/>
-        <polygon points="540,222 558,231 540,240 522,231" fill="#4C802E"/>
-      </g>
-
-      <!-- 4. DYNAMIC MINECRAFT VOXEL BLOCKS -->
+      <!-- Ground Voxels -->
       
-  <!-- Voxel Block (0,0) -->
-  <g class="mc-block" data-tile="0,0">
-    <polygon points="422,182 460,201 460,249 422,230" fill="#4A6E27"/>
-    <polygon points="460,201 498,182 498,230 460,249" fill="#37521D"/>
-    <polygon points="460,163 498,182 460,201 422,182" fill="#5B8731"/>
-
-    <!-- Block Border Accents -->
-    <polyline points="422,182 460,201 498,182" fill="none" stroke="#FFFFFF" stroke-width="1.2" opacity="0.3"/>
-    <line x1="460" y1="201" x2="460" y2="249" stroke="#000000" stroke-width="1.2" opacity="0.35"/>
-
-    <!-- Clear, Highly Legible Tag -->
-    <g transform="translate(460, 152)">
-      <rect x="-78" y="-10" width="156" height="20" rx="3" fill="#000000" opacity="0.9" stroke="#55FF55" stroke-width="1.8"/>
-      <text x="0" y="4" text-anchor="middle" fill="#55FF55" class="font-mc" font-size="8.5" font-weight="700">🌲 @SystemGenesis</text>
-    </g>
+  <!-- Grass Tile (0,2) -->
+  <g data-tile="0,2">
+    <polygon points="502,242 544,263 544,277 502,256" fill="#866043"/>
+    <polygon points="544,263 586,242 586,256 544,277" fill="#694B32"/>
+    <polygon points="544,221 586,242 544,263 502,242" fill="#5B8731"/>
+    <!-- Top Grass Detail -->
+    <polygon points="544,230 564,240 544,250 524,240" fill="#6FA33C" opacity="0.75"/>
+    <!-- Overhang Green Fringe -->
+    <polygon points="502,242 544,263 544,267 502,246" fill="#4C7026"/>
+    <polygon points="544,263 586,242 586,246 544,267" fill="#3D5A1E"/>
+  </g>
+  <!-- Grass Tile (1,2) -->
+  <g data-tile="1,2">
+    <polygon points="460,263 502,284 502,298 460,277" fill="#866043"/>
+    <polygon points="502,284 544,263 544,277 502,298" fill="#694B32"/>
+    <polygon points="502,242 544,263 502,284 460,263" fill="#5B8731"/>
+    <!-- Top Grass Detail -->
+    <polygon points="502,251 522,261 502,271 482,261" fill="#6FA33C" opacity="0.75"/>
+    <!-- Overhang Green Fringe -->
+    <polygon points="460,263 502,284 502,288 460,267" fill="#4C7026"/>
+    <polygon points="502,284 544,263 544,267 502,288" fill="#3D5A1E"/>
+  </g>
+  <!-- Grass Tile (1,3) -->
+  <g data-tile="1,3">
+    <polygon points="502,284 544,305 544,319 502,298" fill="#866043"/>
+    <polygon points="544,305 586,284 586,298 544,319" fill="#694B32"/>
+    <polygon points="544,263 586,284 544,305 502,284" fill="#5B8731"/>
+    <!-- Top Grass Detail -->
+    <polygon points="544,272 564,282 544,292 524,282" fill="#6FA33C" opacity="0.75"/>
+    <!-- Overhang Green Fringe -->
+    <polygon points="502,284 544,305 544,309 502,288" fill="#4C7026"/>
+    <polygon points="544,305 586,284 586,288 544,309" fill="#3D5A1E"/>
+  </g>
+  <!-- Grass Tile (2,2) -->
+  <g data-tile="2,2">
+    <polygon points="418,284 460,305 460,319 418,298" fill="#866043"/>
+    <polygon points="460,305 502,284 502,298 460,319" fill="#694B32"/>
+    <polygon points="460,263 502,284 460,305 418,284" fill="#5B8731"/>
+    <!-- Top Grass Detail -->
+    <polygon points="460,272 480,282 460,292 440,282" fill="#6FA33C" opacity="0.75"/>
+    <!-- Overhang Green Fringe -->
+    <polygon points="418,284 460,305 460,309 418,288" fill="#4C7026"/>
+    <polygon points="460,305 502,284 502,288 460,309" fill="#3D5A1E"/>
+  </g>
+  <!-- Grass Tile (2,3) -->
+  <g data-tile="2,3">
+    <polygon points="460,305 502,326 502,340 460,319" fill="#866043"/>
+    <polygon points="502,326 544,305 544,319 502,340" fill="#694B32"/>
+    <polygon points="502,284 544,305 502,326 460,305" fill="#5B8731"/>
+    <!-- Top Grass Detail -->
+    <polygon points="502,293 522,303 502,313 482,303" fill="#6FA33C" opacity="0.75"/>
+    <!-- Overhang Green Fringe -->
+    <polygon points="460,305 502,326 502,330 460,309" fill="#4C7026"/>
+    <polygon points="502,326 544,305 544,309 502,330" fill="#3D5A1E"/>
+  </g>
+  <!-- Grass Tile (3,2) -->
+  <g data-tile="3,2">
+    <polygon points="376,305 418,326 418,340 376,319" fill="#866043"/>
+    <polygon points="418,326 460,305 460,319 418,340" fill="#694B32"/>
+    <polygon points="418,284 460,305 418,326 376,305" fill="#5B8731"/>
+    <!-- Top Grass Detail -->
+    <polygon points="418,293 438,303 418,313 398,303" fill="#6FA33C" opacity="0.75"/>
+    <!-- Overhang Green Fringe -->
+    <polygon points="376,305 418,326 418,330 376,309" fill="#4C7026"/>
+    <polygon points="418,326 460,305 460,309 418,330" fill="#3D5A1E"/>
+  </g>
+  <!-- Grass Tile (2,4) -->
+  <g data-tile="2,4">
+    <polygon points="502,326 544,347 544,361 502,340" fill="#866043"/>
+    <polygon points="544,347 586,326 586,340 544,361" fill="#694B32"/>
+    <polygon points="544,305 586,326 544,347 502,326" fill="#5B8731"/>
+    <!-- Top Grass Detail -->
+    <polygon points="544,314 564,324 544,334 524,324" fill="#6FA33C" opacity="0.75"/>
+    <!-- Overhang Green Fringe -->
+    <polygon points="502,326 544,347 544,351 502,330" fill="#4C7026"/>
+    <polygon points="544,347 586,326 586,330 544,351" fill="#3D5A1E"/>
+  </g>
+  <!-- Grass Tile (3,3) -->
+  <g data-tile="3,3">
+    <polygon points="418,326 460,347 460,361 418,340" fill="#866043"/>
+    <polygon points="460,347 502,326 502,340 460,361" fill="#694B32"/>
+    <polygon points="460,305 502,326 460,347 418,326" fill="#5B8731"/>
+    <!-- Top Grass Detail -->
+    <polygon points="460,314 480,324 460,334 440,324" fill="#6FA33C" opacity="0.75"/>
+    <!-- Overhang Green Fringe -->
+    <polygon points="418,326 460,347 460,351 418,330" fill="#4C7026"/>
+    <polygon points="460,347 502,326 502,330 460,351" fill="#3D5A1E"/>
+  </g>
+  <!-- Grass Tile (3,4) -->
+  <g data-tile="3,4">
+    <polygon points="460,347 502,368 502,382 460,361" fill="#866043"/>
+    <polygon points="502,368 544,347 544,361 502,382" fill="#694B32"/>
+    <polygon points="502,326 544,347 502,368 460,347" fill="#5B8731"/>
+    <!-- Top Grass Detail -->
+    <polygon points="502,335 522,345 502,355 482,345" fill="#6FA33C" opacity="0.75"/>
+    <!-- Overhang Green Fringe -->
+    <polygon points="460,347 502,368 502,372 460,351" fill="#4C7026"/>
+    <polygon points="502,368 544,347 544,351 502,372" fill="#3D5A1E"/>
   </g>
 
-  <!-- Voxel Block (0,1) -->
-  <g class="mc-block" data-tile="0,1">
-    <polygon points="460,201 498,220 498,268 460,249" fill="#AD8045"/>
-    <polygon points="498,220 536,201 536,249 498,268" fill="#825C2D"/>
-    <polygon points="498,182 536,201 498,220 460,201" fill="#D9A766"/>
-
-    <!-- Block Border Accents -->
-    <polyline points="460,201 498,220 536,201" fill="none" stroke="#FFFFFF" stroke-width="1.2" opacity="0.3"/>
-    <line x1="498" y1="220" x2="498" y2="268" stroke="#000000" stroke-width="1.2" opacity="0.35"/>
-
-    <!-- Clear, Highly Legible Tag -->
-    <g transform="translate(498, 171)">
-      <rect x="-74" y="-10" width="148" height="20" rx="3" fill="#000000" opacity="0.9" stroke="#00FFFF" stroke-width="1.8"/>
-      <text x="0" y="4" text-anchor="middle" fill="#00FFFF" class="font-mc" font-size="8.5" font-weight="700">🍞 @EarlyAdopter</text>
-    </g>
-  </g>
-
-  <!-- Voxel Block (0,2) -->
-  <g class="mc-block" data-tile="0,2">
-    <polygon points="498,220 536,239 536,287 498,268" fill="#AD8045"/>
-    <polygon points="536,239 574,220 574,268 536,287" fill="#825C2D"/>
-    <polygon points="536,201 574,220 536,239 498,220" fill="#D9A766"/>
-
-    <!-- Block Border Accents -->
-    <polyline points="498,220 536,239 574,220" fill="none" stroke="#FFFFFF" stroke-width="1.2" opacity="0.3"/>
-    <line x1="536" y1="239" x2="536" y2="287" stroke="#000000" stroke-width="1.2" opacity="0.35"/>
-
-    <!-- Clear, Highly Legible Tag -->
-    <g transform="translate(536, 190)">
-      <rect x="-62" y="-10" width="124" height="20" rx="3" fill="#000000" opacity="0.9" stroke="#00FFFF" stroke-width="1.8"/>
-      <text x="0" y="4" text-anchor="middle" fill="#00FFFF" class="font-mc" font-size="8.5" font-weight="700">🍞 @mo-farooq</text>
-    </g>
-  </g>
-
-  <!-- Voxel Block (0,3) -->
-  <g class="mc-block" data-tile="0,3">
-    <polygon points="536,239 574,258 574,306 536,287" fill="#AD8045"/>
-    <polygon points="574,258 612,239 612,287 574,306" fill="#825C2D"/>
-    <polygon points="574,220 612,239 574,258 536,239" fill="#D9A766"/>
-
-    <!-- Block Border Accents -->
-    <polyline points="536,239 574,258 612,239" fill="none" stroke="#FFFFFF" stroke-width="1.2" opacity="0.3"/>
-    <line x1="574" y1="258" x2="574" y2="306" stroke="#000000" stroke-width="1.2" opacity="0.35"/>
-
-    <!-- Clear, Highly Legible Tag -->
-    <g transform="translate(574, 209)">
-      <rect x="-90" y="-10" width="180" height="20" rx="3" fill="#000000" opacity="0.9" stroke="#FFAA00" stroke-width="1.8"/>
-      <text x="0" y="4" text-anchor="middle" fill="#FFAA00" class="font-mc" font-size="8.5" font-weight="700">🍞 @CommunityBuilder</text>
-    </g>
-  </g>
-
-  <!-- Voxel Block (1,2) -->
-  <g class="mc-block" data-tile="1,2">
-    <polygon points="460,239 498,258 498,306 460,287" fill="#AD8045"/>
-    <polygon points="498,258 536,239 536,287 498,306" fill="#825C2D"/>
-    <polygon points="498,220 536,239 498,258 460,239" fill="#D9A766"/>
-
-    <!-- Block Border Accents -->
-    <polyline points="460,239 498,258 536,239" fill="none" stroke="#FFFFFF" stroke-width="1.2" opacity="0.3"/>
-    <line x1="498" y1="258" x2="498" y2="306" stroke="#000000" stroke-width="1.2" opacity="0.35"/>
-
-    <!-- Clear, Highly Legible Tag -->
-    <g transform="translate(498, 209)">
-      <rect x="-58" y="-10" width="116" height="20" rx="3" fill="#000000" opacity="0.9" stroke="#FFAA00" stroke-width="1.8"/>
-      <text x="0" y="4" text-anchor="middle" fill="#FFAA00" class="font-mc" font-size="8.5" font-weight="700">🍞 @OctoChef</text>
-    </g>
-  </g>
-
-  <!-- Voxel Block (2,2) -->
-  <g class="mc-block" data-tile="2,2">
-    <polygon points="422,258 460,277 460,325 422,306" fill="#2CBAA8"/>
-    <polygon points="460,277 498,258 498,306 460,325" fill="#1A8F81"/>
-    <polygon points="460,239 498,258 460,277 422,258" fill="#4DEDDE"/>
-
-    <!-- Block Border Accents -->
-    <polyline points="422,258 460,277 498,258" fill="none" stroke="#FFFFFF" stroke-width="1.2" opacity="0.3"/>
-    <line x1="460" y1="277" x2="460" y2="325" stroke="#000000" stroke-width="1.2" opacity="0.35"/>
-
-    <!-- Clear, Highly Legible Tag -->
-    <g transform="translate(460, 228)">
-      <rect x="-78" y="-10" width="156" height="20" rx="3" fill="#000000" opacity="0.9" stroke="#00FFFF" stroke-width="1.8"/>
-      <text x="0" y="4" text-anchor="middle" fill="#00FFFF" class="font-mc" font-size="8.5" font-weight="700">💎 @Mayor Pixel-8</text>
-    </g>
-  </g>
-
-  <!-- Voxel Block (2,3) -->
-  <g class="mc-block" data-tile="2,3">
-    <polygon points="460,277 498,296 498,344 460,325" fill="#B57428"/>
-    <polygon points="498,296 536,277 536,325 498,344" fill="#875114"/>
-    <polygon points="498,258 536,277 498,296 460,277" fill="#E09B48"/>
-
-    <!-- Block Border Accents -->
-    <polyline points="460,277 498,296 536,277" fill="none" stroke="#FFFFFF" stroke-width="1.2" opacity="0.3"/>
-    <line x1="498" y1="296" x2="498" y2="344" stroke="#000000" stroke-width="1.2" opacity="0.35"/>
-
-    <!-- Clear, Highly Legible Tag -->
-    <g transform="translate(498, 247)">
-      <rect x="-50" y="-10" width="100" height="20" rx="3" fill="#000000" opacity="0.9" stroke="#FFAA00" stroke-width="1.8"/>
-      <text x="0" y="4" text-anchor="middle" fill="#FFAA00" class="font-mc" font-size="8.5" font-weight="700">☕ @DevBean</text>
-    </g>
-  </g>
-
-
-      <!-- 5. MINECRAFT STEVE RIG (Wielding Diamond Pickaxe) -->
+      <!-- Void Bridge Blocks -->
       
-  <!-- Steve Rig -->
-  <g class="steve-actor" data-character="steve">
-    <!-- Contact Shadow -->
-    <ellipse cx="460" cy="272" rx="22" ry="10" fill="#000000" opacity="0.4"/>
+  <!-- Bridge Block at (4,2) -->
+  <g class="bridge-block" data-tile="4,2">
+    <polygon points="334,294 376,315 376,347 334,326" fill="#9E6F33"/>
+    <polygon points="376,315 418,294 418,326 376,347" fill="#7D5422"/>
+    <polygon points="376,273 418,294 376,315 334,294" fill="#B88746"/>
 
-    <!-- Boots -->
-    <polygon points="448,266 456,270 456,259 448,255" fill="#3A3A3A"/>
-    <polygon points="456,270 464,266 464,255 456,259" fill="#242424"/>
-    <polygon points="465,270 473,266 473,255 465,259" fill="#3A3A3A"/>
-    <polygon points="473,266 480,263 480,252 473,255" fill="#242424"/>
-
-    <!-- Denim Jeans -->
-    <polygon points="449,256 459,261 459,240 449,235" fill="#2B3CA3"/>
-    <polygon points="463,261 473,256 473,235 463,240" fill="#1B266B"/>
-
-    <!-- Cyan Shirt / Torso -->
-    <polygon points="460,210 478,219 460,228 442,219" fill="#00BDBD"/>
-    <polygon points="442,219 460,228 460,243 442,234" fill="#008E8E"/>
-    <polygon points="460,228 478,219 478,234 460,243" fill="#006363"/>
-
-    <!-- Cubic Head -->
-    <polygon points="460,190 474,197 460,204 446,197" fill="#4A3018"/>
-    <polygon points="446,197 460,204 460,221 446,214" fill="#BD8B72"/>
-    <polygon points="446,197 460,204 460,208 446,201" fill="#4A3018"/>
-    <polygon points="460,204 474,197 474,214 460,221" fill="#996D57"/>
-
-    <!-- Eyes -->
-    <rect x="449" y="208" width="4" height="3" fill="#FFFFFF"/>
-    <rect x="453" y="208" width="3" height="3" fill="#2B3CA3"/>
-
-    <!-- Left Arm -->
-    <polygon points="440,220 446,223 446,240 440,237" fill="#008E8E"/>
-    <polygon points="440,237 446,240 446,248 440,245" fill="#BD8B72"/>
-
-    <!-- Right Arm swinging Diamond Pickaxe -->
-    <g class="steve-arm">
-      <polygon points="474,223 480,220 480,237 474,240" fill="#006363"/>
-      <!-- Wooden Handle -->
-      <line x1="477" y1="242" x2="496" y2="220" stroke="#866043" stroke-width="3.5" stroke-linecap="round"/>
-      <!-- Diamond Pickaxe Head -->
-      <polygon points="489,214 501,224 499,227 487,217" fill="url(#diamondGleam)"/>
+    <!-- Player Tag -->
+    <g transform="translate(376, 270)">
+      <rect x="-56.75" y="-9" width="113.5" height="18" rx="3" fill="#000000" opacity="0.9" stroke="#00FFFF" stroke-width="1.5"/>
+      <text x="0" y="4" text-anchor="middle" fill="#00FFFF" class="font-mc" font-size="7.5" font-weight="700">🪵 @mo-farooq</text>
     </g>
+  </g>
+  <!-- Bridge Block at (5,2) -->
+  <g class="bridge-block" data-tile="5,2">
+    <polygon points="292,315 334,336 334,368 292,347" fill="#757575"/>
+    <polygon points="334,336 376,315 376,347 334,368" fill="#595959"/>
+    <polygon points="334,294 376,315 334,336 292,315" fill="#999999"/>
 
-    <!-- Floating XP Orbs -->
-    <circle cx="492" cy="206" r="4" fill="#55FF55" class="xp-orb"/>
-    <circle cx="436" cy="220" r="3.5" fill="#FFFF55" class="xp-orb" style="animation-delay: 0.75s;"/>
+    <!-- Player Tag -->
+    <g transform="translate(334, 291)">
+      <rect x="-53" y="-9" width="106" height="18" rx="3" fill="#000000" opacity="0.9" stroke="#AAAAAA" stroke-width="1.5"/>
+      <text x="0" y="4" text-anchor="middle" fill="#FFFFFF" class="font-mc" font-size="7.5" font-weight="700">🪨 @alex_dev</text>
+    </g>
+  </g>
+  <!-- Bridge Block at (6,2) -->
+  <g class="bridge-block" data-tile="6,2">
+    <polygon points="250,336 292,357 292,389 250,368" fill="#2CBAA8"/>
+    <polygon points="292,357 334,336 334,368 292,389" fill="#1A8F81"/>
+    <polygon points="292,315 334,336 292,357 250,336" fill="#4DEDDE"/>
 
-    <!-- High-Contrast Tag -->
-    <g transform="translate(460, 176)">
-      <rect x="-62" y="-11" width="124" height="22" rx="3" fill="#000000" stroke="#55FF55" stroke-width="1.5"/>
-      <text x="0" y="5" text-anchor="middle" fill="#FFFFFF" class="font-mc" font-size="9" font-weight="700">Steve @mo-farooq</text>
+    <!-- Player Tag -->
+    <g transform="translate(292, 312)">
+      <rect x="-71.75" y="-9" width="143.5" height="18" rx="3" fill="#000000" opacity="0.9" stroke="#00FFFF" stroke-width="1.5"/>
+      <text x="0" y="4" text-anchor="middle" fill="#00FFFF" class="font-mc" font-size="7.5" font-weight="700">💎 @stargazer_vip</text>
     </g>
   </g>
 
-      <!-- 6. MINECRAFT ALEX RIG (Holding Iron Sword) -->
+      <!-- Solitary Oak Tree at [0, 2] -->
+      
+  <!-- Solitary Oak Tree [0, 2] -->
+  <g class="skyblock-tree">
+    <!-- Trunk -->
+    <polygon points="534,222 548,230 548,248 534,240" fill="#6B5130"/>
+    <polygon points="548,230 562,222 562,240 548,248" fill="#4F3B23"/>
+
+    <!-- Cubic Foliage Lower Layer -->
+    <polygon points="544,172 582,192 544,212 506,192" fill="#4C802E"/>
+    <polygon points="506,192 544,212 544,232 506,212" fill="#386420"/>
+    <polygon points="544,212 582,192 582,212 544,232" fill="#264714"/>
+
+    <!-- Cubic Foliage Top Cube -->
+    <polygon points="544,152 568,164 544,176 520,164" fill="#5FA33A"/>
+    <polygon points="520,164 544,176 544,192 520,180" fill="#4C802E"/>
+    <polygon points="544,176 568,164 568,180 544,192" fill="#386420"/>
+
+    <!-- Tree HP Badge -->
+    <g transform="translate(544, 138)">
+      <rect x="-48" y="-9" width="96" height="18" rx="3" fill="#000000" opacity="0.9" stroke="#55FF55" stroke-width="1.5"/>
+      <text x="0" y="4" text-anchor="middle" fill="#55FF55" class="font-mc" font-size="7.5">🌲 TREE (3/4 HP)</text>
+    </g>
+  </g>
+
+      <!-- Starter Wooden Chest at [1, 2] -->
+      
+  <!-- Starter Chest [1, 2] -->
+  <g class="starter-chest">
+    <!-- Box Body -->
+    <polygon points="486,239 502,247 502,267 486,259" fill="#7D5127"/>
+    <polygon points="502,247 518,239 518,259 502,267" fill="#5A3A1C"/>
+    <polygon points="502,231 518,239 502,247 486,239" fill="#9E6732"/>
+    <!-- Iron Latch -->
+    <rect x="500" y="243" width="4" height="6" fill="#D6D6D6" stroke="#000000" stroke-width="0.8"/>
+
+    <!-- Chest Tag -->
+    <g transform="translate(502, 221)">
+      <rect x="-38" y="-8" width="76" height="16" rx="2" fill="#000000" opacity="0.85" stroke="#FFAA00" stroke-width="1.2"/>
+      <text x="0" y="4" text-anchor="middle" fill="#FFAA00" class="font-mc" font-size="7">📦 CHEST</text>
+    </g>
+  </g>
+
+      <!-- Cobblestone Generator at [1, 3] -->
+      
+  <!-- Cobblestone Generator [1, 3] -->
+  <g class="cobblestone-gen">
+    <!-- Water block (Left) -->
+    <polygon points="516,268 534,277 534,289 516,280" fill="#2E6BA8"/>
+    <polygon points="534,277 534,267 516,258 516,268" fill="#4A8CE0"/>
+
+    <!-- Lava block (Right) -->
+    <polygon points="554,277 572,268 572,280 554,289" fill="url(#lavaGrad)"/>
+    <polygon points="554,277 554,267 572,258 572,268" fill="#FF6600"/>
+
+    <!-- Generated Cobblestone (Center) -->
+    <polygon points="534,267 544,272 544,292 534,287" fill="#6E6E6E"/>
+    <polygon points="544,272 554,267 554,287 544,292" fill="#545454"/>
+    <polygon points="544,262 554,267 544,272 534,267" fill="#8A8A8A"/>
+
+    <!-- Rising Steam Particle -->
+    <circle cx="544" cy="258" r="2.5" fill="#FFFFFF" opacity="0.75" class="steam-particle"/>
+
+    <!-- Generator Tag -->
+    <g transform="translate(544, 244)">
+      <rect x="-42" y="-8" width="84" height="16" rx="2" fill="#000000" opacity="0.85" stroke="#FFFFFF" stroke-width="1.2"/>
+      <text x="0" y="4" text-anchor="middle" fill="#FFFFFF" class="font-mc" font-size="6.5">⚡ COBBLE GEN</text>
+    </g>
+  </g>
+
+      <!-- Placed Objects (Torches, Crafting Table, Furnaces) -->
+      
+  <!-- Torch at (544,326) -->
+  <g class="placed-torch">
+    <!-- Stick -->
+    <line x1="544" y1="326" x2="544" y2="304" stroke="#6B4724" stroke-width="3" stroke-linecap="square"/>
+    <!-- Yellow Flame Glow -->
+    <circle cx="544" cy="301" r="5" fill="#FFCC00" opacity="0.9"/>
+    <circle cx="544" cy="301" r="9" fill="#FFAA00" opacity="0.35"/>
+  </g>
+
+      <!-- Alex Rig at [2, 4] -->
       
   <!-- Alex Rig -->
   <g class="alex-actor" data-character="alex">
-    <ellipse cx="574" cy="329" rx="20" ry="9" fill="#000000" opacity="0.35"/>
+    <ellipse cx="544" cy="330" rx="20" ry="9" fill="#000000" opacity="0.35"/>
 
     <!-- Alex Boots -->
-    <polygon points="564,324 571,327 571,317 564,314" fill="#3A3A3A"/>
-    <polygon points="577,327 584,324 584,314 577,317" fill="#242424"/>
+    <polygon points="534,325 541,328 541,318 534,315" fill="#3A3A3A"/>
+    <polygon points="547,328 554,325 554,315 547,318" fill="#242424"/>
 
     <!-- Alex Brown Pants -->
-    <polygon points="565,315 574,319 574,299 565,295" fill="#543825"/>
-    <polygon points="575,319 584,315 584,295 575,299" fill="#3D281A"/>
+    <polygon points="535,316 544,320 544,300 535,296" fill="#543825"/>
+    <polygon points="545,320 554,316 554,296 545,300" fill="#3D281A"/>
 
     <!-- Alex Green Tunic -->
-    <polygon points="574,271 590,279 574,287 558,279" fill="#5B8731"/>
-    <polygon points="558,279 574,287 574,302 558,294" fill="#466826"/>
-    <polygon points="574,287 590,279 590,294 574,302" fill="#334C1B"/>
+    <polygon points="544,272 560,280 544,288 528,280" fill="#5B8731"/>
+    <polygon points="528,280 544,288 544,303 528,295" fill="#466826"/>
+    <polygon points="544,288 560,280 560,295 544,303" fill="#334C1B"/>
 
     <!-- Alex Ginger Hair & Head -->
-    <polygon points="574,251 586,257 574,263 562,257" fill="#BE5C28"/>
-    <polygon points="562,257 574,263 574,280 562,274" fill="#BD8B72"/>
-    <polygon points="562,257 574,263 574,267 562,261" fill="#BE5C28"/>
-    <polygon points="574,263 586,257 586,274 574,280" fill="#996D57"/>
+    <polygon points="544,252 556,258 544,264 532,258" fill="#BE5C28"/>
+    <polygon points="532,258 544,264 544,281 532,275" fill="#BD8B72"/>
+    <polygon points="532,258 544,264 544,268 532,262" fill="#BE5C28"/>
+    <polygon points="544,264 556,258 556,275 544,281" fill="#996D57"/>
 
     <!-- Alex Eyes -->
-    <rect x="564" y="268" width="4" height="3" fill="#FFFFFF"/>
-    <rect x="568" y="268" width="3" height="3" fill="#388731"/>
+    <rect x="534" y="269" width="4" height="3" fill="#FFFFFF"/>
+    <rect x="538" y="269" width="3" height="3" fill="#388731"/>
 
     <!-- Alex Holding Iron Sword -->
-    <line x1="587" y1="297" x2="602" y2="281" stroke="#E0E0E0" stroke-width="3.5" stroke-linecap="round"/>
-    <polygon points="600,277 605,283 599,283" fill="#FFFFFF"/>
+    <line x1="557" y1="298" x2="572" y2="282" stroke="#E0E0E0" stroke-width="3.5" stroke-linecap="round"/>
+    <polygon points="570,278 575,284 569,284" fill="#FFFFFF"/>
 
     <!-- High-Contrast Tag -->
-    <g transform="translate(574, 237)">
-      <rect x="-50" y="-11" width="100" height="22" rx="3" fill="#000000" stroke="#FFAA00" stroke-width="1.5"/>
-      <text x="0" y="5" text-anchor="middle" fill="#FFAA00" class="font-mc" font-size="9" font-weight="700">Alex @Co-Op</text>
+    <g transform="translate(544, 236)">
+      <rect x="-48" y="-11" width="96" height="22" rx="3" fill="#000000" stroke="#FFAA00" stroke-width="1.5"/>
+      <text x="0" y="5" text-anchor="middle" fill="#FFAA00" class="font-mc" font-size="8.5" font-weight="700">Alex @Co-Op</text>
+    </g>
+  </g>
+
+      <!-- Steve Rig at [steve.row, steve.col] -->
+      
+  <!-- Steve Rig -->
+  <g class="steve-actor" data-character="steve">
+    <ellipse cx="502" cy="267" rx="22" ry="10" fill="#000000" opacity="0.4"/>
+
+    <!-- Boots -->
+    <polygon points="490,261 498,265 498,254 490,250" fill="#3A3A3A"/>
+    <polygon points="498,265 506,261 506,250 498,254" fill="#242424"/>
+    <polygon points="507,265 515,261 515,250 507,254" fill="#3A3A3A"/>
+    <polygon points="515,261 522,258 522,247 515,250" fill="#242424"/>
+
+    <!-- Denim Jeans -->
+    <polygon points="491,251 501,256 501,235 491,230" fill="#2B3CA3"/>
+    <polygon points="505,256 515,251 515,230 505,235" fill="#1B266B"/>
+
+    <!-- Cyan Shirt / Torso -->
+    <polygon points="502,205 520,214 502,223 484,214" fill="#00BDBD"/>
+    <polygon points="484,214 502,223 502,238 484,229" fill="#008E8E"/>
+    <polygon points="502,223 520,214 520,229 502,238" fill="#006363"/>
+
+    <!-- Cubic Head -->
+    <polygon points="502,185 516,192 502,199 488,192" fill="#4A3018"/>
+    <polygon points="488,192 502,199 502,216 488,209" fill="#BD8B72"/>
+    <polygon points="488,192 502,199 502,203 488,196" fill="#4A3018"/>
+    <polygon points="502,199 516,192 516,209 502,216" fill="#996D57"/>
+
+    <!-- Eyes -->
+    <rect x="491" y="203" width="4" height="3" fill="#FFFFFF"/>
+    <rect x="495" y="203" width="3" height="3" fill="#2B3CA3"/>
+
+    <!-- Left Arm -->
+    <polygon points="482,215 488,218 488,235 482,232" fill="#008E8E"/>
+    <polygon points="482,232 488,235 488,243 482,240" fill="#BD8B72"/>
+
+    <!-- Right Arm swinging Diamond Pickaxe -->
+    <g class="steve-arm">
+      <polygon points="516,218 522,215 522,232 516,235" fill="#006363"/>
+      <!-- Wooden Handle -->
+      <line x1="519" y1="237" x2="538" y2="215" stroke="#866043" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- Diamond Pickaxe Head -->
+      <polygon points="531,209 543,219 541,222 529,212" fill="url(#diamondGleam)"/>
+    </g>
+
+    <!-- Floating XP Orbs -->
+    <circle cx="534" cy="201" r="4" fill="#55FF55" class="xp-orb"/>
+    <circle cx="478" cy="215" r="3.5" fill="#FFFF55" class="xp-orb" style="animation-delay: 0.75s;"/>
+
+    <!-- High-Contrast Tag -->
+    <g transform="translate(502, 169)">
+      <rect x="-64" y="-11" width="128" height="22" rx="3" fill="#000000" stroke="#55FF55" stroke-width="1.8"/>
+      <text x="0" y="5" text-anchor="middle" fill="#FFFFFF" class="font-mc" font-size="8.5" font-weight="700">Steve @mo-farooq</text>
     </g>
   </g>
 
     </g>
 
-    <!-- Bottom Corner Badges -->
-    <rect x="36" y="430" width="230" height="26" rx="4" fill="#111111" opacity="0.88" stroke="#333333" stroke-width="1.5"/>
-    <text x="48" y="447" fill="#55FF55" class="font-mc" font-size="8.5">⛏️ Pure SVG • 60 FPS CSS</text>
+    <!-- Viewport Info Pills -->
+    <rect x="34" y="434" width="240" height="26" rx="4" fill="#0E1012" opacity="0.9" stroke="#333333" stroke-width="1.5"/>
+    <text x="46" y="451" fill="#55FF55" class="font-mc" font-size="8">🏝️ L-Island Skyblock • Turn-Based</text>
 
-    <rect x="660" y="430" width="224" height="26" rx="4" fill="#111111" opacity="0.88" stroke="#00FFFF" stroke-width="1.5"/>
-    <text x="772" y="447" text-anchor="middle" fill="#00FFFF" class="font-mc" font-size="8.5">⭐ Star = VIP Diamond</text>
+    <rect x="670" y="434" width="216" height="26" rx="4" fill="#0E1012" opacity="0.9" stroke="#00FFFF" stroke-width="1.5"/>
+    <text x="778" y="451" text-anchor="middle" fill="#00FFFF" class="font-mc" font-size="8">⭐ Star = VIP Diamond Bridge</text>
   </g>
 
-  <!-- ================= 3. CLEAN BOTTOM SERVER TICKER ================= -->
-  <rect x="20" y="480" width="880" height="46" rx="6" fill="#222325" stroke="#444648" stroke-width="2"/>
-  <rect x="24" y="484" width="872" height="38" rx="4" fill="#18191A"/>
-  <text x="40" y="508" fill="#00FFFF" class="font-mc" font-size="10">&lt;Server&gt; <tspan fill="#FFFFFF">Achievement Unlocked: @CommunityBuilder placed &quot;Village Bakery&quot; onto the island! Steve notes that starring the repository upgrades your next craft to a rare Diamond Block!</tspan></text>
+  <!-- ================= 3. BOTTOM SERVER TICKER ================= -->
+  <rect x="20" y="482" width="880" height="44" rx="6" fill="#202224" stroke="#3D4044" stroke-width="2"/>
+  <rect x="24" y="486" width="872" height="36" rx="4" fill="#141517"/>
+  <text x="40" y="509" fill="#00FFFF" class="font-mc" font-size="9.5">&lt;Server&gt; <tspan fill="#FFFFFF">Steve is standing at Tile [1, 2]. Select an action below to make the next multiplayer move!</tspan></text>
 </svg>

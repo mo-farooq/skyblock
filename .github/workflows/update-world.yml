@@ -1,4 +1,4 @@
-name: Update Isometric World
+name: Skyblock Multiplayer Engine
 
 on:
   issues:
@@ -9,14 +9,23 @@ permissions:
   issues: write
 
 concurrency:
-  group: world-update-queue
+  group: skyblock-turn-queue
   cancel-in-progress: false
 
 jobs:
-  build-and-update:
+  process-turn:
     runs-on: ubuntu-latest
-    # Run if issue title starts with Build, Craft, Mine, or Construct
-    if: startsWith(github.event.issue.title, 'Build') || startsWith(github.event.issue.title, 'build') || startsWith(github.event.issue.title, 'Craft') || startsWith(github.event.issue.title, 'craft') || startsWith(github.event.issue.title, 'Mine') || startsWith(github.event.issue.title, 'Construct')
+    if: >-
+      startsWith(github.event.issue.title, 'Move') ||
+      startsWith(github.event.issue.title, 'move') ||
+      startsWith(github.event.issue.title, 'Action') ||
+      startsWith(github.event.issue.title, 'action') ||
+      startsWith(github.event.issue.title, 'Craft') ||
+      startsWith(github.event.issue.title, 'craft') ||
+      startsWith(github.event.issue.title, 'Mine') ||
+      startsWith(github.event.issue.title, 'mine') ||
+      startsWith(github.event.issue.title, 'Build') ||
+      startsWith(github.event.issue.title, 'build')
 
     steps:
       - name: Checkout Repository
@@ -29,7 +38,7 @@ jobs:
         with:
           node-version: 22
 
-      - name: Process Move & Re-render Isometric World
+      - name: Process Skyblock Turn & Re-render World
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -38,10 +47,11 @@ jobs:
         run: |
           node scripts/process-move.js
 
-      - name: Commit and Push Updated World
+      - name: Commit and Push Updated Skyblock Realm
         run: |
-          git config --global user.name "Community World Bot"
-          git config --global user.email "bot@mo-farooq.github"
-          git add world-3d.svg data/world-state.json
-          git commit -m "🏛️ Community Build: Update isometric world for #${{ github.event.issue.number }} by @${{ github.event.issue.user.login }} [skip ci]" || echo "No changes to commit"
+          git config --global user.name "Skyblock Bot"
+          git config --global user.email "skyblock-bot@mo-farooq.github"
+          git add world-3d.svg data/world-state.json README.md
+          git commit -m "🏝️ Skyblock Turn #${{ github.event.issue.number }} executed by @${{ github.event.issue.user.login }} [skip ci]" || echo "No changes to commit"
+          git pull --rebase origin main || true
           git push origin main
