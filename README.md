@@ -50,8 +50,10 @@
   </tr>
 </table>
 
-### 🔨 Crafting Bench
-<em>(Inventory has no craftable ingredients. Punch the Oak Tree or loot the Starter Chest to gather materials!)</em>
+### 🔨 Available Crafting Recipes (Based on Current Inventory)
+<p>
+  <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Action%3A%20Craft%204%20Planks"><img src="https://img.shields.io/badge/🔨_CRAFT_4_PLANKS-B88746?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Planks"/></a>
+</p>
 
 </div>
 
