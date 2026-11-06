@@ -10,135 +10,178 @@ const SVG_OUTPUT = path.join(ROOT_DIR, 'world-3d.svg');
 
 export function renderWorldSvg(stateData) {
   const {
-    steve = { row: 2, col: 2, lastMover: 'mo-farooq' },
-    tree = { hp: 4, maxHp: 4 },
-    enderDragon = { hp: 850, maxHp: 1000 },
-    inventory = [],
-    stats = {},
-    starterIsland = [],
-    bridges = [],
-    placedObjects = []
+    steve = { row: 3, col: 2, lastMover: 'mo-farooq' },
+    tree = { row: 0, col: 1, hp: 4, maxHp: 4 },
+    inventory = []
   } = stateData;
 
-  // Isometric Grid Projection Math
-  // Canvas: 920x540
-  // Center Origin: (460, 200)
-  // Step vectors: dx = 42, dy = 21
-  function getTileCenter(row, col) {
-    const cx = 460 + (col - row) * 42;
-    const cy = 200 + (col + row) * 21;
+  // Projection math:
+  // Canvas: 920 x 540
+  // Origin: (460, 185)
+  // Step vectors: dx = 36, dy = 18
+  function getTileCenter(r, c) {
+    const cx = 460 + (c - r) * 36;
+    const cy = 185 + (c + r) * 18;
     return { cx, cy };
   }
 
-  // Draw starter L-island ground tiles
-  const islandTiles = [
-    { row: 0, col: 2 },
-    { row: 1, col: 2 },
-    { row: 1, col: 3 },
-    { row: 2, col: 2 },
-    { row: 2, col: 3 },
-    { row: 2, col: 4 },
-    { row: 3, col: 2 },
-    { row: 3, col: 3 },
-    { row: 3, col: 4 }
-  ];
-
-  // Render ground voxels
-  let groundSvg = '';
-  // Sort tiles depth-wise (row + col) ascending
-  const allGround = [...islandTiles].sort((a, b) => (a.row + a.col) - (b.row + b.col));
-  for (const t of allGround) {
-    const { cx, cy } = getTileCenter(t.row, t.col);
-    groundSvg += renderGrassTile(cx, cy, t.row, t.col);
-  }
-
-  // Render Void Bridges
-  let bridgesSvg = '';
-  const sortedBridges = [...bridges].sort((a, b) => (a.row + a.col) - (b.row + b.col));
-  for (const b of sortedBridges) {
-    const { cx, cy } = getTileCenter(b.row, b.col);
-    bridgesSvg += renderBridgeVoxel(cx, cy, b.type, b.builder, b.emoji, b.row, b.col, b.isVip);
-  }
-
-  // Render Placed Objects (Torches, Crafting Tables, Furnaces)
-  let objectsSvg = '';
-  for (const obj of placedObjects) {
-    const { cx, cy } = getTileCenter(obj.row, obj.col);
-    if (obj.type === 'torch') {
-      objectsSvg += renderTorch(cx, cy);
-    } else if (obj.type === 'crafting_table') {
-      objectsSvg += renderCraftingTable(cx, cy, obj.builder);
-    } else if (obj.type === 'furnace') {
-      objectsSvg += renderFurnace(cx, cy, obj.builder);
+  // Authentic 27-block classic SkyBlock L-island surface coordinates
+  // Rows 0..2: cols 0..2 (3x3 arm)
+  // Rows 3..5: cols 0..5 (3x6 arm)
+  const surfaceTiles = [];
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 6; c++) {
+      if ((r < 3 && c < 3) || (r >= 3 && c < 6)) {
+        surfaceTiles.push({ r, c });
+      }
     }
   }
 
-  // Solitary Oak Tree at [0, 2]
-  const treePos = getTileCenter(0, 2);
-  const treeSvg = renderSkyblockTree(treePos.cx, treePos.cy, tree.hp, tree.maxHp);
+  // Sort surface tiles depth-wise: (r + c) ascending
+  surfaceTiles.sort((a, b) => (a.r + a.b) - (b.r + b.c));
 
-  // Starter Chest at [1, 2]
-  const chestPos = getTileCenter(1, 2);
-  const chestSvg = renderStarterChest(chestPos.cx, chestPos.cy);
+  // Render top grass diamond for each tile
+  let grassTilesSvg = '';
+  for (const t of surfaceTiles) {
+    const { cx, cy } = getTileCenter(t.r, t.c);
+    grassTilesSvg += `
+    <polygon points="${cx},${cy - 18} ${cx + 36},${cy} ${cx},${cy + 18} ${cx - 36},${cy}" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+    <polygon points="${cx},${cy - 10} ${cx + 18},${cy - 1} ${cx},${cy + 8} ${cx - 18},${cy - 1}" fill="#6E9F3D" opacity="0.6"/>`;
+  }
 
-  // Cobblestone Generator at [1, 3]
-  const genPos = getTileCenter(1, 3);
-  const genSvg = renderCobblestoneGenerator(genPos.cx, genPos.cy);
+  // Cliff face extrusions (4 blocks deep = 48px)
+  // South-West Front Face (along row 5, cols 0..5): 6 tiles long
+  let leftCliffSvg = '';
+  for (let c = 0; c < 6; c++) {
+    const { cx, cy } = getTileCenter(5, c);
+    const depth = 44;
+    // Dirt face
+    leftCliffSvg += `
+    <!-- Left cliff at (5,${c}) -->
+    <polygon points="${cx - 36},${cy} ${cx},${cy + 18} ${cx},${cy + 18 + depth} ${cx - 36},${cy + depth}" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
+    <!-- Grass fringe overhang -->
+    <polygon points="${cx - 36},${cy} ${cx},${cy + 18} ${cx},${cy + 24} ${cx - 18},${cy + 18} ${cx - 36},${cy + 6}" fill="#4C7026"/>
+    <!-- Stone texture markings -->
+    <line x1="${cx - 18}" y1="${cy + 22}" x2="${cx - 18}" y2="${cy + 36}" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>`;
+  }
 
-  // Steve Rig at steve.row, steve.col
-  const stevePos = getTileCenter(steve.row, steve.col);
-  const steveSvg = renderMinecraftSteve(stevePos.cx, stevePos.cy, steve.lastMover);
+  // South-East Front Face (along col 2 for rows 0..2, and col 5 for rows 3..5)
+  let rightCliffSvg = '';
+  const rightTiles = [
+    { r: 0, c: 2 },
+    { r: 1, c: 2 },
+    { r: 2, c: 2 },
+    { r: 3, c: 5 },
+    { r: 4, c: 5 },
+    { r: 5, c: 5 }
+  ];
+  for (const t of rightTiles) {
+    const { cx, cy } = getTileCenter(t.r, t.c);
+    const depth = 44;
+    rightCliffSvg += `
+    <!-- Right cliff at (${t.r},${t.c}) -->
+    <polygon points="${cx},${cy + 18} ${cx + 36},${cy} ${cx + 36},${cy + depth} ${cx},${cy + 18 + depth}" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
+    <!-- Grass fringe overhang -->
+    <polygon points="${cx},${cy + 18} ${cx + 36},${cy} ${cx + 36},${cy + 6} ${cx + 18},${cy + 18} ${cx},${cy + 24}" fill="#3D5A1E"/>
+    <!-- Shadow details -->
+    <line x1="${cx + 18}" y1="${cy + 22}" x2="${cx + 18}" y2="${cy + 36}" stroke="#523924" stroke-width="1.5" opacity="0.5"/>`;
+  }
 
-  // Alex Rig at [2, 4]
-  const alexPos = getTileCenter(2, 4);
-  const alexSvg = renderMinecraftAlex(alexPos.cx, alexPos.cy);
+  // Bedrock single bottom cornerstone at spawn bottom
+  const spawnCenter = getTileCenter(4, 2);
+  const bedrockSvg = `
+  <!-- Single Bedrock Block on Island Underside -->
+  <polygon points="${spawnCenter.cx - 20},${spawnCenter.cy + 42} ${spawnCenter.cx + 20},${spawnCenter.cy + 42} ${spawnCenter.cx},${spawnCenter.cy + 58}" fill="#2E2E2E"/>
+  <polygon points="${spawnCenter.cx - 20},${spawnCenter.cy + 42} ${spawnCenter.cx},${spawnCenter.cy + 58} ${spawnCenter.cx - 10},${spawnCenter.cy + 48}" fill="#1F1F1F"/>`;
 
-  const dragonWidth = Math.max(Math.min((enderDragon.hp / enderDragon.maxHp) * 340, 340), 10);
+  // Solitary Oak Tree at (0, 1)
+  const treeTile = getTileCenter(tree.row || 0, tree.col || 1);
+  const treeSvg = renderAuthenticOakTree(treeTile.cx, treeTile.cy);
+
+  // Starter Chest at (5, 5) - far corner of the L
+  const chestTile = getTileCenter(5, 5);
+  const chestSvg = renderAuthenticChest(chestTile.cx, chestTile.cy);
+
+  // Steve Rig at (steve.row, steve.col) - ONLY character!
+  const steveTile = getTileCenter(steve.row || 3, steve.col || 2);
+  const steveSvg = renderSoloSteve(steveTile.cx, steveTile.cy);
+
+  // Hotbar Inventory Slots (Default 9 classic Skyblock slots)
+  const defaultHotbar = [
+    { slot: 1, emoji: '🪵', count: 4, name: 'Oak Log', active: false },
+    { slot: 2, emoji: '🪵', count: 16, name: 'Planks', active: false },
+    { slot: 3, emoji: '🪨', count: 12, name: 'Cobblestone', active: false },
+    { slot: 4, emoji: '⛏️', count: 1, name: 'Pickaxe', active: true },
+    { slot: 5, emoji: '🧊', count: 1, name: 'Ice', active: false },
+    { slot: 6, emoji: '🌋', count: 1, name: 'Lava', active: false },
+    { slot: 7, emoji: '🍞', count: 5, name: 'Bread', active: false },
+    { slot: 8, emoji: '🕯️', count: 4, name: 'Torch', active: false },
+    { slot: 9, emoji: '📦', count: 1, name: 'Chest', active: false }
+  ];
+
+  // Merge state inventory into hotbar slots if provided
+  const slotsToRender = defaultHotbar.map((slot, idx) => {
+    const stateItem = inventory[idx];
+    if (stateItem) {
+      return {
+        slot: idx + 1,
+        emoji: stateItem.emoji || slot.emoji,
+        count: stateItem.count ?? slot.count,
+        name: stateItem.name || slot.name,
+        active: idx === 3
+      };
+    }
+    return slot;
+  });
+
+  let hotbarSvg = '';
+  const slotWidth = 46;
+  const startX = 460 - (9 * slotWidth) / 2; // Centered
+  const hotbarY = 472;
+
+  slotsToRender.forEach((item, idx) => {
+    const x = startX + idx * slotWidth;
+    const isSelected = item.active;
+    hotbarSvg += `
+    <!-- Slot ${idx + 1} -->
+    <rect x="${x}" y="${hotbarY}" width="42" height="46" rx="2" fill="#3A3A3A" stroke="${isSelected ? '#FFFFFF' : '#1E1E1E'}" stroke-width="${isSelected ? '2.5' : '1.8'}"/>
+    <rect x="${x + 2}" y="${hotbarY + 2}" width="38" height="42" rx="1" fill="#252525"/>
+    <!-- Item Icon -->
+    <text x="${x + 21}" y="${hotbarY + 27}" font-size="20" text-anchor="middle">${item.emoji}</text>
+    <!-- Stack Count -->
+    <text x="${x + 36}" y="${hotbarY + 41}" fill="#FFFFFF" class="font-mc" font-size="8.5" font-weight="700" text-anchor="end">${item.count > 1 ? item.count : ''}</text>
+    `;
+  });
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" width="100%" height="100%">
   <defs>
-    <!-- Sky Gradient -->
+    <!-- Sky Void Gradient -->
     <linearGradient id="skyVoid" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#3D6CD9"/>
-      <stop offset="60%" stop-color="#7EA4F8"/>
-      <stop offset="100%" stop-color="#C2D6FF"/>
-    </linearGradient>
-
-    <!-- Ender Dragon Boss Bar -->
-    <linearGradient id="dragonBarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#A500D6"/>
-      <stop offset="50%" stop-color="#E352FF"/>
-      <stop offset="100%" stop-color="#7B00A0"/>
+      <stop offset="0%" stop-color="#4B7BE5"/>
+      <stop offset="65%" stop-color="#89B4FA"/>
+      <stop offset="100%" stop-color="#D6E4FF"/>
     </linearGradient>
 
     <!-- Diamond Gleam -->
-    <linearGradient id="diamondGleam" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="diamondPick" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#E8FFFF"/>
       <stop offset="50%" stop-color="#00FFFF"/>
       <stop offset="100%" stop-color="#009999"/>
     </linearGradient>
 
-    <!-- Lava Glow -->
-    <linearGradient id="lavaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FF9900"/>
-      <stop offset="60%" stop-color="#FF3300"/>
-      <stop offset="100%" stop-color="#CC1100"/>
-    </linearGradient>
-
     <!-- Island Drop Shadow -->
-    <filter id="voidShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="24" stdDeviation="16" flood-color="#000000" flood-opacity="0.5"/>
+    <filter id="islandShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="28" stdDeviation="18" flood-color="#000000" flood-opacity="0.55"/>
     </filter>
 
     <clipPath id="skyClip">
-      <rect x="20" y="86" width="880" height="388" rx="8"/>
+      <rect x="20" y="80" width="880" height="380" rx="6"/>
     </clipPath>
   </defs>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=Share+Tech+Mono&amp;display=swap');
-    .font-mc { font-family: 'Press Start 2P', 'Courier New', monospace; }
-    .font-ui { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap');
+    .font-mc { font-family: 'Press Start 2P', monospace; }
 
     @keyframes floatIsland {
       0%, 100% { transform: translateY(0px); }
@@ -146,431 +189,193 @@ export function renderWorldSvg(stateData) {
     }
     @keyframes armSwing {
       0%, 100% { transform: rotate(0deg); }
-      50% { transform: rotate(-24deg); }
-    }
-    @keyframes xpOrbPulse {
-      0%, 100% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.35); opacity: 1; }
-    }
-    @keyframes dragonWing {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-8px) rotate(2deg); }
-    }
-    @keyframes steamRise {
-      0% { transform: translateY(0px); opacity: 0.8; }
-      100% { transform: translateY(-16px); opacity: 0; }
+      50% { transform: rotate(-25deg); }
     }
 
     .mc-island { animation: floatIsland 5s ease-in-out infinite; }
-    .steve-arm { animation: armSwing 1.6s ease-in-out infinite; transform-origin: 36px 44px; }
-    .xp-orb { animation: xpOrbPulse 1.6s infinite ease-in-out; }
-    .dragon-actor { animation: dragonWing 4s ease-in-out infinite; }
-    .steam-particle { animation: steamRise 1.8s infinite linear; }
+    .steve-arm { animation: armSwing 1.8s ease-in-out infinite; transform-origin: 34px 42px; }
   </style>
 
-  <!-- ================= FRAME ================= -->
-  <rect x="0" y="0" width="920" height="540" rx="12" fill="#18191A"/>
-  <rect x="4" y="4" width="912" height="532" rx="10" fill="#2A2B2E" stroke="#101112" stroke-width="3"/>
-  <rect x="10" y="10" width="900" height="520" rx="8" fill="#141517"/>
+  <!-- ================= CANVAS BACKGROUND ================= -->
+  <rect x="0" y="0" width="920" height="540" rx="10" fill="#18191A"/>
+  <rect x="4" y="4" width="912" height="532" rx="8" fill="#28292C" stroke="#0E0F10" stroke-width="3"/>
+  <rect x="8" y="8" width="904" height="524" rx="6" fill="#141517"/>
 
-  <!-- ================= 1. MINECRAFT HEADER ================= -->
-  <rect x="20" y="16" width="880" height="60" rx="6" fill="#252628" stroke="#404245" stroke-width="2"/>
+  <!-- ================= 1. CLEAN TOP STATUS HUD (NO CLUTTER) ================= -->
+  <rect x="20" y="16" width="880" height="54" rx="4" fill="#252628" stroke="#424548" stroke-width="2"/>
 
   <!-- Steve Avatar -->
-  <g transform="translate(32, 25)">
-    <rect width="42" height="42" rx="3" fill="#111111" stroke="#000000" stroke-width="2"/>
-    <rect x="4" y="4" width="34" height="12" fill="#4A3018"/>
-    <rect x="4" y="16" width="34" height="22" fill="#BD8B72"/>
-    <rect x="8" y="21" width="7" height="5" fill="#FFFFFF"/>
-    <rect x="11" y="21" width="4" height="5" fill="#2B3CA3"/>
-    <rect x="26" y="21" width="7" height="5" fill="#FFFFFF"/>
-    <rect x="26" y="21" width="4" height="5" fill="#2B3CA3"/>
-    <rect x="17" y="27" width="8" height="5" fill="#A06950"/>
-    <rect x="14" y="32" width="14" height="3" fill="#693820"/>
+  <g transform="translate(30, 23)">
+    <rect width="40" height="40" rx="2" fill="#111111" stroke="#000000" stroke-width="2"/>
+    <rect x="4" y="4" width="32" height="11" fill="#4A3018"/>
+    <rect x="4" y="15" width="32" height="21" fill="#BD8B72"/>
+    <rect x="7" y="20" width="7" height="5" fill="#FFFFFF"/>
+    <rect x="10" y="20" width="4" height="5" fill="#2B3CA3"/>
+    <rect x="25" y="20" width="7" height="5" fill="#FFFFFF"/>
+    <rect x="25" y="20" width="4" height="5" fill="#2B3CA3"/>
+    <rect x="16" y="25" width="8" height="5" fill="#A06950"/>
+    <rect x="13" y="30" width="14" height="3" fill="#693820"/>
   </g>
 
-  <!-- Player Title & Location -->
-  <text x="88" y="41" fill="#FFFFFF" class="font-mc" font-size="12" font-weight="700">Mohammad Farooq's Skyblock</text>
-  <text x="88" y="58" fill="#55FF55" class="font-mc" font-size="9">★ STEVE AT TILE [${steve.row}, ${steve.col}] • HARDCORE SURVIVAL</text>
+  <!-- Clear, High-Contrast Title & Mode -->
+  <text x="84" y="38" fill="#FFFFFF" class="font-mc" font-size="13" font-weight="700">MINECRAFT SKYBLOCK</text>
+  <text x="84" y="55" fill="#55FF55" class="font-mc" font-size="9">SOLO SURVIVAL • HARDCORE CHALLENGE</text>
 
-  <!-- Hearts & Food -->
-  <g transform="translate(560, 30)">
+  <!-- Hearts & Hunger Bars -->
+  <g transform="translate(560, 28)">
     <text x="0" y="15" font-size="14">❤️❤️❤️❤️❤️</text>
-    <text x="88" y="15" font-size="14">🍗🍗🍗🍗🍗</text>
+    <text x="86" y="15" font-size="14">🍗🍗🍗🍗🍗</text>
     <text x="0" y="32" fill="#FFAA00" class="font-mc" font-size="8">FULL HEALTH</text>
-    <text x="88" y="32" fill="#FFAA00" class="font-mc" font-size="8">FULL HUNGER</text>
+    <text x="86" y="32" fill="#FFAA00" class="font-mc" font-size="8">FULL HUNGER</text>
   </g>
 
-  <!-- Turn Counter Badge -->
-  <g transform="translate(760, 25)">
-    <rect width="128" height="42" rx="4" fill="#18191A" stroke="#55FF55" stroke-width="1.5"/>
-    <text x="64" y="18" fill="#AAAAAA" class="font-mc" font-size="7.5" text-anchor="middle">TOTAL TURNS</text>
-    <text x="64" y="36" fill="#55FF55" class="font-mc" font-size="12" font-weight="700" text-anchor="middle">MOVE #${stats.totalMoves || 42}</text>
+  <!-- Level 42 Badge -->
+  <g transform="translate(760, 23)">
+    <rect width="128" height="40" rx="3" fill="#1A1B1C" stroke="#55FF55" stroke-width="1.5"/>
+    <text x="64" y="18" fill="#AAAAAA" class="font-mc" font-size="7.5" text-anchor="middle">EXPERIENCE</text>
+    <text x="64" y="34" fill="#55FF55" class="font-mc" font-size="13" font-weight="700" text-anchor="middle">LEVEL 42</text>
   </g>
 
-  <!-- ================= 2. 3D SKYBLOCK VIEWPORT ================= -->
-  <rect x="20" y="86" width="880" height="388" rx="8" fill="#1C2333" stroke="#3D4248" stroke-width="2"/>
+  <!-- ================= 2. 3D SKY VIEWPORT (THE AUTHENTIC L-ISLAND) ================= -->
+  <rect x="20" y="80" width="880" height="380" rx="6" fill="#1A2233" stroke="#3D4248" stroke-width="2"/>
 
   <g clip-path="url(#skyClip)">
     <!-- Infinite Sky Background -->
-    <rect x="20" y="86" width="880" height="388" fill="url(#skyVoid)"/>
+    <rect x="20" y="80" width="880" height="380" fill="url(#skyVoid)"/>
 
-    <!-- Minecraft Blocky Clouds -->
-    <rect x="40" y="110" width="160" height="28" fill="#FFFFFF" opacity="0.85" rx="2"/>
-    <rect x="120" y="100" width="100" height="28" fill="#FFFFFF" opacity="0.85" rx="2"/>
-    <rect x="660" y="125" width="200" height="30" fill="#FFFFFF" opacity="0.8" rx="2"/>
-    <rect x="750" y="115" width="110" height="30" fill="#FFFFFF" opacity="0.8" rx="2"/>
+    <!-- Minecraft Blocky Pixel Clouds -->
+    <rect x="60" y="105" width="170" height="26" fill="#FFFFFF" opacity="0.85" rx="2"/>
+    <rect x="140" y="95" width="100" height="26" fill="#FFFFFF" opacity="0.85" rx="2"/>
+    <rect x="650" y="115" width="200" height="28" fill="#FFFFFF" opacity="0.8" rx="2"/>
+    <rect x="740" y="105" width="110" height="28" fill="#FFFFFF" opacity="0.8" rx="2"/>
 
-    <!-- Ender Dragon Flying Silhouette -->
-    <g class="dragon-actor" transform="translate(680, 160)">
-      <!-- Dragon Body & Wings -->
-      <polygon points="0,15 35,0 70,15 45,22 0,22" fill="#181818"/>
-      <polygon points="15,10 35,-15 50,5" fill="#222222"/>
-      <polygon points="40,10 65,-12 60,8" fill="#181818"/>
-      <!-- Glowing Purple Eyes -->
-      <rect x="62" y="13" width="3" height="3" fill="#D600FF"/>
-      <rect x="66" y="13" width="3" height="3" fill="#D600FF"/>
-      <text x="35" y="35" text-anchor="middle" fill="#E352FF" class="font-mc" font-size="7">Ender Dragon</text>
-    </g>
+    <!-- The Authentic L-Shaped Skyblock Island -->
+    <g class="mc-island" filter="url(#islandShadow)">
 
-    <!-- Ender Dragon Boss Bar Overlay -->
-    <g transform="translate(260, 98)">
-      <rect x="0" y="0" width="400" height="22" rx="3" fill="#0C0C0D" stroke="#333333" stroke-width="2"/>
-      <rect x="3" y="3" width="${dragonWidth}" height="16" rx="2" fill="url(#dragonBarGrad)"/>
-      <text x="200" y="15" text-anchor="middle" fill="#FFFFFF" class="font-mc" font-size="8.5" font-weight="700">⚔️ Ender Dragon (${enderDragon.hp} / ${enderDragon.maxHp} HP)</text>
-    </g>
+      <!-- Bedrock Tip -->
+      ${bedrockSvg}
 
-    <!-- ================= THE L-SHAPED SKYBLOCK ISLAND ================= -->
-    <g class="mc-island" filter="url(#voidShadow)">
+      <!-- Front Cliff Faces (Dirt Extrusions) -->
+      ${leftCliffSvg}
+      ${rightCliffSvg}
 
-      <!-- L-Island Base Cliff Extrusions (Dirt & Bedrock Layers) -->
-      <!-- Dirt Layers -->
-      <polygon points="376,263 460,305 460,335 376,293" fill="#866043"/>
-      <polygon points="460,305 586,242 586,272 460,335" fill="#694B32"/>
-      <!-- Bedrock bottom -->
-      <polygon points="376,293 460,335 460,350 376,308" fill="#4A4A4A"/>
-      <polygon points="460,335 586,272 586,287 460,350" fill="#333333"/>
+      <!-- Top Grass Surface (27 Tiles) -->
+      ${grassTilesSvg}
 
-      <!-- Ground Voxels -->
-      ${groundSvg}
-
-      <!-- Void Bridge Blocks -->
-      ${bridgesSvg}
-
-      <!-- Solitary Oak Tree at [0, 2] -->
+      <!-- Solitary Oak Tree at (0, 1) -->
       ${treeSvg}
 
-      <!-- Starter Wooden Chest at [1, 2] -->
+      <!-- Starter Wooden Chest at (5, 5) -->
       ${chestSvg}
 
-      <!-- Cobblestone Generator at [1, 3] -->
-      ${genSvg}
-
-      <!-- Placed Objects (Torches, Crafting Table, Furnaces) -->
-      ${objectsSvg}
-
-      <!-- Alex Rig at [2, 4] -->
-      ${alexSvg}
-
-      <!-- Steve Rig at [steve.row, steve.col] -->
+      <!-- Steve (Lone Survivor) -->
       ${steveSvg}
 
     </g>
-
-    <!-- Viewport Info Pills -->
-    <rect x="34" y="434" width="240" height="26" rx="4" fill="#0E1012" opacity="0.9" stroke="#333333" stroke-width="1.5"/>
-    <text x="46" y="451" fill="#55FF55" class="font-mc" font-size="8">🏝️ L-Island Skyblock • Turn-Based</text>
-
-    <rect x="670" y="434" width="216" height="26" rx="4" fill="#0E1012" opacity="0.9" stroke="#00FFFF" stroke-width="1.5"/>
-    <text x="778" y="451" text-anchor="middle" fill="#00FFFF" class="font-mc" font-size="8">⭐ Star = VIP Diamond Bridge</text>
   </g>
 
-  <!-- ================= 3. BOTTOM SERVER TICKER ================= -->
-  <rect x="20" y="482" width="880" height="44" rx="6" fill="#202224" stroke="#3D4044" stroke-width="2"/>
-  <rect x="24" y="486" width="872" height="36" rx="4" fill="#141517"/>
-  <text x="40" y="509" fill="#00FFFF" class="font-mc" font-size="9.5">&lt;Server&gt; <tspan fill="#FFFFFF">Steve is standing at Tile [${steve.row}, ${steve.col}]. Select an action below to make the next multiplayer move!</tspan></text>
+  <!-- ================= 3. AUTHENTIC MINECRAFT HOTBAR (INVENTORY) ================= -->
+  <rect x="20" y="466" width="880" height="58" rx="4" fill="#202224" stroke="#3D4044" stroke-width="2"/>
+  <rect x="24" y="470" width="872" height="50" rx="3" fill="#161718"/>
+
+  <!-- 9 Hotbar Slots -->
+  <g transform="translate(0, 0)">
+    ${hotbarSvg}
+  </g>
 </svg>`;
 }
 
-// 3D Voxel Grass Tile
-function renderGrassTile(cx, cy, row, col) {
-  const top = `${cx},${cy - 21} ${cx + 42},${cy} ${cx},${cy + 21} ${cx - 42},${cy}`;
-  const left = `${cx - 42},${cy} ${cx},${cy + 21} ${cx},${cy + 35} ${cx - 42},${cy + 14}`;
-  const right = `${cx},${cy + 21} ${cx + 42},${cy} ${cx + 42},${cy + 14} ${cx},${cy + 35}`;
-
+// Authentic Minecraft Oak Tree at (0, 1)
+function renderAuthenticOakTree(cx, cy) {
   return `
-  <!-- Grass Tile (${row},${col}) -->
-  <g data-tile="${row},${col}">
-    <polygon points="${left}" fill="#866043"/>
-    <polygon points="${right}" fill="#694B32"/>
-    <polygon points="${top}" fill="#5B8731"/>
-    <!-- Top Grass Detail -->
-    <polygon points="${cx},${cy - 12} ${cx + 20},${cy - 2} ${cx},${cy + 8} ${cx - 20},${cy - 2}" fill="#6FA33C" opacity="0.75"/>
-    <!-- Overhang Green Fringe -->
-    <polygon points="${cx - 42},${cy} ${cx},${cy + 21} ${cx},${cy + 25} ${cx - 42},${cy + 4}" fill="#4C7026"/>
-    <polygon points="${cx},${cy + 21} ${cx + 42},${cy} ${cx + 42},${cy + 4} ${cx},${cy + 25}" fill="#3D5A1E"/>
+  <!-- Authentic Skyblock Oak Tree -->
+  <g class="oak-tree">
+    <!-- Tree Trunk (4 blocks high) -->
+    <polygon points="${cx - 10},${cy - 18} ${cx + 4},${cy - 10} ${cx + 4},${cy + 10} ${cx - 10},${cy + 2}" fill="#6B5130"/>
+    <polygon points="${cx + 4},${cy - 10} ${cx + 18},${cy - 18} ${cx + 18},${cy + 2} ${cx + 4},${cy + 10}" fill="#4F3B23"/>
+
+    <!-- Trunk Bark Grain Lines -->
+    <line x1="${cx - 3}" y1="${cy - 14}" x2="${cx - 3}" y2="${cy + 6}" stroke="#543E23" stroke-width="1.2"/>
+    <line x1="${cx + 11}" y1="${cy - 14}" x2="${cx + 11}" y2="${cy + 6}" stroke="#3D2E18" stroke-width="1.2"/>
+
+    <!-- Cubic Foliage - Lower Big Cluster -->
+    <polygon points="${cx},${cy - 72} ${cx + 44},${cy - 50} ${cx},${cy - 28} ${cx - 44},${cy - 50}" fill="#4C802E"/>
+    <polygon points="${cx - 44},${cy - 50} ${cx},${cy - 28} ${cx},${cy - 4} ${cx - 44},${cy - 26}" fill="#386420"/>
+    <polygon points="${cx},${cy - 28} ${cx + 44},${cy - 50} ${cx + 44},${cy - 26} ${cx},${cy - 4}" fill="#264714"/>
+
+    <!-- Cubic Foliage - Top Crown Cluster -->
+    <polygon points="${cx},${cy - 96} ${cx + 28},${cy - 82} ${cx},${cy - 68} ${cx - 28},${cy - 82}" fill="#5FA33A"/>
+    <polygon points="${cx - 28},${cy - 82} ${cx},${cy - 68} ${cx},${cy - 48} ${cx - 28},${cy - 62}" fill="#4C802E"/>
+    <polygon points="${cx},${cy - 68} ${cx + 28},${cy - 82} ${cx + 28},${cy - 62} ${cx},${cy - 48}" fill="#386420"/>
   </g>`;
 }
 
-// 3D Void Bridge Voxel Block
-function renderBridgeVoxel(cx, cy, type, builder, emoji, row, col, isVip) {
-  const h = 32;
-  const roofY = cy - h;
-
-  const palettes = {
-    oak_planks: { top: '#B88746', left: '#9E6F33', right: '#7D5422', border: '#FFAA00', txt: '#FFAA00', emoji: '🪵' },
-    cobblestone: { top: '#999999', left: '#757575', right: '#595959', border: '#AAAAAA', txt: '#FFFFFF', emoji: '🪨' },
-    diamond: { top: '#4DEDDE', left: '#2CBAA8', right: '#1A8F81', border: '#00FFFF', txt: '#00FFFF', emoji: '💎' }
-  };
-
-  const pal = palettes[type] || palettes.oak_planks;
-  const left = `${cx - 42},${roofY} ${cx},${roofY + 21} ${cx},${cy + 21} ${cx - 42},${cy}`;
-  const right = `${cx},${roofY + 21} ${cx + 42},${roofY} ${cx + 42},${cy} ${cx},${cy + 21}`;
-  const roof = `${cx},${roofY - 21} ${cx + 42},${roofY} ${cx},${roofY + 21} ${cx - 42},${roofY}`;
-
-  const tagText = `${pal.emoji} @${escapeXml(builder || 'Player')}`;
-  const tagWidth = Math.max(tagText.length * 7.5 + 16, 76);
-
-  return `
-  <!-- Bridge Block at (${row},${col}) -->
-  <g class="bridge-block" data-tile="${row},${col}">
-    <polygon points="${left}" fill="${pal.left}"/>
-    <polygon points="${right}" fill="${pal.right}"/>
-    <polygon points="${roof}" fill="${pal.top}"/>
-
-    <!-- Player Tag -->
-    <g transform="translate(${cx}, ${roofY - 24})">
-      <rect x="${-tagWidth / 2}" y="-9" width="${tagWidth}" height="18" rx="3" fill="#000000" opacity="0.9" stroke="${isVip ? '#00FFFF' : pal.border}" stroke-width="1.5"/>
-      <text x="0" y="4" text-anchor="middle" fill="${isVip ? '#00FFFF' : pal.txt}" class="font-mc" font-size="7.5" font-weight="700">${tagText}</text>
-    </g>
-  </g>`;
-}
-
-// Solitary Skyblock Oak Tree at [0, 2]
-function renderSkyblockTree(cx, cy, hp = 4, maxHp = 4) {
-  return `
-  <!-- Solitary Oak Tree [0, 2] -->
-  <g class="skyblock-tree">
-    <!-- Trunk -->
-    <polygon points="${cx - 10},${cy - 20} ${cx + 4},${cy - 12} ${cx + 4},${cy + 6} ${cx - 10},${cy - 2}" fill="#6B5130"/>
-    <polygon points="${cx + 4},${cy - 12} ${cx + 18},${cy - 20} ${cx + 18},${cy - 2} ${cx + 4},${cy + 6}" fill="#4F3B23"/>
-
-    <!-- Cubic Foliage Lower Layer -->
-    <polygon points="${cx},${cy - 70} ${cx + 38},${cy - 50} ${cx},${cy - 30} ${cx - 38},${cy - 50}" fill="#4C802E"/>
-    <polygon points="${cx - 38},${cy - 50} ${cx},${cy - 30} ${cx},${cy - 10} ${cx - 38},${cy - 30}" fill="#386420"/>
-    <polygon points="${cx},${cy - 30} ${cx + 38},${cy - 50} ${cx + 38},${cy - 30} ${cx},${cy - 10}" fill="#264714"/>
-
-    <!-- Cubic Foliage Top Cube -->
-    <polygon points="${cx},${cy - 90} ${cx + 24},${cy - 78} ${cx},${cy - 66} ${cx - 24},${cy - 78}" fill="#5FA33A"/>
-    <polygon points="${cx - 24},${cy - 78} ${cx},${cy - 66} ${cx},${cy - 50} ${cx - 24},${cy - 62}" fill="#4C802E"/>
-    <polygon points="${cx},${cy - 66} ${cx + 24},${cy - 78} ${cx + 24},${cy - 62} ${cx},${cy - 50}" fill="#386420"/>
-
-    <!-- Tree HP Badge -->
-    <g transform="translate(${cx}, ${cy - 104})">
-      <rect x="-48" y="-9" width="96" height="18" rx="3" fill="#000000" opacity="0.9" stroke="#55FF55" stroke-width="1.5"/>
-      <text x="0" y="4" text-anchor="middle" fill="#55FF55" class="font-mc" font-size="7.5">🌲 TREE (${hp}/${maxHp} HP)</text>
-    </g>
-  </g>`;
-}
-
-// Starter Wooden Chest at [1, 2]
-function renderStarterChest(cx, cy) {
+// Authentic Minecraft Wooden Starter Chest at (5, 5)
+function renderAuthenticChest(cx, cy) {
   const roofY = cy - 24;
   return `
-  <!-- Starter Chest [1, 2] -->
+  <!-- Starter Wooden Chest -->
   <g class="starter-chest">
     <!-- Box Body -->
-    <polygon points="${cx - 16},${roofY} ${cx},${roofY + 8} ${cx},${cy + 4} ${cx - 16},${cy - 4}" fill="#7D5127"/>
-    <polygon points="${cx},${roofY + 8} ${cx + 16},${roofY} ${cx + 16},${cy - 4} ${cx},${cy + 4}" fill="#5A3A1C"/>
-    <polygon points="${cx},${roofY - 8} ${cx + 16},${roofY} ${cx},${roofY + 8} ${cx - 16},${roofY}" fill="#9E6732"/>
-    <!-- Iron Latch -->
-    <rect x="${cx - 2}" y="${roofY + 4}" width="4" height="6" fill="#D6D6D6" stroke="#000000" stroke-width="0.8"/>
+    <polygon points="${cx - 16},${roofY} ${cx},${roofY + 8} ${cx},${cy + 6} ${cx - 16},${cy - 2}" fill="#7D5127" stroke="#4A2F14" stroke-width="1"/>
+    <polygon points="${cx},${roofY + 8} ${cx + 16},${roofY} ${cx + 16},${cy - 2} ${cx},${cy + 6}" fill="#5A3A1C" stroke="#3D2611" stroke-width="1"/>
+    <polygon points="${cx},${roofY - 8} ${cx + 16},${roofY} ${cx},${roofY + 8} ${cx - 16},${roofY}" fill="#9E6732" stroke="#4A2F14" stroke-width="1"/>
 
-    <!-- Chest Tag -->
-    <g transform="translate(${cx}, ${roofY - 18})">
-      <rect x="-38" y="-8" width="76" height="16" rx="2" fill="#000000" opacity="0.85" stroke="#FFAA00" stroke-width="1.2"/>
-      <text x="0" y="4" text-anchor="middle" fill="#FFAA00" class="font-mc" font-size="7">📦 CHEST</text>
-    </g>
+    <!-- Black Chest Trim -->
+    <line x1="${cx - 16}" y1="${roofY + 3}" x2="${cx}" y2="${roofY + 11}" stroke="#1E1E1E" stroke-width="1.2"/>
+    <line x1="${cx}" y1="${roofY + 11}" x2="${cx + 16}" y2="${roofY + 3}" stroke="#1E1E1E" stroke-width="1.2"/>
+
+    <!-- Front Iron Latch -->
+    <rect x="${cx - 2.5}" y="${roofY + 5}" width="5" height="7" rx="1" fill="#E0E0E0" stroke="#000000" stroke-width="0.8"/>
   </g>`;
 }
 
-// Cobblestone Generator at [1, 3]
-function renderCobblestoneGenerator(cx, cy) {
-  const roofY = cy - 22;
+// Steve Solo Survivor Rig
+function renderSoloSteve(cx, cy) {
   return `
-  <!-- Cobblestone Generator [1, 3] -->
-  <g class="cobblestone-gen">
-    <!-- Water block (Left) -->
-    <polygon points="${cx - 28},${roofY + 6} ${cx - 10},${roofY + 15} ${cx - 10},${cy + 5} ${cx - 28},${cy - 4}" fill="#2E6BA8"/>
-    <polygon points="${cx - 10},${roofY + 15} ${cx - 10},${roofY + 5} ${cx - 28},${roofY - 4} ${cx - 28},${roofY + 6}" fill="#4A8CE0"/>
-
-    <!-- Lava block (Right) -->
-    <polygon points="${cx + 10},${roofY + 15} ${cx + 28},${roofY + 6} ${cx + 28},${cy - 4} ${cx + 10},${cy + 5}" fill="url(#lavaGrad)"/>
-    <polygon points="${cx + 10},${roofY + 15} ${cx + 10},${roofY + 5} ${cx + 28},${roofY - 4} ${cx + 28},${roofY + 6}" fill="#FF6600"/>
-
-    <!-- Generated Cobblestone (Center) -->
-    <polygon points="${cx - 10},${roofY + 5} ${cx},${roofY + 10} ${cx},${cy + 8} ${cx - 10},${cy + 3}" fill="#6E6E6E"/>
-    <polygon points="${cx},${roofY + 10} ${cx + 10},${roofY + 5} ${cx + 10},${cy + 3} ${cx},${cy + 8}" fill="#545454"/>
-    <polygon points="${cx},${roofY} ${cx + 10},${roofY + 5} ${cx},${roofY + 10} ${cx - 10},${roofY + 5}" fill="#8A8A8A"/>
-
-    <!-- Rising Steam Particle -->
-    <circle cx="${cx}" cy="${roofY - 4}" r="2.5" fill="#FFFFFF" opacity="0.75" class="steam-particle"/>
-
-    <!-- Generator Tag -->
-    <g transform="translate(${cx}, ${roofY - 18})">
-      <rect x="-42" y="-8" width="84" height="16" rx="2" fill="#000000" opacity="0.85" stroke="#FFFFFF" stroke-width="1.2"/>
-      <text x="0" y="4" text-anchor="middle" fill="#FFFFFF" class="font-mc" font-size="6.5">⚡ COBBLE GEN</text>
-    </g>
-  </g>`;
-}
-
-// 3D Torch
-function renderTorch(cx, cy) {
-  return `
-  <!-- Torch at (${cx},${cy}) -->
-  <g class="placed-torch">
-    <!-- Stick -->
-    <line x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy - 22}" stroke="#6B4724" stroke-width="3" stroke-linecap="square"/>
-    <!-- Yellow Flame Glow -->
-    <circle cx="${cx}" cy="${cy - 25}" r="5" fill="#FFCC00" opacity="0.9"/>
-    <circle cx="${cx}" cy="${cy - 25}" r="9" fill="#FFAA00" opacity="0.35"/>
-  </g>`;
-}
-
-// 3D Crafting Table
-function renderCraftingTable(cx, cy, builder) {
-  const roofY = cy - 28;
-  return `
-  <!-- Crafting Table -->
-  <g class="crafting-table">
-    <polygon points="${cx - 20},${roofY} ${cx},${roofY + 10} ${cx},${cy + 5} ${cx - 20},${cy - 5}" fill="#805329"/>
-    <polygon points="${cx},${roofY + 10} ${cx + 20},${roofY} ${cx + 20},${cy - 5} ${cx},${cy + 5}" fill="#5E3C1B"/>
-    <polygon points="${cx},${roofY - 10} ${cx + 20},${roofY} ${cx},${roofY + 10} ${cx - 20},${roofY}" fill="#A67038"/>
-    <!-- Grid markings on top -->
-    <line x1="${cx - 7}" y1="${roofY - 3}" x2="${cx + 7}" y2="${roofY + 4}" stroke="#4D2F12" stroke-width="1"/>
-  </g>`;
-}
-
-// 3D Furnace
-function renderFurnace(cx, cy, builder) {
-  const roofY = cy - 28;
-  return `
-  <!-- Furnace -->
-  <g class="furnace">
-    <polygon points="${cx - 20},${roofY} ${cx},${roofY + 10} ${cx},${cy + 5} ${cx - 20},${cy - 5}" fill="#545454"/>
-    <polygon points="${cx},${roofY + 10} ${cx + 20},${roofY} ${cx + 20},${cy - 5} ${cx},${cy + 5}" fill="#404040"/>
-    <polygon points="${cx},${roofY - 10} ${cx + 20},${roofY} ${cx},${roofY + 10} ${cx - 20},${roofY}" fill="#757575"/>
-    <!-- Glowing furnace fire opening -->
-    <rect x="${cx - 12}" y="${roofY + 8}" width="8" height="6" fill="#FF5500"/>
-  </g>`;
-}
-
-// 3D Steve Rig
-function renderMinecraftSteve(cx, cy, lastMover) {
-  return `
-  <!-- Steve Rig -->
+  <!-- Steve (Solo Survivor) -->
   <g class="steve-actor" data-character="steve">
-    <ellipse cx="${cx}" cy="${cy + 4}" rx="22" ry="10" fill="#000000" opacity="0.4"/>
+    <!-- Contact Shadow -->
+    <ellipse cx="${cx}" cy="${cy + 4}" rx="20" ry="9" fill="#000000" opacity="0.4"/>
 
     <!-- Boots -->
-    <polygon points="${cx - 12},${cy - 2} ${cx - 4},${cy + 2} ${cx - 4},${cy - 9} ${cx - 12},${cy - 13}" fill="#3A3A3A"/>
-    <polygon points="${cx - 4},${cy + 2} ${cx + 4},${cy - 2} ${cx + 4},${cy - 13} ${cx - 4},${cy - 9}" fill="#242424"/>
-    <polygon points="${cx + 5},${cy + 2} ${cx + 13},${cy - 2} ${cx + 13},${cy - 13} ${cx + 5},${cy - 9}" fill="#3A3A3A"/>
-    <polygon points="${cx + 13},${cy - 2} ${cx + 20},${cy - 5} ${cx + 20},${cy - 16} ${cx + 13},${cy - 13}" fill="#242424"/>
+    <polygon points="${cx - 10},${cy - 2} ${cx - 3},${cy + 2} ${cx - 3},${cy - 8} ${cx - 10},${cy - 12}" fill="#3A3A3A"/>
+    <polygon points="${cx - 3},${cy + 2} ${cx + 3},${cy - 2} ${cx + 3},${cy - 12} ${cx - 3},${cy - 8}" fill="#242424"/>
+    <polygon points="${cx + 4},${cy + 2} ${cx + 11},${cy - 2} ${cx + 11},${cy - 12} ${cx + 4},${cy - 8}" fill="#3A3A3A"/>
+    <polygon points="${cx + 11},${cy - 2} ${cx + 17},${cy - 5} ${cx + 17},${cy - 15} ${cx + 11},${cy - 12}" fill="#242424"/>
 
-    <!-- Denim Jeans -->
-    <polygon points="${cx - 11},${cy - 12} ${cx - 1},${cy - 7} ${cx - 1},${cy - 28} ${cx - 11},${cy - 33}" fill="#2B3CA3"/>
-    <polygon points="${cx + 3},${cy - 7} ${cx + 13},${cy - 12} ${cx + 13},${cy - 33} ${cx + 3},${cy - 28}" fill="#1B266B"/>
+    <!-- Blue Denim Pants -->
+    <polygon points="${cx - 9},${cy - 11} ${cx - 1},${cy - 7} ${cx - 1},${cy - 26} ${cx - 9},${cy - 30}" fill="#2B3CA3"/>
+    <polygon points="${cx + 2},${cy - 7} ${cx + 11},${cy - 11} ${cx + 11},${cy - 30} ${cx + 2},${cy - 26}" fill="#1B266B"/>
 
     <!-- Cyan Shirt / Torso -->
-    <polygon points="${cx},${cy - 58} ${cx + 18},${cy - 49} ${cx},${cy - 40} ${cx - 18},${cy - 49}" fill="#00BDBD"/>
-    <polygon points="${cx - 18},${cy - 49} ${cx},${cy - 40} ${cx},${cy - 25} ${cx - 18},${cy - 34}" fill="#008E8E"/>
-    <polygon points="${cx},${cy - 40} ${cx + 18},${cy - 49} ${cx + 18},${cy - 34} ${cx},${cy - 25}" fill="#006363"/>
+    <polygon points="${cx},${cy - 54} ${cx + 16},${cy - 46} ${cx},${cy - 38} ${cx - 16},${cy - 46}" fill="#00BDBD"/>
+    <polygon points="${cx - 16},${cy - 46} ${cx},${cy - 38} ${cx},${cy - 24} ${cx - 16},${cy - 32}" fill="#008E8E"/>
+    <polygon points="${cx},${cy - 38} ${cx + 16},${cy - 46} ${cx + 16},${cy - 32} ${cx},${cy - 24}" fill="#006363"/>
 
     <!-- Cubic Head -->
-    <polygon points="${cx},${cy - 78} ${cx + 14},${cy - 71} ${cx},${cy - 64} ${cx - 14},${cy - 71}" fill="#4A3018"/>
-    <polygon points="${cx - 14},${cy - 71} ${cx},${cy - 64} ${cx},${cy - 47} ${cx - 14},${cy - 54}" fill="#BD8B72"/>
-    <polygon points="${cx - 14},${cy - 71} ${cx},${cy - 64} ${cx},${cy - 60} ${cx - 14},${cy - 67}" fill="#4A3018"/>
-    <polygon points="${cx},${cy - 64} ${cx + 14},${cy - 71} ${cx + 14},${cy - 54} ${cx},${cy - 47}" fill="#996D57"/>
+    <polygon points="${cx},${cy - 74} ${cx + 13},${cy - 68} ${cx},${cy - 62} ${cx - 13},${cy - 68}" fill="#4A3018"/>
+    <polygon points="${cx - 13},${cy - 68} ${cx},${cy - 62} ${cx},${cy - 45} ${cx - 13},${cy - 51}" fill="#BD8B72"/>
+    <polygon points="${cx - 13},${cy - 68} ${cx},${cy - 62} ${cx},${cy - 58} ${cx - 13},${cy - 64}" fill="#4A3018"/>
+    <polygon points="${cx},${cy - 62} ${cx + 13},${cy - 68} ${cx + 13},${cy - 51} ${cx},${cy - 45}" fill="#996D57"/>
 
-    <!-- Eyes -->
-    <rect x="${cx - 11}" y="${cy - 60}" width="4" height="3" fill="#FFFFFF"/>
-    <rect x="${cx - 7}" y="${cy - 60}" width="3" height="3" fill="#2B3CA3"/>
+    <!-- Pixel Eyes -->
+    <rect x="${cx - 10}" y="${cy - 57}" width="4" height="3" fill="#FFFFFF"/>
+    <rect x="${cx - 6}" y="${cy - 57}" width="3" height="3" fill="#2B3CA3"/>
 
     <!-- Left Arm -->
-    <polygon points="${cx - 20},${cy - 48} ${cx - 14},${cy - 45} ${cx - 14},${cy - 28} ${cx - 20},${cy - 31}" fill="#008E8E"/>
-    <polygon points="${cx - 20},${cy - 31} ${cx - 14},${cy - 28} ${cx - 14},${cy - 20} ${cx - 20},${cy - 23}" fill="#BD8B72"/>
+    <polygon points="${cx - 18},${cy - 45} ${cx - 13},${cy - 42} ${cx - 13},${cy - 26} ${cx - 18},${cy - 29}" fill="#008E8E"/>
+    <polygon points="${cx - 18},${cy - 29} ${cx - 13},${cy - 26} ${cx - 13},${cy - 18} ${cx - 18},${cy - 21}" fill="#BD8B72"/>
 
-    <!-- Right Arm swinging Diamond Pickaxe -->
+    <!-- Right Arm with Diamond Pickaxe -->
     <g class="steve-arm">
-      <polygon points="${cx + 14},${cy - 45} ${cx + 20},${cy - 48} ${cx + 20},${cy - 31} ${cx + 14},${cy - 28}" fill="#006363"/>
+      <polygon points="${cx + 13},${cy - 42} ${cx + 18},${cy - 45} ${cx + 18},${cy - 29} ${cx + 13},${cy - 26}" fill="#006363"/>
       <!-- Wooden Handle -->
-      <line x1="${cx + 17}" y1="${cy - 26}" x2="${cx + 36}" y2="${cy - 48}" stroke="#866043" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="${cx + 15}" y1="${cy - 24}" x2="${cx + 34}" y2="${cy - 45}" stroke="#866043" stroke-width="3" stroke-linecap="round"/>
       <!-- Diamond Pickaxe Head -->
-      <polygon points="${cx + 29},${cy - 54} ${cx + 41},${cy - 44} ${cx + 39},${cy - 41} ${cx + 27},${cy - 51}" fill="url(#diamondGleam)"/>
-    </g>
-
-    <!-- Floating XP Orbs -->
-    <circle cx="${cx + 32}" cy="${cy - 62}" r="4" fill="#55FF55" class="xp-orb"/>
-    <circle cx="${cx - 24}" cy="${cy - 48}" r="3.5" fill="#FFFF55" class="xp-orb" style="animation-delay: 0.75s;"/>
-
-    <!-- High-Contrast Tag -->
-    <g transform="translate(${cx}, ${cy - 94})">
-      <rect x="-64" y="-11" width="128" height="22" rx="3" fill="#000000" stroke="#55FF55" stroke-width="1.8"/>
-      <text x="0" y="5" text-anchor="middle" fill="#FFFFFF" class="font-mc" font-size="8.5" font-weight="700">Steve @${escapeXml(lastMover || 'mo-farooq')}</text>
+      <polygon points="${cx + 27},${cy - 50} ${cx + 39},${cy - 41} ${cx + 37},${cy - 38} ${cx + 25},${cy - 47}" fill="url(#diamondPick)"/>
     </g>
   </g>`;
-}
-
-// 3D Alex Rig
-function renderMinecraftAlex(cx, cy) {
-  return `
-  <!-- Alex Rig -->
-  <g class="alex-actor" data-character="alex">
-    <ellipse cx="${cx}" cy="${cy + 4}" rx="20" ry="9" fill="#000000" opacity="0.35"/>
-
-    <!-- Alex Boots -->
-    <polygon points="${cx - 10},${cy - 1} ${cx - 3},${cy + 2} ${cx - 3},${cy - 8} ${cx - 10},${cy - 11}" fill="#3A3A3A"/>
-    <polygon points="${cx + 3},${cy + 2} ${cx + 10},${cy - 1} ${cx + 10},${cy - 11} ${cx + 3},${cy - 8}" fill="#242424"/>
-
-    <!-- Alex Brown Pants -->
-    <polygon points="${cx - 9},${cy - 10} ${cx},${cy - 6} ${cx},${cy - 26} ${cx - 9},${cy - 30}" fill="#543825"/>
-    <polygon points="${cx + 1},${cy - 6} ${cx + 10},${cy - 10} ${cx + 10},${cy - 30} ${cx + 1},${cy - 26}" fill="#3D281A"/>
-
-    <!-- Alex Green Tunic -->
-    <polygon points="${cx},${cy - 54} ${cx + 16},${cy - 46} ${cx},${cy - 38} ${cx - 16},${cy - 46}" fill="#5B8731"/>
-    <polygon points="${cx - 16},${cy - 46} ${cx},${cy - 38} ${cx},${cy - 23} ${cx - 16},${cy - 31}" fill="#466826"/>
-    <polygon points="${cx},${cy - 38} ${cx + 16},${cy - 46} ${cx + 16},${cy - 31} ${cx},${cy - 23}" fill="#334C1B"/>
-
-    <!-- Alex Ginger Hair & Head -->
-    <polygon points="${cx},${cy - 74} ${cx + 12},${cy - 68} ${cx},${cy - 62} ${cx - 12},${cy - 68}" fill="#BE5C28"/>
-    <polygon points="${cx - 12},${cy - 68} ${cx},${cy - 62} ${cx},${cy - 45} ${cx - 12},${cy - 51}" fill="#BD8B72"/>
-    <polygon points="${cx - 12},${cy - 68} ${cx},${cy - 62} ${cx},${cy - 58} ${cx - 12},${cy - 64}" fill="#BE5C28"/>
-    <polygon points="${cx},${cy - 62} ${cx + 12},${cy - 68} ${cx + 12},${cy - 51} ${cx},${cy - 45}" fill="#996D57"/>
-
-    <!-- Alex Eyes -->
-    <rect x="${cx - 10}" y="${cy - 57}" width="4" height="3" fill="#FFFFFF"/>
-    <rect x="${cx - 6}" y="${cy - 57}" width="3" height="3" fill="#388731"/>
-
-    <!-- Alex Holding Iron Sword -->
-    <line x1="${cx + 13}" y1="${cy - 28}" x2="${cx + 28}" y2="${cy - 44}" stroke="#E0E0E0" stroke-width="3.5" stroke-linecap="round"/>
-    <polygon points="${cx + 26},${cy - 48} ${cx + 31},${cy - 42} ${cx + 25},${cy - 42}" fill="#FFFFFF"/>
-
-    <!-- High-Contrast Tag -->
-    <g transform="translate(${cx}, ${cy - 90})">
-      <rect x="-48" y="-11" width="96" height="22" rx="3" fill="#000000" stroke="#FFAA00" stroke-width="1.5"/>
-      <text x="0" y="5" text-anchor="middle" fill="#FFAA00" class="font-mc" font-size="8.5" font-weight="700">Alex @Co-Op</text>
-    </g>
-  </g>`;
-}
-
-function escapeXml(unsafe) {
-  return String(unsafe || '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
 }
 
 // Standalone execution
@@ -580,7 +385,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     const state = JSON.parse(rawData);
     const svgContent = renderWorldSvg(state);
     fs.writeFileSync(SVG_OUTPUT, svgContent, 'utf-8');
-    console.log(`[SVG Engine] Successfully rendered Minecraft Skyblock World to: ${SVG_OUTPUT}`);
+    console.log(`[SVG Engine] Successfully rendered Minecraft Skyblock to: ${SVG_OUTPUT}`);
   } catch (err) {
     console.error(`[SVG Engine Error]:`, err);
     process.exit(1);
