@@ -20,10 +20,9 @@ function isWalkable(r, c, state) {
 }
 
 // Generate standard GitHub Issue URL with template and clean encoding
-function createIssueUrl(repoOwner, repoName, title, body) {
+function createIssueUrl(repoOwner, repoName, title) {
   const encTitle = encodeURIComponent(title);
-  const encBody = encodeURIComponent(body);
-  return `https://github.com/${repoOwner}/${repoName}/issues/new?template=skyblock-move.md&title=${encTitle}&body=${encBody}`;
+  return `https://github.com/${repoOwner}/${repoName}/issues/new?template=skyblock-move.md&title=${encTitle}`;
 }
 
 async function main() {
@@ -305,6 +304,8 @@ export function generateGamepadReadme(state, repoOwner = 'mo-farooq', repoName =
 
 ## 🎮 Dynamic Gamepad Controller: Make Your Move!
 *Steve is at **Tile [${steve.row}, ${steve.col}]**. The camera is locked to Steve, and buttons update in real-time!*
+
+> 💡 **How to Play:** Click any button below &rarr; click the green **"Create"** button on GitHub &rarr; Steve moves & the island updates in ~15s!
 
 <table>
   <tr>

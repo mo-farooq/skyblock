@@ -9,6 +9,8 @@
 ## 🎮 Dynamic Gamepad Controller: Make Your Move!
 *Steve is at **Tile [3, 2]**. The camera is locked to Steve, and buttons update in real-time!*
 
+> 💡 **How to Play:** Click any button below &rarr; click the green **"Create"** button on GitHub &rarr; Steve moves & the island updates in ~15s!
+
 <table>
   <tr>
     <th align="center" colspan="3">🕹️ D-PAD MOVEMENT</th>
@@ -18,7 +20,7 @@
   <tr>
     <td></td>
     <td align="center">
-      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Move%3A%20Step%20Forward&body=Moving%20Steve%20Forward%20on%20the%20Skyblock%20Island."><img src="https://img.shields.io/badge/⬆️_FORWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Forward"/></a>
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Move%3A%20Step%20Forward"><img src="https://img.shields.io/badge/⬆️_FORWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Forward"/></a>
     </td>
     <td></td>
     <td></td>
@@ -28,20 +30,20 @@
   </tr>
   <tr>
     <td align="center">
-      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Move%3A%20Step%20Left&body=Moving%20Steve%20Left%20on%20the%20Skyblock%20Island."><img src="https://img.shields.io/badge/⬅️_LEFT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Left"/></a>
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Move%3A%20Step%20Left"><img src="https://img.shields.io/badge/⬅️_LEFT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Left"/></a>
     </td>
     <td align="center">
       <img src="https://img.shields.io/badge/🕹️_STEVE-000000?style=for-the-badge&logoColor=white" height="38"/>
     </td>
     <td align="center">
-      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Move%3A%20Step%20Right&body=Moving%20Steve%20Right%20on%20the%20Skyblock%20Island."><img src="https://img.shields.io/badge/➡️_RIGHT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Right"/></a>
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Move%3A%20Step%20Right"><img src="https://img.shields.io/badge/➡️_RIGHT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Right"/></a>
     </td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td align="center">
-      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Move%3A%20Step%20Backward&body=Moving%20Steve%20Backward%20on%20the%20Skyblock%20Island."><img src="https://img.shields.io/badge/⬇️_BACKWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Backward"/></a>
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Move%3A%20Step%20Backward"><img src="https://img.shields.io/badge/⬇️_BACKWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Backward"/></a>
     </td>
     <td></td>
     <td></td>
