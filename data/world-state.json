@@ -2,14 +2,14 @@
   "gridSize": 6,
   "mayor": {
     "name": "Mayor Pixel-8 (AI)",
-    "mood": "Resourceful",
-    "announcement": "By municipal decree, @mo-farooq's \"Quantum Croissant Bakery\" has been officially consecrated into our isometric skyline! Mayor Pixel-8 hints that starring the repository instantly unlocks royal gold permits!"
+    "mood": "Adventurous",
+    "announcement": "Achievement Unlocked: @CommunityBuilder placed \"Village Bakery\" onto the island! Steve notes that starring the repository upgrades your next craft to a rare Diamond Block!"
   },
   "stats": {
-    "totalBuildings": 6,
-    "lastBuilder": "mo-farooq",
-    "lastAction": "Built Quantum Croissant Bakery",
-    "updatedAt": "2026-11-05T22:18:08.313Z"
+    "totalBuildings": 7,
+    "lastBuilder": "CommunityBuilder",
+    "lastAction": "Built Village Bakery",
+    "updatedAt": "2026-11-06T19:46:14.008Z"
   },
   "cells": [
     {
@@ -46,7 +46,12 @@
     {
       "row": 0,
       "col": 3,
-      "type": "empty"
+      "type": "bakery",
+      "name": "Village Bakery",
+      "builder": "CommunityBuilder",
+      "emoji": "🍞",
+      "level": 1,
+      "builtAt": "2026-11-06T19:46:13.385Z"
     },
     {
       "row": 0,

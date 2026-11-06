@@ -221,56 +221,44 @@ function sanitizeType(type) {
 function fallbackMayorDecision(title, username, hasStarred) {
   const lower = title.toLowerCase();
 
-  let buildingType = 'house';
-  let buildingName = 'Cosmic Haven';
-  let emoji = '🏠';
+  let buildingType = 'diamond';
+  let buildingName = 'Diamond Ore Block';
+  let emoji = '💎';
 
-  if (lower.includes('bakery') || lower.includes('croissant') || lower.includes('bread') || lower.includes('cake')) {
+  if (lower.includes('diamond') || lower.includes('mine') || lower.includes('ore') || lower.includes('gem')) {
+    buildingType = 'diamond';
+    buildingName = 'Diamond Ore Cache';
+    emoji = '💎';
+  } else if (lower.includes('castle') || lower.includes('fort') || lower.includes('tower') || lower.includes('stone')) {
+    buildingType = 'castle';
+    buildingName = 'Cobblestone Fort';
+    emoji = '🏰';
+  } else if (lower.includes('bakery') || lower.includes('bread') || lower.includes('croissant') || lower.includes('cake')) {
     buildingType = 'bakery';
-    buildingName = 'Quantum Croissant Bakery';
-    emoji = '🥐';
-  } else if (lower.includes('cafe') || lower.includes('coffee') || lower.includes('tea') || lower.includes('espresso')) {
+    buildingName = 'Village Bakery';
+    emoji = '🍞';
+  } else if (lower.includes('cafe') || lower.includes('tavern') || lower.includes('coffee') || lower.includes('tea')) {
     buildingType = 'cafe';
-    buildingName = 'Cyber Roast Coffee Lab';
+    buildingName = 'Nether Cafe & Tavern';
     emoji = '☕';
-  } else if (lower.includes('arcade') || lower.includes('game') || lower.includes('retro') || lower.includes('pixel')) {
-    buildingType = 'arcade';
-    buildingName = 'Synthwave 8-Bit Arcade';
-    emoji = '🎮';
-  } else if (lower.includes('datacenter') || lower.includes('server') || lower.includes('cloud') || lower.includes('ai')) {
-    buildingType = 'datacenter';
-    buildingName = 'Quantum Neural Datacenter';
-    emoji = '🤖';
-  } else if (lower.includes('park') || lower.includes('tree') || lower.includes('garden') || lower.includes('zen')) {
-    buildingType = 'park';
-    buildingName = 'Emerald Pine Sanctuary';
+  } else if (lower.includes('tree') || lower.includes('oak') || lower.includes('park') || lower.includes('forest') || lower.includes('wood')) {
+    buildingType = 'tree';
+    buildingName = 'Oak Canopy Grove';
     emoji = '🌲';
-  } else if (lower.includes('rocket') || lower.includes('space') || lower.includes('launch') || lower.includes('orbit')) {
-    buildingType = 'spaceport';
-    buildingName = 'Apollo-X Orbital Launchpad';
-    emoji = '🚀';
-  } else if (lower.includes('tower') || lower.includes('skyscraper') || lower.includes('hq') || lower.includes('office')) {
-    buildingType = 'tower';
-    buildingName = 'Skyline Innovation Tower';
-    emoji = '🏢';
-  } else if (lower.includes('telescope') || lower.includes('star') || lower.includes('observatory') || lower.includes('sky')) {
-    buildingType = 'observatory';
-    buildingName = 'Deep Horizon Observatory';
-    emoji = '🔭';
   }
 
   const starSnippet = hasStarred
-    ? `As an esteemed VIP Stargazer, your cornerstone is cast in pure gold!`
-    : `Mayor Pixel-8 hints that starring the repository instantly unlocks royal gold permits!`;
+    ? `As a VIP Stargazer, your block was forged in pure Diamond & Netherite!`
+    : `Steve notes that starring the repository upgrades your next craft to a rare Diamond Block!`;
 
-  const proclamation = `By municipal decree, @${username}'s "${buildingName}" has been officially consecrated into our isometric skyline! ${starSnippet}`;
+  const proclamation = `Achievement Unlocked: @${username} placed "${buildingName}" onto the island! ${starSnippet}`;
 
   return {
     buildingType,
     buildingName,
     emoji,
     proclamation,
-    mayorMood: hasStarred ? 'Starstruck' : 'Resourceful'
+    mayorMood: hasStarred ? 'Diamond Rank' : 'Adventurous'
   };
 }
 
@@ -317,26 +305,26 @@ async function replyAndCloseIssue(context, mayorDecision, placement, hasStarred)
   const { repoOwner, repoName, issueNumber, username } = context;
   const token = process.env.GITHUB_TOKEN;
 
-  const commentBody = `### 🏛️ Municipal Bureau of the Community World
+  const commentBody = `### ⛏️ Minecraft Realm Notice
 
 Greetings **@${username}**! 
 
-The Town Hall has ratified your construction permit. Here is the official decree:
+Your voxel block has been placed into the world:
 
-> 🤖 **Mayor Pixel-8 Proclaims:**  
+> 🟩 **Realm Server Decree:**  
 > *"${mayorDecision.proclamation}"*
 
 ---
 
-#### 🗺️ Construction Coordinates:
-- **Plot:** \`[Row ${placement.row}, Col ${placement.col}]\`
-- **Building:** ${placement.emoji} **${placement.name}** (\`${placement.type}\`)
-- **VIP Golden Permit:** ${hasStarred ? '✅ Verified Stargazer' : '⭐ Star the repo to upgrade to Golden Foundation!'}
+#### 🗺️ Voxel Coordinates:
+- **Block:** ${placement.emoji} **${placement.name}** (\`${placement.type}\`)
+- **Coordinates:** \`[X: ${placement.row}, Z: ${placement.col}]\`
+- **VIP Perk:** ${hasStarred ? '💎 Diamond Miner Verified' : '⭐ Star the repo to unlock rare Diamond & Netherite blocks!'}
 
-Your building has now been rendered live into the **3D Isometric Community World**! Check out the updated skyline on the [Repository Profile](https://github.com/${repoOwner}/${repoName})!
+Your block is now rendered live on the **3D Minecraft Voxel Island**! Check out the updated realm on the [Repository Profile](https://github.com/${repoOwner}/${repoName})!
 
 ---
-*Automated via GitHub Actions community workflow by @${repoOwner}.*`;
+*Automated Minecraft Voxel Engine by @${repoOwner}.*`;
 
   try {
     // 1. Post Comment

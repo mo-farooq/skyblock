@@ -15,8 +15,8 @@ concurrency:
 jobs:
   build-and-update:
     runs-on: ubuntu-latest
-    # Only run if the issue title starts with "Build:" or "Construct:"
-    if: startsWith(github.event.issue.title, 'Build') || startsWith(github.event.issue.title, 'build') || startsWith(github.event.issue.title, 'Construct')
+    # Run if issue title starts with Build, Craft, Mine, or Construct
+    if: startsWith(github.event.issue.title, 'Build') || startsWith(github.event.issue.title, 'build') || startsWith(github.event.issue.title, 'Craft') || startsWith(github.event.issue.title, 'craft') || startsWith(github.event.issue.title, 'Mine') || startsWith(github.event.issue.title, 'Construct')
 
     steps:
       - name: Checkout Repository
