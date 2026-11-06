@@ -7,7 +7,7 @@
 <div align="center">
 
 ## 🎮 Dynamic Gamepad Controller: Make Your Move!
-*Steve is at **Tile [3, 2]**. The camera is locked to Steve, and buttons update in real-time!*
+*Steve is at **Tile [3, 1]**. The camera is locked to Steve, and buttons update in real-time!*
 
 > 💡 **How to Play:** Click any button below &rarr; click the green **"Create"** button on GitHub &rarr; Steve moves & the island updates in ~15s!
 

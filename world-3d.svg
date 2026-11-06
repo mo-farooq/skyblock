@@ -57,7 +57,7 @@
 
   <!-- Title & Mode -->
   <text x="84" y="38" fill="#FFFFFF" class="font-mc" font-size="13" font-weight="700">MINECRAFT SKYBLOCK</text>
-  <text x="84" y="55" fill="#55FF55" class="font-mc" font-size="9">CAMERA LOCKED ON STEVE • TILE [3, 2]</text>
+  <text x="84" y="55" fill="#55FF55" class="font-mc" font-size="9">CAMERA LOCKED ON STEVE • TILE [3, 1]</text>
 
   <!-- Hearts & Hunger Bars -->
   <g transform="translate(560, 28)">
@@ -92,14 +92,11 @@
 
       <!-- Bedrock Tip -->
       
-  <polygon points="404,300 444,300 424,316" fill="#2E2E2E"/>
-  <polygon points="404,300 424,316 414,306" fill="#1F1F1F"/>
+  <polygon points="440,318 480,318 460,334" fill="#2E2E2E"/>
+  <polygon points="440,318 460,334 450,324" fill="#1F1F1F"/>
 
       <!-- Front Cliff Faces (Dirt Extrusions) -->
       
-    <polygon points="280,240 316,258 316,302 280,284" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
-    <polygon points="280,240 316,258 316,264 298,258 280,246" fill="#4C7026"/>
-    <line x1="298" y1="262" x2="298" y2="276" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
     <polygon points="316,258 352,276 352,320 316,302" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
     <polygon points="316,258 352,276 352,282 334,276 316,264" fill="#4C7026"/>
     <line x1="334" y1="280" x2="334" y2="294" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
@@ -115,58 +112,55 @@
     <polygon points="460,330 496,348 496,392 460,374" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
     <polygon points="460,330 496,348 496,354 478,348 460,336" fill="#4C7026"/>
     <line x1="478" y1="352" x2="478" y2="366" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="496,348 532,366 532,410 496,392" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
+    <polygon points="496,348 532,366 532,372 514,366 496,354" fill="#4C7026"/>
+    <line x1="514" y1="370" x2="514" y2="384" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
       
-    <polygon points="568,204 604,186 604,230 568,248" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
-    <polygon points="568,204 604,186 604,192 586,204 568,210" fill="#3D5A1E"/>
-    <line x1="586" y1="208" x2="586" y2="222" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="532,222 568,204 568,248 532,266" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
-    <polygon points="532,222 568,204 568,210 550,222 532,228" fill="#3D5A1E"/>
-    <line x1="550" y1="226" x2="550" y2="240" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="496,240 532,222 532,266 496,284" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
-    <polygon points="496,240 532,222 532,228 514,240 496,246" fill="#3D5A1E"/>
-    <line x1="514" y1="244" x2="514" y2="258" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="568,312 604,294 604,338 568,356" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
-    <polygon points="568,312 604,294 604,300 586,312 568,318" fill="#3D5A1E"/>
-    <line x1="586" y1="316" x2="586" y2="330" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="532,330 568,312 568,356 532,374" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
-    <polygon points="532,330 568,312 568,318 550,330 532,336" fill="#3D5A1E"/>
-    <line x1="550" y1="334" x2="550" y2="348" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="496,348 532,330 532,374 496,392" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
-    <polygon points="496,348 532,330 532,336 514,348 496,354" fill="#3D5A1E"/>
-    <line x1="514" y1="352" x2="514" y2="366" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="604,222 640,204 640,248 604,266" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
+    <polygon points="604,222 640,204 640,210 622,222 604,228" fill="#3D5A1E"/>
+    <line x1="622" y1="226" x2="622" y2="240" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="568,240 604,222 604,266 568,284" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
+    <polygon points="568,240 604,222 604,228 586,240 568,246" fill="#3D5A1E"/>
+    <line x1="586" y1="244" x2="586" y2="258" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="532,258 568,240 568,284 532,302" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
+    <polygon points="532,258 568,240 568,246 550,258 532,264" fill="#3D5A1E"/>
+    <line x1="550" y1="262" x2="550" y2="276" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="604,330 640,312 640,356 604,374" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
+    <polygon points="604,330 640,312 640,318 622,330 604,336" fill="#3D5A1E"/>
+    <line x1="622" y1="334" x2="622" y2="348" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="568,348 604,330 604,374 568,392" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
+    <polygon points="568,348 604,330 604,336 586,348 568,354" fill="#3D5A1E"/>
+    <line x1="586" y1="352" x2="586" y2="366" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="532,366 568,348 568,392 532,410" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
+    <polygon points="532,366 568,348 568,354 550,366 532,372" fill="#3D5A1E"/>
+    <line x1="550" y1="370" x2="550" y2="384" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
 
       <!-- Top Grass Surface (27 Tiles) -->
       
-    <polygon points="496,132 532,150 496,168 460,150" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-    <polygon points="496,140 514,149 496,158 478,149" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="532,150 568,168 532,186 496,168" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
     <polygon points="532,158 550,167 532,176 514,167" fill="#6E9F3D" opacity="0.6"/>
-    <polygon points="460,150 496,168 460,186 424,168" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-    <polygon points="460,158 478,167 460,176 442,167" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="568,168 604,186 568,204 532,186" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
     <polygon points="568,176 586,185 568,194 550,185" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="496,168 532,186 496,204 460,186" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
     <polygon points="496,176 514,185 496,194 478,185" fill="#6E9F3D" opacity="0.6"/>
-    <polygon points="424,168 460,186 424,204 388,186" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-    <polygon points="424,176 442,185 424,194 406,185" fill="#6E9F3D" opacity="0.6"/>
+    <polygon points="604,186 640,204 604,222 568,204" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+    <polygon points="604,194 622,203 604,212 586,203" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="532,186 568,204 532,222 496,204" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
     <polygon points="532,194 550,203 532,212 514,203" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="460,186 496,204 460,222 424,204" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
     <polygon points="460,194 478,203 460,212 442,203" fill="#6E9F3D" opacity="0.6"/>
-    <polygon points="388,186 424,204 388,222 352,204" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-    <polygon points="388,194 406,203 388,212 370,203" fill="#6E9F3D" opacity="0.6"/>
+    <polygon points="568,204 604,222 568,240 532,222" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+    <polygon points="568,212 586,221 568,230 550,221" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="496,204 532,222 496,240 460,222" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
     <polygon points="496,212 514,221 496,230 478,221" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="424,204 460,222 424,240 388,222" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
     <polygon points="424,212 442,221 424,230 406,221" fill="#6E9F3D" opacity="0.6"/>
-    <polygon points="352,204 388,222 352,240 316,222" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-    <polygon points="352,212 370,221 352,230 334,221" fill="#6E9F3D" opacity="0.6"/>
+    <polygon points="532,222 568,240 532,258 496,240" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+    <polygon points="532,230 550,239 532,248 514,239" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="460,222 496,240 460,258 424,240" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
     <polygon points="460,230 478,239 460,248 442,239" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="388,222 424,240 388,258 352,240" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
     <polygon points="388,230 406,239 388,248 370,239" fill="#6E9F3D" opacity="0.6"/>
-    <polygon points="316,222 352,240 316,258 280,240" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-    <polygon points="316,230 334,239 316,248 298,239" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="496,240 532,258 496,276 460,258" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
     <polygon points="496,248 514,257 496,266 478,257" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="424,240 460,258 424,276 388,258" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
@@ -185,46 +179,52 @@
     <polygon points="496,284 514,293 496,302 478,293" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="424,276 460,294 424,312 388,294" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
     <polygon points="424,284 442,293 424,302 406,293" fill="#6E9F3D" opacity="0.6"/>
+    <polygon points="604,294 640,312 604,330 568,312" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+    <polygon points="604,302 622,311 604,320 586,311" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="532,294 568,312 532,330 496,312" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
     <polygon points="532,302 550,311 532,320 514,311" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="460,294 496,312 460,330 424,312" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
     <polygon points="460,302 478,311 460,320 442,311" fill="#6E9F3D" opacity="0.6"/>
+    <polygon points="568,312 604,330 568,348 532,330" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+    <polygon points="568,320 586,329 568,338 550,329" fill="#6E9F3D" opacity="0.6"/>
     <polygon points="496,312 532,330 496,348 460,330" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
     <polygon points="496,320 514,329 496,338 478,329" fill="#6E9F3D" opacity="0.6"/>
+    <polygon points="532,330 568,348 532,366 496,348" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+    <polygon points="532,338 550,347 532,356 514,347" fill="#6E9F3D" opacity="0.6"/>
 
       <!-- Solitary Oak Tree at (0, 1) -->
       
   <!-- Authentic Skyblock Oak Tree -->
   <g class="oak-tree">
     <!-- Tree Trunk -->
-    <polygon points="522,150 536,158 536,178 522,170" fill="#6B5130"/>
-    <polygon points="536,158 550,150 550,170 536,178" fill="#4F3B23"/>
+    <polygon points="558,168 572,176 572,196 558,188" fill="#6B5130"/>
+    <polygon points="572,176 586,168 586,188 572,196" fill="#4F3B23"/>
 
     <!-- Bark Lines -->
-    <line x1="529" y1="154" x2="529" y2="174" stroke="#543E23" stroke-width="1.2"/>
-    <line x1="543" y1="154" x2="543" y2="174" stroke="#3D2E18" stroke-width="1.2"/>
+    <line x1="565" y1="172" x2="565" y2="192" stroke="#543E23" stroke-width="1.2"/>
+    <line x1="579" y1="172" x2="579" y2="192" stroke="#3D2E18" stroke-width="1.2"/>
 
     <!-- Cubic Foliage Lower Cluster -->
-    <polygon points="532,96 576,118 532,140 488,118" fill="#4C802E"/>
-    <polygon points="488,118 532,140 532,164 488,142" fill="#386420"/>
-    <polygon points="532,140 576,118 576,142 532,164" fill="#264714"/>
+    <polygon points="568,114 612,136 568,158 524,136" fill="#4C802E"/>
+    <polygon points="524,136 568,158 568,182 524,160" fill="#386420"/>
+    <polygon points="568,158 612,136 612,160 568,182" fill="#264714"/>
 
     <!-- Cubic Foliage Crown -->
-    <polygon points="532,72 560,86 532,100 504,86" fill="#5FA33A"/>
-    <polygon points="504,86 532,100 532,120 504,106" fill="#4C802E"/>
-    <polygon points="532,100 560,86 560,106 532,120" fill="#386420"/>
+    <polygon points="568,90 596,104 568,118 540,104" fill="#5FA33A"/>
+    <polygon points="540,104 568,118 568,138 540,124" fill="#4C802E"/>
+    <polygon points="568,118 596,104 596,124 568,138" fill="#386420"/>
   </g>
 
       <!-- Starter Wooden Chest at (5, 5) -->
       
   <!-- Starter Wooden Chest -->
   <g class="starter-chest">
-    <polygon points="480,306 496,314 496,336 480,328" fill="#7D5127" stroke="#4A2F14" stroke-width="1"/>
-    <polygon points="496,314 512,306 512,328 496,336" fill="#5A3A1C" stroke="#3D2611" stroke-width="1"/>
-    <polygon points="496,298 512,306 496,314 480,306" fill="#9E6732" stroke="#4A2F14" stroke-width="1"/>
-    <line x1="480" y1="309" x2="496" y2="317" stroke="#1E1E1E" stroke-width="1.2"/>
-    <line x1="496" y1="317" x2="512" y2="309" stroke="#1E1E1E" stroke-width="1.2"/>
-    <rect x="493.5" y="311" width="5" height="7" rx="1" fill="#E0E0E0" stroke="#000000" stroke-width="0.8"/>
+    <polygon points="516,324 532,332 532,354 516,346" fill="#7D5127" stroke="#4A2F14" stroke-width="1"/>
+    <polygon points="532,332 548,324 548,346 532,354" fill="#5A3A1C" stroke="#3D2611" stroke-width="1"/>
+    <polygon points="532,316 548,324 532,332 516,324" fill="#9E6732" stroke="#4A2F14" stroke-width="1"/>
+    <line x1="516" y1="327" x2="532" y2="335" stroke="#1E1E1E" stroke-width="1.2"/>
+    <line x1="532" y1="335" x2="548" y2="327" stroke="#1E1E1E" stroke-width="1.2"/>
+    <rect x="529.5" y="329" width="5" height="7" rx="1" fill="#E0E0E0" stroke="#000000" stroke-width="0.8"/>
   </g>
 
       <!-- Steve (Permanently Centered in Camera) -->

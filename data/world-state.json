@@ -3,10 +3,10 @@
   "season": 1,
   "steve": {
     "row": 3,
-    "col": 2,
+    "col": 1,
     "facing": "south",
     "lastMover": "mo-farooq",
-    "lastAction": "Spawned on Skyblock Island (Empty-Handed)"
+    "lastAction": "@mo-farooq moved Steve Left to [3, 1]. Camera centered!"
   },
   "tree": {
     "row": 0,
@@ -22,10 +22,10 @@
   },
   "inventory": [],
   "stats": {
-    "totalMoves": 0,
+    "totalMoves": 1,
     "treesHarvested": 0,
     "chestsOpened": 0,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-06T21:15:00.000Z"
+    "updatedAt": "2026-11-06T22:07:02.227Z"
   }
 }
