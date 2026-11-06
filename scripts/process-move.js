@@ -10,18 +10,16 @@ const STATE_FILE = path.join(ROOT_DIR, 'data', 'world-state.json');
 const SVG_OUTPUT = path.join(ROOT_DIR, 'world-3d.svg');
 const README_FILE = path.join(ROOT_DIR, 'README.md');
 
-// Starter Island Coordinates
-const STARTER_TILES = [
-  { row: 0, col: 2 },
-  { row: 1, col: 2 },
-  { row: 1, col: 3 },
-  { row: 2, col: 2 },
-  { row: 2, col: 3 },
-  { row: 2, col: 4 },
-  { row: 3, col: 2 },
-  { row: 3, col: 3 },
-  { row: 3, col: 4 }
-];
+// Helper to test if a tile (r, c) is on the authentic 27-block Skyblock L-island or an existing bridge
+function isWalkable(r, c, state) {
+  if (r < 0 || c < 0 || r > 8 || c > 8) return false;
+  // Authentic 27-block Skyblock island
+  const onIsland = (r < 3 && c < 3) || (r >= 3 && c < 6);
+  if (onIsland) return true;
+  // Bridges built into the void
+  if (state.bridges && state.bridges.some(b => b.row === r && b.col === c)) return true;
+  return false;
+}
 
 async function main() {
   console.log('⛏️ [Skyblock Engine] Processing turn-based move...');
@@ -48,10 +46,10 @@ async function main() {
   fs.writeFileSync(SVG_OUTPUT, svgContent, 'utf-8');
   console.log(`🎨 Rendered world-3d.svg successfully.`);
 
-  // Generate dynamic README with available actions based on Steve's new position
-  const dynamicReadme = generateDynamicReadme(state, context.repoOwner, context.repoName);
+  // Generate dynamic README with dynamically appearing & disappearing buttons
+  const dynamicReadme = generateGamepadReadme(state, context.repoOwner, context.repoName);
   fs.writeFileSync(README_FILE, dynamicReadme, 'utf-8');
-  console.log(`📜 Dynamic README updated with legal moves.`);
+  console.log(`📜 Dynamic README updated with appearing/disappearing Gamepad buttons.`);
 
   // Comment & close issue if running in GitHub Actions
   if (process.env.GITHUB_TOKEN && context.issueNumber && context.repoOwner && context.repoName) {
@@ -64,85 +62,80 @@ export function processSkyblockAction(state, title, username, hasStarred) {
   const lower = title.toLowerCase();
   let actionSummary = '';
 
-  // 1. PUNCH OAK TREE
-  if (lower.includes('punch') || lower.includes('chop') || lower.includes('tree') || lower.includes('harvest wood')) {
+  // 1. OPEN STARTER CHEST
+  if (lower.includes('chest') || lower.includes('open chest')) {
+    if (!state.chest.opened) {
+      state.chest.opened = true;
+      addItem(state.inventory, 'lava_bucket', 'Lava Bucket', '🌋', 1);
+      addItem(state.inventory, 'ice_block', 'Ice Block', '🧊', 1);
+      addItem(state.inventory, 'bread', 'Bread', '🍞', 3);
+      actionSummary = `@${username} opened the Starter Chest! Looted 1 Lava Bucket, 1 Ice Block, and 3 Bread.`;
+    } else {
+      actionSummary = `@${username} opened the Starter Chest, but it was already looted!`;
+    }
+    state.stats.chestsOpened = (state.stats.chestsOpened || 0) + 1;
+  }
+  // 2. PUNCH OAK TREE
+  else if (lower.includes('punch') || lower.includes('chop') || lower.includes('tree') || lower.includes('wood')) {
     state.tree.hp -= 1;
     if (state.tree.hp <= 0) {
       state.tree.hp = state.tree.maxHp;
       addItem(state.inventory, 'oak_log', 'Oak Log', '🪵', 4);
       addItem(state.inventory, 'oak_planks', 'Oak Planks', '🪵', 8);
-      actionSummary = `@${username} felled the Oak Tree! Gathered 4 Logs and replanted the sapling.`;
+      actionSummary = `@${username} felled the Oak Tree! Harvested 4 Oak Logs and 8 Planks, replanting the sapling.`;
     } else {
       addItem(state.inventory, 'oak_log', 'Oak Log', '🪵', 1);
       actionSummary = `@${username} punched the Oak Tree! (${state.tree.hp}/${state.tree.maxHp} HP remaining). +1 Log gathered.`;
     }
     state.stats.treesHarvested = (state.stats.treesHarvested || 0) + 1;
   }
-  // 2. MINE COBBLESTONE
-  else if (lower.includes('cobble') || lower.includes('mine cobblestone') || lower.includes('generator')) {
-    addItem(state.inventory, 'cobblestone', 'Cobblestone', '🪨', 2);
-    actionSummary = `@${username} mined the Cobblestone Generator! +2 Cobblestone added to inventory.`;
-  }
-  // 3. PLACE PLANK BRIDGE / EXPAND VOID
-  else if (lower.includes('bridge') || lower.includes('plank') || lower.includes('build')) {
-    // Determine target void coordinate from Steve's position
-    const target = getNextBridgeCoordinate(state);
-    const blockType = hasStarred ? 'diamond' : 'oak_planks';
-    const emoji = hasStarred ? '💎' : '🪵';
-
-    state.bridges.push({
-      row: target.row,
-      col: target.col,
-      type: blockType,
-      builder: username,
-      emoji: emoji,
-      isVip: hasStarred
-    });
-
-    // Deduct planks if available
-    deductItem(state.inventory, 'oak_planks', 1);
-
-    // Damage Ender Dragon on bridge progression
-    state.enderDragon.hp = Math.max(state.enderDragon.hp - 25, 0);
-    state.stats.bridgesBuilt = (state.stats.bridgesBuilt || 0) + 1;
-    state.stats.dragonDamageDealt = (state.stats.dragonDamageDealt || 0) + 25;
-
-    actionSummary = `@${username} placed a ${hasStarred ? 'VIP Diamond' : 'Oak Plank'} bridge block at [${target.row}, ${target.col}]! Ender Dragon took 25 damage (${state.enderDragon.hp}/1000 HP).`;
-  }
-  // 4. PLACE OBJECT (FURNACE / CRAFTING TABLE / TORCH)
-  else if (lower.includes('furnace')) {
-    if (deductItem(state.inventory, 'furnace', 1)) {
-      state.placedObjects.push({ row: state.steve.row, col: state.steve.col + 1, type: 'furnace', builder: username });
-      actionSummary = `@${username} deployed a stone Furnace on the island!`;
+  // 3. DIRECTIONAL MOVEMENT (FORWARD / BACKWARD / LEFT / RIGHT)
+  else if (lower.includes('forward') || lower.includes('north') || lower.includes('up')) {
+    const targetRow = state.steve.row - 1;
+    if (isWalkable(targetRow, state.steve.col, state)) {
+      state.steve.row = targetRow;
+      actionSummary = `@${username} moved Steve Forward to [${state.steve.row}, ${state.steve.col}].`;
     } else {
-      actionSummary = `@${username} tried to place a Furnace, but none were left in inventory!`;
+      actionSummary = `@${username} tried to move Forward, but reached the island edge facing the void!`;
     }
-  } else if (lower.includes('crafting table')) {
-    if (deductItem(state.inventory, 'crafting_table', 1)) {
-      state.placedObjects.push({ row: state.steve.row, col: state.steve.col + 1, type: 'crafting_table', builder: username });
-      actionSummary = `@${username} placed a Crafting Table on the island!`;
+  } else if (lower.includes('backward') || lower.includes('south') || lower.includes('down')) {
+    const targetRow = state.steve.row + 1;
+    if (isWalkable(targetRow, state.steve.col, state)) {
+      state.steve.row = targetRow;
+      actionSummary = `@${username} moved Steve Backward to [${state.steve.row}, ${state.steve.col}].`;
+    } else {
+      actionSummary = `@${username} tried to move Backward, but reached the island edge facing the void!`;
     }
-  } else if (lower.includes('torch')) {
-    if (deductItem(state.inventory, 'torch', 1)) {
-      state.placedObjects.push({ row: state.steve.row, col: state.steve.col, type: 'torch', builder: username });
-      actionSummary = `@${username} planted a Torch to light up the island!`;
+  } else if (lower.includes('right') || lower.includes('east')) {
+    const targetCol = state.steve.col + 1;
+    if (isWalkable(state.steve.row, targetCol, state)) {
+      state.steve.col = targetCol;
+      actionSummary = `@${username} moved Steve Right to [${state.steve.row}, ${state.steve.col}].`;
+    } else {
+      actionSummary = `@${username} tried to move Right, but reached the island edge facing the void!`;
+    }
+  } else if (lower.includes('left') || lower.includes('west')) {
+    const targetCol = state.steve.col - 1;
+    if (isWalkable(state.steve.row, targetCol, state)) {
+      state.steve.col = targetCol;
+      actionSummary = `@${username} moved Steve Left to [${state.steve.row}, ${state.steve.col}].`;
+    } else {
+      actionSummary = `@${username} tried to move Left, but reached the island edge facing the void!`;
     }
   }
-  // 5. DIRECTIONAL MOVEMENT
-  else if (lower.includes('north') || lower.includes('up')) {
-    state.steve.row = Math.max(state.steve.row - 1, 0);
-    actionSummary = `@${username} moved Steve North to [${state.steve.row}, ${state.steve.col}].`;
-  } else if (lower.includes('south') || lower.includes('down')) {
-    state.steve.row += 1;
-    actionSummary = `@${username} moved Steve South to [${state.steve.row}, ${state.steve.col}].`;
-  } else if (lower.includes('east') || lower.includes('right')) {
-    state.steve.col += 1;
-    actionSummary = `@${username} moved Steve East to [${state.steve.row}, ${state.steve.col}].`;
-  } else if (lower.includes('west') || lower.includes('left')) {
-    state.steve.col = Math.max(state.steve.col - 1, 0);
-    actionSummary = `@${username} moved Steve West to [${state.steve.row}, ${state.steve.col}].`;
+  // 4. PLACE PLANK BRIDGE
+  else if (lower.includes('bridge') || lower.includes('plank')) {
+    if (deductItem(state.inventory, 'oak_planks', 1) || deductItem(state.inventory, 'oak_log', 1)) {
+      const bridgeRow = state.steve.row + 1;
+      const bridgeCol = state.steve.col;
+      state.bridges = state.bridges || [];
+      state.bridges.push({ row: bridgeRow, col: bridgeCol, type: hasStarred ? 'diamond' : 'oak_planks', builder: username });
+      actionSummary = `@${username} placed a bridge block at [${bridgeRow}, ${bridgeCol}] expanding the island!`;
+    } else {
+      actionSummary = `@${username} tried to bridge, but has no planks or wood in inventory!`;
+    }
   } else {
-    actionSummary = `@${username} explored the Skyblock island!`;
+    actionSummary = `@${username} surveyed the Skyblock realm!`;
   }
 
   // Update Steve metadata
@@ -155,20 +148,12 @@ export function processSkyblockAction(state, title, username, hasStarred) {
   return actionSummary;
 }
 
-// Compute next bridge coordinate extending south from L-island
-function getNextBridgeCoordinate(state) {
-  const existingBridgeRows = state.bridges.map(b => b.row);
-  const maxRow = existingBridgeRows.length > 0 ? Math.max(...existingBridgeRows) : 3;
-  return { row: maxRow + 1, col: 2 };
-}
-
-// Inventory helpers
 function addItem(inventory, id, name, emoji, count) {
   const slot = inventory.find(i => i.id === id);
   if (slot) {
-    slot.count = Math.min(slot.count + count, slot.maxStack || 64);
-  } else if (inventory.length < 8) {
-    inventory.push({ slot: inventory.length + 1, id, name, emoji, count, maxStack: 64 });
+    slot.count = Math.min(slot.count + count, 64);
+  } else if (inventory.length < 9) {
+    inventory.push({ slot: inventory.length + 1, id, name, emoji, count });
   }
 }
 
@@ -181,133 +166,139 @@ function deductItem(inventory, id, count) {
   return false;
 }
 
-// Generate dynamic README with available legal moves
-export function generateDynamicReadme(state, repoOwner = 'mo-farooq', repoName = 'skyblock') {
-  const { steve, tree, enderDragon, inventory, stats } = state;
+// Generate Gamepad Controller Layout with DYNAMICALLY APPEARING & DISAPPEARING BUTTONS
+export function generateGamepadReadme(state, repoOwner = 'mo-farooq', repoName = 'skyblock') {
+  const { steve, tree, chest, inventory } = state;
+
+  // 1. Dynamic D-Pad Movement Buttons (Only appear if target tile is walkable!)
+  const canGoNorth = isWalkable(steve.row - 1, steve.col, state);
+  const canGoSouth = isWalkable(steve.row + 1, steve.col, state);
+  const canGoEast = isWalkable(steve.row, steve.col + 1, state);
+  const canGoWest = isWalkable(steve.row, steve.col - 1, state);
+
+  const forwardBtn = canGoNorth
+    ? `<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Move%3A+Step+Forward&body=Moving+Steve+Forward"><img src="https://img.shields.io/badge/⬆️_FORWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Forward"/></a>`
+    : `<em>(Void)</em>`;
+
+  const backwardBtn = canGoSouth
+    ? `<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Move%3A+Step+Backward&body=Moving+Steve+Backward"><img src="https://img.shields.io/badge/⬇️_BACKWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Backward"/></a>`
+    : `<em>(Void)</em>`;
+
+  const leftBtn = canGoWest
+    ? `<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Move%3A+Step+Left&body=Moving+Steve+Left"><img src="https://img.shields.io/badge/⬅️_LEFT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Left"/></a>`
+    : `<em>(Void)</em>`;
+
+  const rightBtn = canGoEast
+    ? `<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Move%3A+Step+Right&body=Moving+Steve+Right"><img src="https://img.shields.io/badge/➡️_RIGHT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Right"/></a>`
+    : `<em>(Void)</em>`;
+
+  // 2. Dynamic Action Buttons (Appear ONLY when in range or inventory permits!)
   const isBesideTree = Math.abs(steve.row - tree.row) <= 1 && Math.abs(steve.col - tree.col) <= 1;
-  const isBesideGen = Math.abs(steve.row - 1) <= 1 && Math.abs(steve.col - 3) <= 1;
-  const isAtSouthEdge = steve.row >= 3;
-  const hasFurnace = inventory.some(i => i.id === 'furnace' && i.count > 0);
-  const hasPlanks = inventory.some(i => i.id === 'oak_planks' && i.count > 0);
-
-  // Generate dynamic contextual buttons
-  const buttons = [];
-
-  // Movement options
-  buttons.push(`[![Step North](https://img.shields.io/badge/⬆️_STEP_NORTH-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/${repoOwner}/${repoName}/issues/new?title=Move%3A+Step+North&body=Moving+Steve+North+on+the+Skyblock+Island)`);
-  buttons.push(`[![Step South](https://img.shields.io/badge/⬇️_STEP_SOUTH-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/${repoOwner}/${repoName}/issues/new?title=Move%3A+Step+South&body=Moving+Steve+South+on+the+Skyblock+Island)`);
-  buttons.push(`[![Step East](https://img.shields.io/badge/➡️_STEP_EAST-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/${repoOwner}/${repoName}/issues/new?title=Move%3A+Step+East&body=Moving+Steve+East+on+the+Skyblock+Island)`);
-  buttons.push(`[![Step West](https://img.shields.io/badge/⬅️_STEP_WEST-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/${repoOwner}/${repoName}/issues/new?title=Move%3A+Step+West&body=Moving+Steve+West+on+the+Skyblock+Island)`);
+  const isBesideChest = Math.abs(steve.row - chest.row) <= 1 && Math.abs(steve.col - chest.col) <= 1;
+  const hasPlanks = inventory.some(i => (i.id === 'oak_planks' || i.id === 'oak_log') && i.count > 0);
 
   const actionButtons = [];
-  // Contextual Tree Punch
+
+  // [A] Punch Tree: APPEARS ONLY when beside the tree!
   if (isBesideTree) {
-    actionButtons.push(`[![Punch Oak Tree](https://img.shields.io/badge/🪓_PUNCH_OAK_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Punch+Oak+Tree&body=Steve+is+beside+the+Tree%21+Harvesting+wood+logs.)`);
-  }
-  // Contextual Cobblestone Mine
-  if (isBesideGen) {
-    actionButtons.push(`[![Mine Cobblestone](https://img.shields.io/badge/⛏️_MINE_COBBLESTONE-78909C?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Mine+Cobblestone&body=Mining+fresh+cobblestone+from+the+lava%2Fwater+generator%21)`);
-  }
-  // Contextual Void Bridging
-  if (isAtSouthEdge || hasPlanks) {
-    actionButtons.push(`[![Bridge Planks](https://img.shields.io/badge/🪵_BRIDGE_PLANKS-D84315?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Bridge+Planks&body=Placing+a+wooden+plank+bridge+block+into+the+void+towards+the+Ender+Dragon%21)`);
-  }
-  // Contextual Furnace Placement
-  if (hasFurnace) {
-    actionButtons.push(`[![Place Furnace](https://img.shields.io/badge/♨️_PLACE_FURNACE-455A64?style=for-the-badge&logoColor=white&labelColor=1B2838)](https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Place+Furnace&body=Deploying+a+stone+furnace+onto+the+island%21)`);
+    actionButtons.push(`<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Punch+Oak+Tree&body=Punching+the+solitary+oak+tree+for+wood%21"><img src="https://img.shields.io/badge/🪓_[A]_PUNCH_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Punch Tree"/></a>`);
   }
 
-  // Stargazer VIP badge
-  actionButtons.push(`[![Star for VIP Diamond](https://img.shields.io/badge/⭐_UNLOCK_VIP_DIAMOND-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838)](https://github.com/${repoOwner}/${repoName}/stargazers)`);
+  // [B] Open Chest: APPEARS ONLY when beside the chest!
+  if (isBesideChest) {
+    actionButtons.push(`<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Open+Starter+Chest&body=Opening+the+starter+chest+for+lava+and+ice%21"><img src="https://img.shields.io/badge/📦_[B]_OPEN_CHEST-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Open Chest"/></a>`);
+  }
 
-  // Hotbar Markdown Table
-  const hotbarCells = inventory.map(item => `**${item.emoji} ${item.name}**<br>(\`x${item.count}\`)`).join(' | ');
-  const hotbarHeaders = inventory.map(item => `Slot ${item.slot}`).join(' | ');
-  const hotbarSeparators = inventory.map(() => ':---:').join(' | ');
+  // [X] Bridge Planks: APPEARS ONLY if player has planks in inventory!
+  if (hasPlanks) {
+    actionButtons.push(`<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Bridge+Planks&body=Placing+plank+bridge+into+the+void%21"><img src="https://img.shields.io/badge/🪵_[X]_BRIDGE_VOID-D84315?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Bridge Void"/></a>`);
+  }
 
-  return `# 🏝️ Minecraft Skyblock Multiplayer Realm
+  // [Y] VIP Star: Always present
+  actionButtons.push(`<a href="https://github.com/${repoOwner}/${repoName}/stargazers"><img src="https://img.shields.io/badge/⭐_[Y]_VIP_STAR-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="42" alt="VIP Star"/></a>`);
+
+  return `# 🏝️ Minecraft Skyblock Survival
 
 <p align="center">
-  <img src="./world-3d.svg" alt="Minecraft Skyblock 3D World" width="100%" />
+  <img src="./world-3d.svg" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
 </p>
 
 <div align="center">
 
-## 🎮 Contextual Command Deck: Make Your Move!
-*Steve is currently at **Tile [${steve.row}, ${steve.col}]**. Click any valid button below to submit the next multiplayer move via GitHub Issues!*
+## 🎮 Dynamic Gamepad Controller: Make Your Move!
+*Steve is at **Tile [${steve.row}, ${steve.col}]**. Buttons appear and disappear dynamically based on available moves!*
 
-### 🚶 Cardinal Movement (Step to Adjacent Tile)
-<p>
-  ${buttons.join('\n  &nbsp;\n  ')}
-</p>
-
-### 🛠️ Contextual Adjacency Actions (Active for Current Tile)
-<p>
-  ${actionButtons.join('\n  &nbsp;\n  ')}
-</p>
-
----
-
-### 🎒 Steve's 8-Slot Hotbar Pack
-| ${hotbarHeaders} |
-| ${hotbarSeparators} |
-| ${hotbarCells} |
+<table>
+  <tr>
+    <th align="center" colspan="3">🕹️ D-PAD MOVEMENT</th>
+    <th width="40"></th>
+    <th align="center">⚡ AVAILABLE ACTIONS</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td align="center">
+      ${forwardBtn}
+    </td>
+    <td></td>
+    <td></td>
+    <td align="center" rowspan="3">
+      ${actionButtons.join('<br><br>')}
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      ${leftBtn}
+    </td>
+    <td align="center">
+      <img src="https://img.shields.io/badge/🕹️_STEVE-000000?style=for-the-badge&logoColor=white" height="38"/>
+    </td>
+    <td align="center">
+      ${rightBtn}
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td align="center">
+      ${backwardBtn}
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
 
 </div>
 
-> [!TIP]
-> ⭐ **Stargazer VIP Perk**: Starring this repository grants your next bridge placement **Luminous Cyan Diamond Block** status with special particle gleams and +50 damage to the Ender Dragon!
-
 ---
 
-## ⚡ Architecture & Turn-Based Event Loop
+## ⚡ How It Works
 
-\`\`\`mermaid
-sequenceDiagram
-    autonumber
-    actor Player as 👤 Visitor
-    participant GH as 🐙 GitHub Issues
-    participant Action as ⚙️ GitHub Actions
-    participant Engine as ⛏️ process-move.js
-    participant SVG as 🎨 world-3d.svg
-
-    Player->>GH: Clicks [ 🪓 PUNCH TREE ] or [ ⬆️ STEP NORTH ]
-    GH->>Action: Triggers runner on issues: [opened]
-    Action->>Engine: Executes turn-based Skyblock movement engine
-    Engine->>Engine: Validates adjacency & updates 8-slot inventory
-    Engine->>SVG: Calculates 3D voxel projection & updates Steve position
-    Engine->>GH: Posts achievement certificate & closes issue
-    Action->>GH: Commits updated SVG and dynamic README deck to main
-\`\`\`
-
----
-
-## 🛠️ Engine Highlights
-
-- **Pure 3D Voxel SVG**: Authentic 2:1 isometric L-shaped Skyblock island with solitary oak tree, starter chest, and cobblestone generator.
-- **Dynamic Contextual Buttons**: README buttons update in real-time depending on Steve's current coordinates.
-- **8-Slot Inventory Management**: Strict item tracking for oak logs, planks, cobblestone, furnaces, and rare diamond gems.
-- **Multiplayer Community Boss Raid**: Ender Dragon boss meter ticks down with every void bridge built toward the End dimension!
+- **Authentic Minecraft SkyBlock**: Faithfully modeled on Noobcrew's classic 2011 27-block L-island layout with 4 vertical dirt layers and a bedrock cornerstone.
+- **Empty-Handed Start**: Steve spawns completely empty-handed with 0 inventory items. Players must navigate to the solitary oak tree to punch wood and reach the starter chest for supplies!
+- **Dynamic Appearing & Disappearing Gamepad**:
+  - **FORWARD, BACKWARD, LEFT, and RIGHT** only appear if the target tile exists on the island. If facing the void, the step button disappears and displays *(Void)*.
+  - **[A] PUNCH TREE** appears **only** when Steve walks beside the tree at [0, 1].
+  - **[B] OPEN CHEST** appears **only** when Steve walks beside the starter chest at [5, 5].
+  - **[X] BRIDGE VOID** appears **only** once wood planks have been gathered into inventory.
 
 ---
 
 ## 🚀 Local Development
 
 \`\`\`bash
-# Clone the repository
+# Clone repository
 git clone https://github.com/${repoOwner}/${repoName}.git
 cd ${repoName}
 
 # Re-render world-3d.svg
 npm run render
 
-# Test a move simulation
+# Test a mock turn
 npm run test-build
 \`\`\`
 `;
 }
 
-// GitHub API checks & Issue responses
 async function checkUserStar(owner, repo, username) {
   if (!process.env.GITHUB_TOKEN) return false;
   try {
@@ -330,7 +321,7 @@ async function getEventContext() {
   const isMock = process.argv.includes('--mock') || !process.env.GITHUB_EVENT_PATH;
   if (isMock) {
     return {
-      issueTitle: process.env.MOCK_TITLE || 'Action: Punch Oak Tree',
+      issueTitle: process.env.MOCK_TITLE || 'Move: Step Forward',
       username: process.env.MOCK_USER || 'mo-farooq',
       issueNumber: 42,
       repoOwner: 'mo-farooq',
@@ -342,7 +333,7 @@ async function getEventContext() {
     const event = JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf-8'));
     const [repoOwner, repoName] = (event.repository?.full_name || 'mo-farooq/skyblock').split('/');
     return {
-      issueTitle: event.issue?.title || 'Move: Step South',
+      issueTitle: event.issue?.title || 'Move: Step Forward',
       username: event.issue?.user?.login || 'Player',
       issueNumber: event.issue?.number,
       repoOwner,
@@ -350,7 +341,7 @@ async function getEventContext() {
     };
   } catch (err) {
     return {
-      issueTitle: 'Move: Step South',
+      issueTitle: 'Move: Step Forward',
       username: 'Player',
       issueNumber: 1,
       repoOwner: 'mo-farooq',
@@ -374,10 +365,11 @@ Greetings **@${username}**! Your move has been executed on the live server:
 
 #### 📍 Server Telemetry:
 - **Steve Location:** \`[Row ${state.steve.row}, Col ${state.steve.col}]\`
-- **Ender Dragon HP:** \`${state.enderDragon.hp} / ${state.enderDragon.maxHp} HP\`
+- **Chest Status:** ${state.chest.opened ? '📦 Opened' : '🔒 Locked'}
+- **Tree HP:** \`${state.tree.hp} / ${state.tree.maxHp} HP\`
 - **VIP Status:** ${hasStarred ? '💎 VIP Diamond Miner (Starred Repository)' : '⭐ Star the repo to unlock rare Diamond bridge blocks!'}
 
-View Steve's updated position and the live island on [mo-farooq/skyblock](https://github.com/${repoOwner}/${repoName})!`;
+View Steve's updated position on [mo-farooq/skyblock](https://github.com/${repoOwner}/${repoName})!`;
 
   try {
     await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues/${issueNumber}/comments`, {

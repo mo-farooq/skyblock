@@ -26,8 +26,6 @@ export function renderWorldSvg(stateData) {
   }
 
   // Authentic 27-block classic SkyBlock L-island surface coordinates
-  // Rows 0..2: cols 0..2 (3x3 arm)
-  // Rows 3..5: cols 0..5 (3x6 arm)
   const surfaceTiles = [];
   for (let r = 0; r < 6; r++) {
     for (let c = 0; c < 6; c++) {
@@ -49,23 +47,21 @@ export function renderWorldSvg(stateData) {
     <polygon points="${cx},${cy - 10} ${cx + 18},${cy - 1} ${cx},${cy + 8} ${cx - 18},${cy - 1}" fill="#6E9F3D" opacity="0.6"/>`;
   }
 
-  // Cliff face extrusions (4 blocks deep = 48px)
+  // Cliff face extrusions (4 blocks deep = 44px)
   // South-West Front Face (along row 5, cols 0..5): 6 tiles long
   let leftCliffSvg = '';
   for (let c = 0; c < 6; c++) {
     const { cx, cy } = getTileCenter(5, c);
     const depth = 44;
-    // Dirt face
     leftCliffSvg += `
     <!-- Left cliff at (5,${c}) -->
     <polygon points="${cx - 36},${cy} ${cx},${cy + 18} ${cx},${cy + 18 + depth} ${cx - 36},${cy + depth}" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
     <!-- Grass fringe overhang -->
     <polygon points="${cx - 36},${cy} ${cx},${cy + 18} ${cx},${cy + 24} ${cx - 18},${cy + 18} ${cx - 36},${cy + 6}" fill="#4C7026"/>
-    <!-- Stone texture markings -->
     <line x1="${cx - 18}" y1="${cy + 22}" x2="${cx - 18}" y2="${cy + 36}" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>`;
   }
 
-  // South-East Front Face (along col 2 for rows 0..2, and col 5 for rows 3..5)
+  // South-East Front Face (col 2 for rows 0..2, and col 5 for rows 3..5)
   let rightCliffSvg = '';
   const rightTiles = [
     { r: 0, c: 2 },
@@ -83,11 +79,10 @@ export function renderWorldSvg(stateData) {
     <polygon points="${cx},${cy + 18} ${cx + 36},${cy} ${cx + 36},${cy + depth} ${cx},${cy + 18 + depth}" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
     <!-- Grass fringe overhang -->
     <polygon points="${cx},${cy + 18} ${cx + 36},${cy} ${cx + 36},${cy + 6} ${cx + 18},${cy + 18} ${cx},${cy + 24}" fill="#3D5A1E"/>
-    <!-- Shadow details -->
     <line x1="${cx + 18}" y1="${cy + 22}" x2="${cx + 18}" y2="${cy + 36}" stroke="#523924" stroke-width="1.5" opacity="0.5"/>`;
   }
 
-  // Bedrock single bottom cornerstone at spawn bottom
+  // Bedrock single bottom cornerstone
   const spawnCenter = getTileCenter(4, 2);
   const bedrockSvg = `
   <!-- Single Bedrock Block on Island Underside -->
@@ -102,56 +97,29 @@ export function renderWorldSvg(stateData) {
   const chestTile = getTileCenter(5, 5);
   const chestSvg = renderAuthenticChest(chestTile.cx, chestTile.cy);
 
-  // Steve Rig at (steve.row, steve.col) - ONLY character!
+  // Steve Rig at (steve.row, steve.col) - Empty Handed!
   const steveTile = getTileCenter(steve.row || 3, steve.col || 2);
   const steveSvg = renderSoloSteve(steveTile.cx, steveTile.cy);
 
-  // Hotbar Inventory Slots (Default 9 classic Skyblock slots)
-  const defaultHotbar = [
-    { slot: 1, emoji: '🪵', count: 4, name: 'Oak Log', active: false },
-    { slot: 2, emoji: '🪵', count: 16, name: 'Planks', active: false },
-    { slot: 3, emoji: '🪨', count: 12, name: 'Cobblestone', active: false },
-    { slot: 4, emoji: '⛏️', count: 1, name: 'Pickaxe', active: true },
-    { slot: 5, emoji: '🧊', count: 1, name: 'Ice', active: false },
-    { slot: 6, emoji: '🌋', count: 1, name: 'Lava', active: false },
-    { slot: 7, emoji: '🍞', count: 5, name: 'Bread', active: false },
-    { slot: 8, emoji: '🕯️', count: 4, name: 'Torch', active: false },
-    { slot: 9, emoji: '📦', count: 1, name: 'Chest', active: false }
-  ];
-
-  // Merge state inventory into hotbar slots if provided
-  const slotsToRender = defaultHotbar.map((slot, idx) => {
-    const stateItem = inventory[idx];
-    if (stateItem) {
-      return {
-        slot: idx + 1,
-        emoji: stateItem.emoji || slot.emoji,
-        count: stateItem.count ?? slot.count,
-        name: stateItem.name || slot.name,
-        active: idx === 3
-      };
-    }
-    return slot;
-  });
-
-  let hotbarSvg = '';
+  // Hotbar Inventory Slots - Initially 0 items!
   const slotWidth = 46;
   const startX = 460 - (9 * slotWidth) / 2; // Centered
   const hotbarY = 472;
 
-  slotsToRender.forEach((item, idx) => {
+  let hotbarSvg = '';
+  for (let idx = 0; idx < 9; idx++) {
     const x = startX + idx * slotWidth;
-    const isSelected = item.active;
+    const isSelected = idx === 0;
+    const item = inventory[idx]; // Null or empty if initial state
+
     hotbarSvg += `
     <!-- Slot ${idx + 1} -->
     <rect x="${x}" y="${hotbarY}" width="42" height="46" rx="2" fill="#3A3A3A" stroke="${isSelected ? '#FFFFFF' : '#1E1E1E'}" stroke-width="${isSelected ? '2.5' : '1.8'}"/>
     <rect x="${x + 2}" y="${hotbarY + 2}" width="38" height="42" rx="1" fill="#252525"/>
-    <!-- Item Icon -->
-    <text x="${x + 21}" y="${hotbarY + 27}" font-size="20" text-anchor="middle">${item.emoji}</text>
-    <!-- Stack Count -->
-    <text x="${x + 36}" y="${hotbarY + 41}" fill="#FFFFFF" class="font-mc" font-size="8.5" font-weight="700" text-anchor="end">${item.count > 1 ? item.count : ''}</text>
+    ${item && item.emoji ? `<text x="${x + 21}" y="${hotbarY + 27}" font-size="20" text-anchor="middle">${item.emoji}</text>` : ''}
+    ${item && item.count > 1 ? `<text x="${x + 36}" y="${hotbarY + 41}" fill="#FFFFFF" class="font-mc" font-size="8.5" font-weight="700" text-anchor="end">${item.count}</text>` : ''}
     `;
-  });
+  }
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" width="100%" height="100%">
   <defs>
@@ -160,13 +128,6 @@ export function renderWorldSvg(stateData) {
       <stop offset="0%" stop-color="#4B7BE5"/>
       <stop offset="65%" stop-color="#89B4FA"/>
       <stop offset="100%" stop-color="#D6E4FF"/>
-    </linearGradient>
-
-    <!-- Diamond Gleam -->
-    <linearGradient id="diamondPick" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#E8FFFF"/>
-      <stop offset="50%" stop-color="#00FFFF"/>
-      <stop offset="100%" stop-color="#009999"/>
     </linearGradient>
 
     <!-- Island Drop Shadow -->
@@ -189,11 +150,11 @@ export function renderWorldSvg(stateData) {
     }
     @keyframes armSwing {
       0%, 100% { transform: rotate(0deg); }
-      50% { transform: rotate(-25deg); }
+      50% { transform: rotate(-18deg); }
     }
 
     .mc-island { animation: floatIsland 5s ease-in-out infinite; }
-    .steve-arm { animation: armSwing 1.8s ease-in-out infinite; transform-origin: 34px 42px; }
+    .steve-arm { animation: armSwing 2s ease-in-out infinite; transform-origin: 34px 42px; }
   </style>
 
   <!-- ================= CANVAS BACKGROUND ================= -->
@@ -217,9 +178,9 @@ export function renderWorldSvg(stateData) {
     <rect x="13" y="30" width="14" height="3" fill="#693820"/>
   </g>
 
-  <!-- Clear, High-Contrast Title & Mode -->
+  <!-- Title & Status -->
   <text x="84" y="38" fill="#FFFFFF" class="font-mc" font-size="13" font-weight="700">MINECRAFT SKYBLOCK</text>
-  <text x="84" y="55" fill="#55FF55" class="font-mc" font-size="9">SOLO SURVIVAL • HARDCORE CHALLENGE</text>
+  <text x="84" y="55" fill="#55FF55" class="font-mc" font-size="9">SOLO SURVIVAL • EMPTY-HANDED START</text>
 
   <!-- Hearts & Hunger Bars -->
   <g transform="translate(560, 28)">
@@ -229,21 +190,21 @@ export function renderWorldSvg(stateData) {
     <text x="86" y="32" fill="#FFAA00" class="font-mc" font-size="8">FULL HUNGER</text>
   </g>
 
-  <!-- Level 42 Badge -->
+  <!-- Level Badge -->
   <g transform="translate(760, 23)">
     <rect width="128" height="40" rx="3" fill="#1A1B1C" stroke="#55FF55" stroke-width="1.5"/>
     <text x="64" y="18" fill="#AAAAAA" class="font-mc" font-size="7.5" text-anchor="middle">EXPERIENCE</text>
-    <text x="64" y="34" fill="#55FF55" class="font-mc" font-size="13" font-weight="700" text-anchor="middle">LEVEL 42</text>
+    <text x="64" y="34" fill="#55FF55" class="font-mc" font-size="13" font-weight="700" text-anchor="middle">LEVEL 0</text>
   </g>
 
-  <!-- ================= 2. 3D SKY VIEWPORT (THE AUTHENTIC L-ISLAND) ================= -->
+  <!-- ================= 2. 3D SKY VIEWPORT (AUTHENTIC SKYBLOCK) ================= -->
   <rect x="20" y="80" width="880" height="380" rx="6" fill="#1A2233" stroke="#3D4248" stroke-width="2"/>
 
   <g clip-path="url(#skyClip)">
-    <!-- Infinite Sky Background -->
+    <!-- Sky Background -->
     <rect x="20" y="80" width="880" height="380" fill="url(#skyVoid)"/>
 
-    <!-- Minecraft Blocky Pixel Clouds -->
+    <!-- Minecraft Pixel Clouds -->
     <rect x="60" y="105" width="170" height="26" fill="#FFFFFF" opacity="0.85" rx="2"/>
     <rect x="140" y="95" width="100" height="26" fill="#FFFFFF" opacity="0.85" rx="2"/>
     <rect x="650" y="115" width="200" height="28" fill="#FFFFFF" opacity="0.8" rx="2"/>
@@ -268,13 +229,13 @@ export function renderWorldSvg(stateData) {
       <!-- Starter Wooden Chest at (5, 5) -->
       ${chestSvg}
 
-      <!-- Steve (Lone Survivor) -->
+      <!-- Steve (Empty-Handed Lone Survivor) -->
       ${steveSvg}
 
     </g>
   </g>
 
-  <!-- ================= 3. AUTHENTIC MINECRAFT HOTBAR (INVENTORY) ================= -->
+  <!-- ================= 3. AUTHENTIC MINECRAFT HOTBAR (INVENTORY: 0 ITEMS) ================= -->
   <rect x="20" y="466" width="880" height="58" rx="4" fill="#202224" stroke="#3D4044" stroke-width="2"/>
   <rect x="24" y="470" width="872" height="50" rx="3" fill="#161718"/>
 
@@ -330,10 +291,10 @@ function renderAuthenticChest(cx, cy) {
   </g>`;
 }
 
-// Steve Solo Survivor Rig
+// Steve Solo Survivor Rig (EMPTY HANDED)
 function renderSoloSteve(cx, cy) {
   return `
-  <!-- Steve (Solo Survivor) -->
+  <!-- Steve (Solo Survivor - Empty Handed) -->
   <g class="steve-actor" data-character="steve">
     <!-- Contact Shadow -->
     <ellipse cx="${cx}" cy="${cy + 4}" rx="20" ry="9" fill="#000000" opacity="0.4"/>
@@ -367,13 +328,10 @@ function renderSoloSteve(cx, cy) {
     <polygon points="${cx - 18},${cy - 45} ${cx - 13},${cy - 42} ${cx - 13},${cy - 26} ${cx - 18},${cy - 29}" fill="#008E8E"/>
     <polygon points="${cx - 18},${cy - 29} ${cx - 13},${cy - 26} ${cx - 13},${cy - 18} ${cx - 18},${cy - 21}" fill="#BD8B72"/>
 
-    <!-- Right Arm with Diamond Pickaxe -->
+    <!-- Right Arm (EMPTY HANDED, swinging naturally) -->
     <g class="steve-arm">
       <polygon points="${cx + 13},${cy - 42} ${cx + 18},${cy - 45} ${cx + 18},${cy - 29} ${cx + 13},${cy - 26}" fill="#006363"/>
-      <!-- Wooden Handle -->
-      <line x1="${cx + 15}" y1="${cy - 24}" x2="${cx + 34}" y2="${cy - 45}" stroke="#866043" stroke-width="3" stroke-linecap="round"/>
-      <!-- Diamond Pickaxe Head -->
-      <polygon points="${cx + 27},${cy - 50} ${cx + 39},${cy - 41} ${cx + 37},${cy - 38} ${cx + 25},${cy - 47}" fill="url(#diamondPick)"/>
+      <polygon points="${cx + 13},${cy - 26} ${cx + 18},${cy - 29} ${cx + 18},${cy - 21} ${cx + 13},${cy - 18}" fill="#BD8B72"/>
     </g>
   </g>`;
 }

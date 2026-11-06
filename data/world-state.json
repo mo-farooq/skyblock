@@ -2,11 +2,11 @@
   "game": "Minecraft Skyblock Solo Survival",
   "season": 1,
   "steve": {
-    "row": 3,
+    "row": 1,
     "col": 2,
     "facing": "south",
     "lastMover": "mo-farooq",
-    "lastAction": "Standing on Skyblock L-Island"
+    "lastAction": "@mo-farooq moved Steve Forward to [1, 2]."
   },
   "tree": {
     "row": 0,
@@ -18,23 +18,29 @@
   "chest": {
     "row": 5,
     "col": 5,
-    "contents": ["lava_bucket", "ice_block"]
+    "opened": false,
+    "items": [
+      {
+        "id": "lava_bucket",
+        "name": "Lava Bucket",
+        "emoji": "🌋",
+        "count": 1
+      },
+      {
+        "id": "ice_block",
+        "name": "Ice Block",
+        "emoji": "🧊",
+        "count": 1
+      }
+    ]
   },
-  "inventory": [
-    { "slot": 1, "id": "oak_log", "name": "Oak Log", "emoji": "🪵", "count": 4 },
-    { "slot": 2, "id": "oak_planks", "name": "Oak Planks", "emoji": "🪵", "count": 16 },
-    { "slot": 3, "id": "cobblestone", "name": "Cobblestone", "emoji": "🪨", "count": 12 },
-    { "slot": 4, "id": "diamond_pickaxe", "name": "Diamond Pickaxe", "emoji": "⛏️", "count": 1 },
-    { "slot": 5, "id": "ice", "name": "Ice Block", "emoji": "🧊", "count": 1 },
-    { "slot": 6, "id": "lava", "name": "Lava Bucket", "emoji": "🌋", "count": 1 },
-    { "slot": 7, "id": "bread", "name": "Bread", "emoji": "🍞", "count": 5 },
-    { "slot": 8, "id": "torch", "name": "Torch", "emoji": "🕯️", "count": 4 },
-    { "slot": 9, "id": "chest", "name": "Starter Chest", "emoji": "📦", "count": 1 }
-  ],
+  "inventory": [],
   "stats": {
-    "totalMoves": 42,
-    "treesHarvested": 3,
+    "totalMoves": 2,
+    "treesHarvested": 0,
+    "chestsOpened": 0,
+    "cobbleMined": 0,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-06T20:45:00.000Z"
+    "updatedAt": "2026-11-06T21:05:22.106Z"
   }
 }

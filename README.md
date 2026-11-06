@@ -6,30 +6,47 @@
 
 <div align="center">
 
-## 🎮 Contextual Command Deck: Make Your Move!
-*Steve is currently at **Tile [3, 2]**. Click any valid button below to submit the next move via GitHub Issues!*
+## 🎮 Dynamic Gamepad Controller: Make Your Move!
+*Steve is at **Tile [1, 2]**. Buttons appear and disappear dynamically based on available moves!*
 
-### 🚶 Cardinal Movement (Step to Adjacent Tile)
-<p>
-  <a href="https://github.com/mo-farooq/skyblock/issues/new?title=Move%3A+Step+North&body=Moving+Steve+North+on+the+Skyblock+Island"><img src="https://img.shields.io/badge/⬆️_STEP_NORTH-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="40" alt="Step North"/></a>
-  &nbsp;
-  <a href="https://github.com/mo-farooq/skyblock/issues/new?title=Move%3A+Step+South&body=Moving+Steve+South+on+the+Skyblock+Island"><img src="https://img.shields.io/badge/⬇️_STEP_SOUTH-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="40" alt="Step South"/></a>
-  &nbsp;
-  <a href="https://github.com/mo-farooq/skyblock/issues/new?title=Move%3A+Step+East&body=Moving+Steve+East+on+the+Skyblock+Island"><img src="https://img.shields.io/badge/➡️_STEP_EAST-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="40" alt="Step East"/></a>
-  &nbsp;
-  <a href="https://github.com/mo-farooq/skyblock/issues/new?title=Move%3A+Step+West&body=Moving+Steve+West+on+the+Skyblock+Island"><img src="https://img.shields.io/badge/⬅️_STEP_WEST-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="40" alt="Step West"/></a>
-</p>
-
-### 🛠️ Contextual Actions
-<p>
-  <a href="https://github.com/mo-farooq/skyblock/issues/new?title=Action%3A+Punch+Oak+Tree&body=Steve+is+harvesting+wood+from+the+solitary+oak+tree%21"><img src="https://img.shields.io/badge/🪓_PUNCH_OAK_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Punch Oak Tree"/></a>
-  &nbsp;
-  <a href="https://github.com/mo-farooq/skyblock/issues/new?title=Action%3A+Open+Starter+Chest&body=Opening+the+starter+chest+at+the+corner+of+the+island%21"><img src="https://img.shields.io/badge/📦_OPEN_CHEST-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Open Chest"/></a>
-  &nbsp;
-  <a href="https://github.com/mo-farooq/skyblock/issues/new?title=Action%3A+Bridge+Planks&body=Placing+an+oak+plank+bridge+block+into+the+void%21"><img src="https://img.shields.io/badge/🪵_BRIDGE_PLANKS-D84315?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Bridge Planks"/></a>
-  &nbsp;
-  <a href="https://github.com/mo-farooq/skyblock/stargazers"><img src="https://img.shields.io/badge/⭐_UNLOCK_VIP_DIAMOND-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="38" alt="Unlock VIP"/></a>
-</p>
+<table>
+  <tr>
+    <th align="center" colspan="3">🕹️ D-PAD MOVEMENT</th>
+    <th width="40"></th>
+    <th align="center">⚡ AVAILABLE ACTIONS</th>
+  </tr>
+  <tr>
+    <td></td>
+    <td align="center">
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?title=Move%3A+Step+Forward&body=Moving+Steve+Forward"><img src="https://img.shields.io/badge/⬆️_FORWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Forward"/></a>
+    </td>
+    <td></td>
+    <td></td>
+    <td align="center" rowspan="3">
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?title=Action%3A+Punch+Oak+Tree&body=Punching+the+solitary+oak+tree+for+wood%21"><img src="https://img.shields.io/badge/🪓_[A]_PUNCH_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Punch Tree"/></a><br><br><a href="https://github.com/mo-farooq/skyblock/stargazers"><img src="https://img.shields.io/badge/⭐_[Y]_VIP_STAR-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="42" alt="VIP Star"/></a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?title=Move%3A+Step+Left&body=Moving+Steve+Left"><img src="https://img.shields.io/badge/⬅️_LEFT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Left"/></a>
+    </td>
+    <td align="center">
+      <img src="https://img.shields.io/badge/🕹️_STEVE-000000?style=for-the-badge&logoColor=white" height="38"/>
+    </td>
+    <td align="center">
+      <em>(Void)</em>
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td align="center">
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?title=Move%3A+Step+Backward&body=Moving+Steve+Backward"><img src="https://img.shields.io/badge/⬇️_BACKWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Backward"/></a>
+    </td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
 
 </div>
 
@@ -38,8 +55,12 @@
 ## ⚡ How It Works
 
 - **Authentic Minecraft SkyBlock**: Faithfully modeled on Noobcrew's classic 2011 27-block L-island layout with 4 vertical dirt layers and a bedrock cornerstone.
-- **Single Character**: Steve survives alone in the infinite sky with a solitary oak tree, a starter wooden chest (lava bucket & ice block), and an authentic 9-slot inventory hotbar.
-- **Pure Turn-Based Logic**: Grid movement and contextual actions are evaluated on each GitHub Issue turn and committed back to the main branch via GitHub Actions in ~15 seconds.
+- **Empty-Handed Start**: Steve spawns completely empty-handed with 0 inventory items. Players must navigate to the solitary oak tree to punch wood and reach the starter chest for supplies!
+- **Dynamic Appearing & Disappearing Gamepad**:
+  - **FORWARD, BACKWARD, LEFT, and RIGHT** only appear if the target tile exists on the island. If facing the void, the step button disappears and displays *(Void)*.
+  - **[A] PUNCH TREE** appears **only** when Steve walks beside the tree at [0, 1].
+  - **[B] OPEN CHEST** appears **only** when Steve walks beside the starter chest at [5, 5].
+  - **[X] BRIDGE VOID** appears **only** once wood planks have been gathered into inventory.
 
 ---
 
