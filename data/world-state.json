@@ -6,7 +6,7 @@
     "col": 1,
     "facing": "south",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq crafted 4 Oak Planks from 1 Oak Log!"
+    "lastAction": "@mo-farooq placed a bridge block at [2, 1] expanding the island!"
   },
   "tree": {
     "row": 0,
@@ -26,14 +26,22 @@
       "id": "oak_planks",
       "name": "Oak Planks",
       "emoji": "🪵",
-      "count": 4
+      "count": 3
     }
   ],
   "stats": {
-    "totalMoves": 5,
+    "totalMoves": 6,
     "treesHarvested": 1,
     "chestsOpened": 0,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-06T22:16:11.528Z"
-  }
+    "updatedAt": "2026-11-06T22:17:46.968Z"
+  },
+  "bridges": [
+    {
+      "row": 2,
+      "col": 1,
+      "type": "diamond",
+      "builder": "mo-farooq"
+    }
+  ]
 }

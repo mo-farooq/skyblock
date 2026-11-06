@@ -52,7 +52,7 @@
 
 ### 🔨 Available Crafting Recipes (Based on Current Inventory)
 <p>
-  <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Action%3A%20Craft%204%20Sticks"><img src="https://img.shields.io/badge/🔨_CRAFT_4_STICKS-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Sticks"/></a> &nbsp; <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Action%3A%20Craft%20Crafting%20Table"><img src="https://img.shields.io/badge/🔨_CRAFT_TABLE-A67038?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Table"/></a>
+  <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Action%3A%20Craft%204%20Sticks"><img src="https://img.shields.io/badge/🔨_CRAFT_4_STICKS-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Sticks"/></a>
 </p>
 
 </div>
