@@ -6,7 +6,7 @@
     "col": 1,
     "facing": "south",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq punched the Oak Tree! (3/4 HP). +1 Log gathered."
+    "lastAction": "@mo-farooq crafted 4 Oak Planks from 1 Oak Log!"
   },
   "tree": {
     "row": 0,
@@ -23,17 +23,17 @@
   "inventory": [
     {
       "slot": 1,
-      "id": "oak_log",
-      "name": "Oak Log",
+      "id": "oak_planks",
+      "name": "Oak Planks",
       "emoji": "🪵",
-      "count": 1
+      "count": 4
     }
   ],
   "stats": {
-    "totalMoves": 4,
+    "totalMoves": 5,
     "treesHarvested": 1,
     "chestsOpened": 0,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-06T22:14:57.067Z"
+    "updatedAt": "2026-11-06T22:16:11.528Z"
   }
 }

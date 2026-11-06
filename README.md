@@ -25,7 +25,7 @@
     <td></td>
     <td></td>
     <td align="center" rowspan="3">
-      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Action%3A%20Punch%20Oak%20Tree"><img src="https://img.shields.io/badge/🪓_[A]_PUNCH_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Punch Tree"/></a><br><br><a href="https://github.com/mo-farooq/skyblock/stargazers"><img src="https://img.shields.io/badge/⭐_[Y]_VIP_STAR-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="42" alt="VIP Star"/></a>
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Action%3A%20Punch%20Oak%20Tree"><img src="https://img.shields.io/badge/🪓_[A]_PUNCH_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Punch Tree"/></a><br><br><a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Action%3A%20Bridge%20Planks"><img src="https://img.shields.io/badge/🪵_[X]_BRIDGE_VOID-D84315?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Bridge Void"/></a><br><br><a href="https://github.com/mo-farooq/skyblock/stargazers"><img src="https://img.shields.io/badge/⭐_[Y]_VIP_STAR-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="42" alt="VIP Star"/></a>
     </td>
   </tr>
   <tr>
@@ -52,7 +52,7 @@
 
 ### 🔨 Available Crafting Recipes (Based on Current Inventory)
 <p>
-  <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Action%3A%20Craft%204%20Planks"><img src="https://img.shields.io/badge/🔨_CRAFT_4_PLANKS-B88746?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Planks"/></a>
+  <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Action%3A%20Craft%204%20Sticks"><img src="https://img.shields.io/badge/🔨_CRAFT_4_STICKS-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Sticks"/></a> &nbsp; <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Action%3A%20Craft%20Crafting%20Table"><img src="https://img.shields.io/badge/🔨_CRAFT_TABLE-A67038?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Table"/></a>
 </p>
 
 </div>
