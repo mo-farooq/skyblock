@@ -7,7 +7,7 @@
 <div align="center">
 
 ## 🎮 Dynamic Gamepad Controller: Make Your Move!
-*Steve is at **Tile [2, 1]**. The camera is locked to Steve, and buttons update in real-time!*
+*Steve is at **Tile [1, 1]**. The camera is locked to Steve, and buttons update in real-time!*
 
 > 💡 **How to Play:** Click any button below &rarr; click the green **"Create"** button on GitHub &rarr; Steve moves & the island updates in ~15s!
 
@@ -25,7 +25,7 @@
     <td></td>
     <td></td>
     <td align="center" rowspan="3">
-      <a href="https://github.com/mo-farooq/skyblock/stargazers"><img src="https://img.shields.io/badge/⭐_[Y]_VIP_STAR-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="42" alt="VIP Star"/></a>
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=skyblock-move.md&title=Action%3A%20Punch%20Oak%20Tree"><img src="https://img.shields.io/badge/🪓_[A]_PUNCH_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Punch Tree"/></a><br><br><a href="https://github.com/mo-farooq/skyblock/stargazers"><img src="https://img.shields.io/badge/⭐_[Y]_VIP_STAR-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="42" alt="VIP Star"/></a>
     </td>
   </tr>
   <tr>
