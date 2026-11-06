@@ -21,6 +21,12 @@
       <stop offset="0%" stop-color="#10B981"/>
       <stop offset="100%" stop-color="#059669"/>
     </linearGradient>
+    <linearGradient id="beamGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="50%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#E0F2FE"/>
+    </linearGradient>
+
     <clipPath id="viewportClip">
       <rect x="24" y="112" width="560" height="348" rx="24"/>
     </clipPath>
@@ -30,6 +36,7 @@
     .font-ui { font-family: 'Quicksand', 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     .font-mono { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
 
+    /* Continuous 60fps Keyframe Animations */
     @keyframes hoverBoard {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-6px); }
@@ -42,9 +49,46 @@
       0%, 100% { opacity: 0.4; }
       50% { opacity: 1; }
     }
+
+    /* 3D Character Rig Skeletal Keyframes */
+    @keyframes heroBreathe {
+      0%, 100% { transform: translateY(0px) scale(1, 1); }
+      50% { transform: translateY(-6px) scale(1.02, 1.02); }
+    }
+    @keyframes shadowSquash {
+      0%, 100% { transform: scale(1); opacity: 0.28; }
+      50% { transform: scale(0.82); opacity: 0.16; }
+    }
+    @keyframes droneOrbitLoop {
+      0% { transform: translate(0px, 0px); }
+      25% { transform: translate(5px, -6px); }
+      50% { transform: translate(0px, -11px); }
+      75% { transform: translate(-5px, -5px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    @keyframes visorPulse {
+      0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 2px #38BDF8); }
+      50% { opacity: 1; filter: drop-shadow(0 0 7px #22D3EE); }
+    }
+    @keyframes saberPulse {
+      0%, 100% { opacity: 0.82; filter: drop-shadow(0 0 3px #38BDF8); }
+      50% { opacity: 1; filter: drop-shadow(0 0 8px #67E8F9); }
+    }
+    @keyframes waterfallRush {
+      0% { opacity: 0.6; }
+      50% { opacity: 0.95; }
+      100% { opacity: 0.6; }
+    }
+
     .iso-world { animation: hoverBoard 5s ease-in-out infinite; }
     .floating-holo { animation: floatCube 3.2s ease-in-out infinite; }
     .beacon-light { animation: pulseBeacon 2s infinite; }
+    .hero-rig { animation: heroBreathe 3.4s ease-in-out infinite; transform-origin: 304px 270px; }
+    .hero-shadow { animation: shadowSquash 3.4s ease-in-out infinite; transform-origin: 304px 270px; }
+    .drone-companion { animation: droneOrbitLoop 3.8s ease-in-out infinite; }
+    .visor-lit { animation: visorPulse 2.2s infinite ease-in-out; }
+    .saber-lit { animation: saberPulse 1.8s infinite ease-in-out; }
+    .water-cascade { animation: waterfallRush 2s infinite ease-in-out; }
   </style>
 
   <!-- ================= MAIN BOARD BACKGROUND ================= -->
@@ -118,9 +162,9 @@
       <polygon points="334,300 364,315 334,330 304,315" fill="#38BDF8"/>
       <polygon points="214,270 244,285 214,300 184,285" fill="#38BDF8"/>
       <polygon points="184,285 214,300 184,315 154,300" fill="#7DD3FC"/>
-      <!-- Waterfall -->
+      <!-- Waterfall with animated flow -->
       <polygon points="154,300 184,315 184,341 154,326" fill="#38BDF8"/>
-      <polygon points="162,304 176,311 176,337 162,330" fill="#E0F2FE" opacity="0.8"/>
+      <polygon points="162,304 176,311 176,337 162,330" fill="#E0F2FE" class="water-cascade"/>
 
       <!-- 4. GREEN COMMIT ELEVATION BLOCKS -->
       <g>
@@ -169,23 +213,23 @@
 
   <!-- Building at Tile (0,2) -->
   <g class="voxel-block" data-tile="0,2">
-    <polygon points="334,180 364,195 364,255 334,240" fill="#FBBF24"/>
-    <polygon points="364,195 394,180 394,240 364,255" fill="#D97706"/>
-    <polygon points="364,165 394,180 364,195 334,180" fill="#FEF08A"/>
+    <polygon points="334,192 364,207 364,255 334,240" fill="#F97316"/>
+    <polygon points="364,207 394,192 394,240 364,255" fill="#C2410C"/>
+    <polygon points="364,177 394,192 364,207 334,192" fill="#FED7AA"/>
     
-    <polygon points="342,197 356,204 356,214 342,207" fill="#FEF08A"/>
-    <polygon points="372,204 386,197 386,207 372,214" fill="#FDE047"/>
+    <polygon points="342,209 356,216 356,226 342,219" fill="#FEF08A"/>
+    <polygon points="372,216 386,209 386,219 372,226" fill="#FDE047"/>
   
     
     <g class="floating-holo">
-      <polygon points="364,142 374,147 364,152 354,147" fill="#FEF08A"/>
-      <polygon points="354,147 364,152 364,164 354,159" fill="#F59E0B"/>
-      <polygon points="364,152 374,147 374,159 364,164" fill="#B45309"/>
+      <polygon points="364,154 374,159 364,164 354,159" fill="#FEF08A"/>
+      <polygon points="354,159 364,164 364,176 354,171" fill="#F59E0B"/>
+      <polygon points="364,164 374,159 374,171 364,176" fill="#B45309"/>
     </g>
   
     
-    <rect x="314.2" y="114" width="99.6" height="18" rx="9" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5" opacity="0.95"/>
-    <text x="364" y="126.5" text-anchor="middle" fill="#B45309" class="font-ui" font-size="9.5" font-weight="800">★ @mo-farooq</text>
+    <rect x="314.2" y="126" width="99.6" height="18" rx="9" fill="#FFEDD5" stroke="#F59E0B" stroke-width="1.5" opacity="0.95"/>
+    <text x="364" y="138.5" text-anchor="middle" fill="#9A3412" class="font-ui" font-size="9.5" font-weight="800">★ @mo-farooq</text>
   
   </g>
 
@@ -255,6 +299,85 @@
   
   </g>
 
+
+      <!-- 6. 3D ANIMATED HERO CHARACTER RIG (Standing Center Stage) -->
+      
+  <!-- ================= 3D ANIMATED HERO CHARACTER RIG ================= -->
+  <g class="hero-character-unit" data-entity="hero-architect">
+    <!-- 1. Perspective Contact Shadow -->
+    <ellipse cx="304" cy="272" rx="18" ry="8" fill="#0F172A" class="hero-shadow"/>
+
+    <!-- 2. Continuous Skeletal Breathing Actor -->
+    <g class="hero-rig">
+      <!-- Boots & Greaves -->
+      <polygon points="295,268 301,270 301,261 295,259" fill="#1E293B"/>
+      <polygon points="301,270 306,268 306,259 301,261" fill="#0F172A"/>
+      <polygon points="307,270 313,268 313,259 307,261" fill="#1E293B"/>
+      <polygon points="313,268 318,266 318,257 313,259" fill="#0F172A"/>
+
+      <!-- Legs & Thigh Armor -->
+      <polygon points="296,259 303,262 303,250 296,248" fill="#334155"/>
+      <polygon points="306,262 313,259 313,248 306,250" fill="#1E293B"/>
+
+      <!-- Torso / Power Armor Chestplate -->
+      <!-- Armor Roof / Shoulders -->
+      <polygon points="304,229 318,236 304,243 290,236" fill="#6366F1"/>
+      <!-- Left Armor Plate -->
+      <polygon points="290,236 304,243 304,254 290,247" fill="#4F46E5"/>
+      <!-- Right Armor Plate -->
+      <polygon points="304,243 318,236 318,247 304,254" fill="#4338CA"/>
+      
+      <!-- Cyan Core Reactor in Chest -->
+      <polygon points="300,245 304,247 304,251 300,249" fill="#38BDF8" class="visor-lit"/>
+      <polygon points="304,247 308,245 308,249 304,251" fill="#22D3EE" class="visor-lit"/>
+
+      <!-- Left Arm & Holographic Shield Emitter -->
+      <polygon points="289,238 293,240 293,250 289,248" fill="#818CF8"/>
+      <!-- Mini Hologram Shield -->
+      <polygon points="286,246 290,249 286,252 282,249" fill="#38BDF8" opacity="0.8" class="visor-lit"/>
+
+      <!-- Right Arm & Beam Saber Weapon -->
+      <polygon points="315,240 319,238 319,248 315,250" fill="#4F46E5"/>
+      <!-- Saber Hilt -->
+      <polygon points="318,250 321,252 321,255 318,253" fill="#94A3B8"/>
+      <!-- Glowing Energy Saber Blade pointing up -->
+      <polygon points="320,252 329,234 330,235 321,253" fill="url(#beamGrad)" class="saber-lit"/>
+
+      <!-- Cyber Helmet & Visor -->
+      <!-- Helmet Top -->
+      <polygon points="304,215 314,220 304,225 294,220" fill="#818CF8"/>
+      <!-- Helmet Left -->
+      <polygon points="294,220 304,225 304,237 294,232" fill="#4F46E5"/>
+      <!-- Helmet Right -->
+      <polygon points="304,225 314,220 314,232 304,237" fill="#3730A3"/>
+      <!-- Glowing Visor Slit -->
+      <polygon points="296,226 304,230 304,233 296,229" fill="#38BDF8" class="visor-lit"/>
+      <polygon points="304,230 312,226 312,229 304,233" fill="#22D3EE" class="visor-lit"/>
+
+      <!-- Orbital Cyber Drone Companion -->
+      <g class="drone-companion">
+        <g transform="translate(334, 215)">
+          <!-- Drone Diamond Body -->
+          <polygon points="0,-8 7,-4 0,0 -7,-4" fill="#38BDF8"/>
+          <polygon points="-7,-4 0,0 0,6 -7,2" fill="#0284C7"/>
+          <polygon points="0,0 7,-4 7,2 0,6" fill="#0369A1"/>
+          <!-- Drone Beacon -->
+          <circle cx="0" cy="-2" r="2.5" fill="#EF4444" class="beacon-light"/>
+          <!-- Scanner Beam Halo -->
+          <ellipse cx="0" cy="9" rx="8" ry="3.5" fill="none" stroke="#38BDF8" stroke-width="1" opacity="0.65"/>
+        </g>
+      </g>
+
+      <!-- Player HUD Title Tag -->
+      <g transform="translate(304, 198)">
+        <rect x="-62" y="-10" width="124" height="20" rx="10" fill="#1E293B" stroke="#F59E0B" stroke-width="1.4" filter="url(#neo-pill)"/>
+        <circle cx="-48" cy="0" r="3.5" fill="#10B981"/>
+        <text x="3" y="3.5" text-anchor="middle" fill="#F8FAFC" class="font-ui" font-size="9.5" font-weight="800">
+          ★ Lv.42 @mo-farooq
+        </text>
+      </g>
+    </g>
+  </g>
 
     </g>
 

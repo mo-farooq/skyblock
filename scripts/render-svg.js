@@ -86,6 +86,10 @@ export function renderWorldSvg(stateData) {
     dynamicBuildingsSvg += renderDynamicVoxel(cx, cy, type, name, builder, level, emoji, row, col) + '\n';
   }
 
+  // 3D Animated Hero Character Model (Center Stage on Plaza at Tile 2,2)
+  const heroTile = getTileCenter(2, 2);
+  const heroCharacterSvg = render3DAnimatedHero(heroTile.cx, heroTile.cy);
+
   const announcement = escapeXml(mayor.announcement || 'Tile (1,1) upgraded to AI Citadel! Click a button below to lay your 3D voxel cornerstone on the live canvas.');
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 580" width="100%" height="100%">
@@ -111,6 +115,12 @@ export function renderWorldSvg(stateData) {
       <stop offset="0%" stop-color="#10B981"/>
       <stop offset="100%" stop-color="#059669"/>
     </linearGradient>
+    <linearGradient id="beamGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="50%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#E0F2FE"/>
+    </linearGradient>
+
     <clipPath id="viewportClip">
       <rect x="24" y="112" width="560" height="348" rx="24"/>
     </clipPath>
@@ -120,6 +130,7 @@ export function renderWorldSvg(stateData) {
     .font-ui { font-family: 'Quicksand', 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     .font-mono { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
 
+    /* Continuous 60fps Keyframe Animations */
     @keyframes hoverBoard {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-6px); }
@@ -132,9 +143,46 @@ export function renderWorldSvg(stateData) {
       0%, 100% { opacity: 0.4; }
       50% { opacity: 1; }
     }
+
+    /* 3D Character Rig Skeletal Keyframes */
+    @keyframes heroBreathe {
+      0%, 100% { transform: translateY(0px) scale(1, 1); }
+      50% { transform: translateY(-6px) scale(1.02, 1.02); }
+    }
+    @keyframes shadowSquash {
+      0%, 100% { transform: scale(1); opacity: 0.28; }
+      50% { transform: scale(0.82); opacity: 0.16; }
+    }
+    @keyframes droneOrbitLoop {
+      0% { transform: translate(0px, 0px); }
+      25% { transform: translate(5px, -6px); }
+      50% { transform: translate(0px, -11px); }
+      75% { transform: translate(-5px, -5px); }
+      100% { transform: translate(0px, 0px); }
+    }
+    @keyframes visorPulse {
+      0%, 100% { opacity: 0.85; filter: drop-shadow(0 0 2px #38BDF8); }
+      50% { opacity: 1; filter: drop-shadow(0 0 7px #22D3EE); }
+    }
+    @keyframes saberPulse {
+      0%, 100% { opacity: 0.82; filter: drop-shadow(0 0 3px #38BDF8); }
+      50% { opacity: 1; filter: drop-shadow(0 0 8px #67E8F9); }
+    }
+    @keyframes waterfallRush {
+      0% { opacity: 0.6; }
+      50% { opacity: 0.95; }
+      100% { opacity: 0.6; }
+    }
+
     .iso-world { animation: hoverBoard 5s ease-in-out infinite; }
     .floating-holo { animation: floatCube 3.2s ease-in-out infinite; }
     .beacon-light { animation: pulseBeacon 2s infinite; }
+    .hero-rig { animation: heroBreathe 3.4s ease-in-out infinite; transform-origin: 304px 270px; }
+    .hero-shadow { animation: shadowSquash 3.4s ease-in-out infinite; transform-origin: 304px 270px; }
+    .drone-companion { animation: droneOrbitLoop 3.8s ease-in-out infinite; }
+    .visor-lit { animation: visorPulse 2.2s infinite ease-in-out; }
+    .saber-lit { animation: saberPulse 1.8s infinite ease-in-out; }
+    .water-cascade { animation: waterfallRush 2s infinite ease-in-out; }
   </style>
 
   <!-- ================= MAIN BOARD BACKGROUND ================= -->
@@ -208,9 +256,9 @@ export function renderWorldSvg(stateData) {
       <polygon points="334,300 364,315 334,330 304,315" fill="#38BDF8"/>
       <polygon points="214,270 244,285 214,300 184,285" fill="#38BDF8"/>
       <polygon points="184,285 214,300 184,315 154,300" fill="#7DD3FC"/>
-      <!-- Waterfall -->
+      <!-- Waterfall with animated flow -->
       <polygon points="154,300 184,315 184,341 154,326" fill="#38BDF8"/>
-      <polygon points="162,304 176,311 176,337 162,330" fill="#E0F2FE" opacity="0.8"/>
+      <polygon points="162,304 176,311 176,337 162,330" fill="#E0F2FE" class="water-cascade"/>
 
       <!-- 4. GREEN COMMIT ELEVATION BLOCKS -->
       <g>
@@ -226,6 +274,9 @@ export function renderWorldSvg(stateData) {
 
       <!-- 5. DYNAMIC CITIZEN BUILDINGS ON 6x6 GRID -->
       ${dynamicBuildingsSvg}
+
+      <!-- 6. 3D ANIMATED HERO CHARACTER RIG (Standing Center Stage) -->
+      ${heroCharacterSvg}
 
     </g>
 
@@ -265,6 +316,87 @@ export function renderWorldSvg(stateData) {
     Click a command below to drop a 3D block on an open tile!
   </text>
 </svg>`;
+}
+
+// 3D Animated Hero Character Rig (Voxel Paladin / Cyber-Architect)
+function render3DAnimatedHero(cx, cy) {
+  return `
+  <!-- ================= 3D ANIMATED HERO CHARACTER RIG ================= -->
+  <g class="hero-character-unit" data-entity="hero-architect">
+    <!-- 1. Perspective Contact Shadow -->
+    <ellipse cx="${cx}" cy="${cy + 2}" rx="18" ry="8" fill="#0F172A" class="hero-shadow"/>
+
+    <!-- 2. Continuous Skeletal Breathing Actor -->
+    <g class="hero-rig">
+      <!-- Boots & Greaves -->
+      <polygon points="${cx - 9},${cy - 2} ${cx - 3},${cy} ${cx - 3},${cy - 9} ${cx - 9},${cy - 11}" fill="#1E293B"/>
+      <polygon points="${cx - 3},${cy} ${cx + 2},${cy - 2} ${cx + 2},${cy - 11} ${cx - 3},${cy - 9}" fill="#0F172A"/>
+      <polygon points="${cx + 3},${cy} ${cx + 9},${cy - 2} ${cx + 9},${cy - 11} ${cx + 3},${cy - 9}" fill="#1E293B"/>
+      <polygon points="${cx + 9},${cy - 2} ${cx + 14},${cy - 4} ${cx + 14},${cy - 13} ${cx + 9},${cy - 11}" fill="#0F172A"/>
+
+      <!-- Legs & Thigh Armor -->
+      <polygon points="${cx - 8},${cy - 11} ${cx - 1},${cy - 8} ${cx - 1},${cy - 20} ${cx - 8},${cy - 22}" fill="#334155"/>
+      <polygon points="${cx + 2},${cy - 8} ${cx + 9},${cy - 11} ${cx + 9},${cy - 22} ${cx + 2},${cy - 20}" fill="#1E293B"/>
+
+      <!-- Torso / Power Armor Chestplate -->
+      <!-- Armor Roof / Shoulders -->
+      <polygon points="${cx},${cy - 41} ${cx + 14},${cy - 34} ${cx},${cy - 27} ${cx - 14},${cy - 34}" fill="#6366F1"/>
+      <!-- Left Armor Plate -->
+      <polygon points="${cx - 14},${cy - 34} ${cx},${cy - 27} ${cx},${cy - 16} ${cx - 14},${cy - 23}" fill="#4F46E5"/>
+      <!-- Right Armor Plate -->
+      <polygon points="${cx},${cy - 27} ${cx + 14},${cy - 34} ${cx + 14},${cy - 23} ${cx},${cy - 16}" fill="#4338CA"/>
+      
+      <!-- Cyan Core Reactor in Chest -->
+      <polygon points="${cx - 4},${cy - 25} ${cx},${cy - 23} ${cx},${cy - 19} ${cx - 4},${cy - 21}" fill="#38BDF8" class="visor-lit"/>
+      <polygon points="${cx},${cy - 23} ${cx + 4},${cy - 25} ${cx + 4},${cy - 21} ${cx},${cy - 19}" fill="#22D3EE" class="visor-lit"/>
+
+      <!-- Left Arm & Holographic Shield Emitter -->
+      <polygon points="${cx - 15},${cy - 32} ${cx - 11},${cy - 30} ${cx - 11},${cy - 20} ${cx - 15},${cy - 22}" fill="#818CF8"/>
+      <!-- Mini Hologram Shield -->
+      <polygon points="${cx - 18},${cy - 24} ${cx - 14},${cy - 21} ${cx - 18},${cy - 18} ${cx - 22},${cy - 21}" fill="#38BDF8" opacity="0.8" class="visor-lit"/>
+
+      <!-- Right Arm & Beam Saber Weapon -->
+      <polygon points="${cx + 11},${cy - 30} ${cx + 15},${cy - 32} ${cx + 15},${cy - 22} ${cx + 11},${cy - 20}" fill="#4F46E5"/>
+      <!-- Saber Hilt -->
+      <polygon points="${cx + 14},${cy - 20} ${cx + 17},${cy - 18} ${cx + 17},${cy - 15} ${cx + 14},${cy - 17}" fill="#94A3B8"/>
+      <!-- Glowing Energy Saber Blade pointing up -->
+      <polygon points="${cx + 16},${cy - 18} ${cx + 25},${cy - 36} ${cx + 26},${cy - 35} ${cx + 17},${cy - 17}" fill="url(#beamGrad)" class="saber-lit"/>
+
+      <!-- Cyber Helmet & Visor -->
+      <!-- Helmet Top -->
+      <polygon points="${cx},${cy - 55} ${cx + 10},${cy - 50} ${cx},${cy - 45} ${cx - 10},${cy - 50}" fill="#818CF8"/>
+      <!-- Helmet Left -->
+      <polygon points="${cx - 10},${cy - 50} ${cx},${cy - 45} ${cx},${cy - 33} ${cx - 10},${cy - 38}" fill="#4F46E5"/>
+      <!-- Helmet Right -->
+      <polygon points="${cx},${cy - 45} ${cx + 10},${cy - 50} ${cx + 10},${cy - 38} ${cx},${cy - 33}" fill="#3730A3"/>
+      <!-- Glowing Visor Slit -->
+      <polygon points="${cx - 8},${cy - 44} ${cx},${cy - 40} ${cx},${cy - 37} ${cx - 8},${cy - 41}" fill="#38BDF8" class="visor-lit"/>
+      <polygon points="${cx},${cy - 40} ${cx + 8},${cy - 44} ${cx + 8},${cy - 41} ${cx},${cy - 37}" fill="#22D3EE" class="visor-lit"/>
+
+      <!-- Orbital Cyber Drone Companion -->
+      <g class="drone-companion">
+        <g transform="translate(${cx + 30}, ${cy - 55})">
+          <!-- Drone Diamond Body -->
+          <polygon points="0,-8 7,-4 0,0 -7,-4" fill="#38BDF8"/>
+          <polygon points="-7,-4 0,0 0,6 -7,2" fill="#0284C7"/>
+          <polygon points="0,0 7,-4 7,2 0,6" fill="#0369A1"/>
+          <!-- Drone Beacon -->
+          <circle cx="0" cy="-2" r="2.5" fill="#EF4444" class="beacon-light"/>
+          <!-- Scanner Beam Halo -->
+          <ellipse cx="0" cy="9" rx="8" ry="3.5" fill="none" stroke="#38BDF8" stroke-width="1" opacity="0.65"/>
+        </g>
+      </g>
+
+      <!-- Player HUD Title Tag -->
+      <g transform="translate(${cx}, ${cy - 72})">
+        <rect x="-62" y="-10" width="124" height="20" rx="10" fill="#1E293B" stroke="#F59E0B" stroke-width="1.4" filter="url(#neo-pill)"/>
+        <circle cx="-48" cy="0" r="3.5" fill="#10B981"/>
+        <text x="3" y="3.5" text-anchor="middle" fill="#F8FAFC" class="font-ui" font-size="9.5" font-weight="800">
+          ★ Lv.42 @mo-farooq
+        </text>
+      </g>
+    </g>
+  </g>`;
 }
 
 // Render dynamic 3D Voxel building at given isometric coordinate
