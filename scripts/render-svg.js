@@ -12,16 +12,26 @@ export function renderWorldSvg(stateData) {
   const {
     steve = { row: 3, col: 2, lastMover: 'mo-farooq' },
     tree = { row: 0, col: 1, hp: 4, maxHp: 4 },
-    inventory = []
+    chest = { row: 5, col: 5 },
+    inventory = [],
+    bridges = []
   } = stateData;
 
-  // Projection math:
-  // Canvas: 920 x 540
-  // Origin: (460, 185)
-  // Step vectors: dx = 36, dy = 18
+  // 🎥 CAMERA ANCHORING MATH
+  // Screen center: cx = 460, cy = 240
+  // Steve is locked at the exact visual center!
+  const viewCenterX = 460;
+  const viewCenterY = 240;
+
+  const steveIsoX = (steve.col - steve.row) * 36;
+  const steveIsoY = (steve.col + steve.row) * 18;
+
+  const camOffsetX = viewCenterX - steveIsoX;
+  const camOffsetY = viewCenterY - steveIsoY;
+
   function getTileCenter(r, c) {
-    const cx = 460 + (c - r) * 36;
-    const cy = 185 + (c + r) * 18;
+    const cx = camOffsetX + (c - r) * 36;
+    const cy = camOffsetY + (c + r) * 18;
     return { cx, cy };
   }
 
@@ -36,7 +46,7 @@ export function renderWorldSvg(stateData) {
   }
 
   // Sort surface tiles depth-wise: (r + c) ascending
-  surfaceTiles.sort((a, b) => (a.r + a.b) - (b.r + b.c));
+  surfaceTiles.sort((a, b) => (a.r + a.c) - (b.r + b.c));
 
   // Render top grass diamond for each tile
   let grassTilesSvg = '';
@@ -54,9 +64,7 @@ export function renderWorldSvg(stateData) {
     const { cx, cy } = getTileCenter(5, c);
     const depth = 44;
     leftCliffSvg += `
-    <!-- Left cliff at (5,${c}) -->
     <polygon points="${cx - 36},${cy} ${cx},${cy + 18} ${cx},${cy + 18 + depth} ${cx - 36},${cy + depth}" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
-    <!-- Grass fringe overhang -->
     <polygon points="${cx - 36},${cy} ${cx},${cy + 18} ${cx},${cy + 24} ${cx - 18},${cy + 18} ${cx - 36},${cy + 6}" fill="#4C7026"/>
     <line x1="${cx - 18}" y1="${cy + 22}" x2="${cx - 18}" y2="${cy + 36}" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>`;
   }
@@ -75,33 +83,29 @@ export function renderWorldSvg(stateData) {
     const { cx, cy } = getTileCenter(t.r, t.c);
     const depth = 44;
     rightCliffSvg += `
-    <!-- Right cliff at (${t.r},${t.c}) -->
     <polygon points="${cx},${cy + 18} ${cx + 36},${cy} ${cx + 36},${cy + depth} ${cx},${cy + 18 + depth}" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
-    <!-- Grass fringe overhang -->
     <polygon points="${cx},${cy + 18} ${cx + 36},${cy} ${cx + 36},${cy + 6} ${cx + 18},${cy + 18} ${cx},${cy + 24}" fill="#3D5A1E"/>
     <line x1="${cx + 18}" y1="${cy + 22}" x2="${cx + 18}" y2="${cy + 36}" stroke="#523924" stroke-width="1.5" opacity="0.5"/>`;
   }
 
-  // Bedrock single bottom cornerstone
+  // Bedrock bottom cornerstone
   const spawnCenter = getTileCenter(4, 2);
   const bedrockSvg = `
-  <!-- Single Bedrock Block on Island Underside -->
   <polygon points="${spawnCenter.cx - 20},${spawnCenter.cy + 42} ${spawnCenter.cx + 20},${spawnCenter.cy + 42} ${spawnCenter.cx},${spawnCenter.cy + 58}" fill="#2E2E2E"/>
   <polygon points="${spawnCenter.cx - 20},${spawnCenter.cy + 42} ${spawnCenter.cx},${spawnCenter.cy + 58} ${spawnCenter.cx - 10},${spawnCenter.cy + 48}" fill="#1F1F1F"/>`;
 
   // Solitary Oak Tree at (0, 1)
-  const treeTile = getTileCenter(tree.row || 0, tree.col || 1);
+  const treeTile = getTileCenter(tree.row ?? 0, tree.col ?? 1);
   const treeSvg = renderAuthenticOakTree(treeTile.cx, treeTile.cy);
 
-  // Starter Chest at (5, 5) - far corner of the L
-  const chestTile = getTileCenter(5, 5);
+  // Starter Chest at (5, 5)
+  const chestTile = getTileCenter(chest.row ?? 5, chest.col ?? 5);
   const chestSvg = renderAuthenticChest(chestTile.cx, chestTile.cy);
 
-  // Steve Rig at (steve.row, steve.col) - Empty Handed!
-  const steveTile = getTileCenter(steve.row || 3, steve.col || 2);
-  const steveSvg = renderSoloSteve(steveTile.cx, steveTile.cy);
+  // Steve Rig at Camera Center (viewCenterX, viewCenterY)!
+  const steveSvg = renderSoloSteve(viewCenterX, viewCenterY, inventory);
 
-  // Hotbar Inventory Slots - Initially 0 items!
+  // Hotbar Inventory Slots - Real-Time Reflection of Inventory State!
   const slotWidth = 46;
   const startX = 460 - (9 * slotWidth) / 2; // Centered
   const hotbarY = 472;
@@ -110,7 +114,7 @@ export function renderWorldSvg(stateData) {
   for (let idx = 0; idx < 9; idx++) {
     const x = startX + idx * slotWidth;
     const isSelected = idx === 0;
-    const item = inventory[idx]; // Null or empty if initial state
+    const item = inventory[idx];
 
     hotbarSvg += `
     <!-- Slot ${idx + 1} -->
@@ -146,7 +150,7 @@ export function renderWorldSvg(stateData) {
 
     @keyframes floatIsland {
       0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-7px); }
+      50% { transform: translateY(-6px); }
     }
     @keyframes armSwing {
       0%, 100% { transform: rotate(0deg); }
@@ -162,7 +166,7 @@ export function renderWorldSvg(stateData) {
   <rect x="4" y="4" width="912" height="532" rx="8" fill="#28292C" stroke="#0E0F10" stroke-width="3"/>
   <rect x="8" y="8" width="904" height="524" rx="6" fill="#141517"/>
 
-  <!-- ================= 1. CLEAN TOP STATUS HUD (NO CLUTTER) ================= -->
+  <!-- ================= 1. CLEAN TOP STATUS HUD (HIGH VISIBILITY) ================= -->
   <rect x="20" y="16" width="880" height="54" rx="4" fill="#252628" stroke="#424548" stroke-width="2"/>
 
   <!-- Steve Avatar -->
@@ -178,9 +182,9 @@ export function renderWorldSvg(stateData) {
     <rect x="13" y="30" width="14" height="3" fill="#693820"/>
   </g>
 
-  <!-- Title & Status -->
+  <!-- Title & Mode -->
   <text x="84" y="38" fill="#FFFFFF" class="font-mc" font-size="13" font-weight="700">MINECRAFT SKYBLOCK</text>
-  <text x="84" y="55" fill="#55FF55" class="font-mc" font-size="9">SOLO SURVIVAL • EMPTY-HANDED START</text>
+  <text x="84" y="55" fill="#55FF55" class="font-mc" font-size="9">CAMERA LOCKED ON STEVE • TILE [${steve.row}, ${steve.col}]</text>
 
   <!-- Hearts & Hunger Bars -->
   <g transform="translate(560, 28)">
@@ -197,7 +201,7 @@ export function renderWorldSvg(stateData) {
     <text x="64" y="34" fill="#55FF55" class="font-mc" font-size="13" font-weight="700" text-anchor="middle">LEVEL 0</text>
   </g>
 
-  <!-- ================= 2. 3D SKY VIEWPORT (AUTHENTIC SKYBLOCK) ================= -->
+  <!-- ================= 2. 3D SKY VIEWPORT (CAMERA LOCKED ON STEVE) ================= -->
   <rect x="20" y="80" width="880" height="380" rx="6" fill="#1A2233" stroke="#3D4248" stroke-width="2"/>
 
   <g clip-path="url(#skyClip)">
@@ -210,7 +214,7 @@ export function renderWorldSvg(stateData) {
     <rect x="650" y="115" width="200" height="28" fill="#FFFFFF" opacity="0.8" rx="2"/>
     <rect x="740" y="105" width="110" height="28" fill="#FFFFFF" opacity="0.8" rx="2"/>
 
-    <!-- The Authentic L-Shaped Skyblock Island -->
+    <!-- The Floating Platform (Translates dynamically beneath camera) -->
     <g class="mc-island" filter="url(#islandShadow)">
 
       <!-- Bedrock Tip -->
@@ -229,13 +233,13 @@ export function renderWorldSvg(stateData) {
       <!-- Starter Wooden Chest at (5, 5) -->
       ${chestSvg}
 
-      <!-- Steve (Empty-Handed Lone Survivor) -->
+      <!-- Steve (Permanently Centered in Camera) -->
       ${steveSvg}
 
     </g>
   </g>
 
-  <!-- ================= 3. AUTHENTIC MINECRAFT HOTBAR (INVENTORY: 0 ITEMS) ================= -->
+  <!-- ================= 3. AUTHENTIC MINECRAFT HOTBAR ================= -->
   <rect x="20" y="466" width="880" height="58" rx="4" fill="#202224" stroke="#3D4044" stroke-width="2"/>
   <rect x="24" y="470" width="872" height="50" rx="3" fill="#161718"/>
 
@@ -246,55 +250,53 @@ export function renderWorldSvg(stateData) {
 </svg>`;
 }
 
-// Authentic Minecraft Oak Tree at (0, 1)
+// Authentic Minecraft Oak Tree
 function renderAuthenticOakTree(cx, cy) {
   return `
   <!-- Authentic Skyblock Oak Tree -->
   <g class="oak-tree">
-    <!-- Tree Trunk (4 blocks high) -->
+    <!-- Tree Trunk -->
     <polygon points="${cx - 10},${cy - 18} ${cx + 4},${cy - 10} ${cx + 4},${cy + 10} ${cx - 10},${cy + 2}" fill="#6B5130"/>
     <polygon points="${cx + 4},${cy - 10} ${cx + 18},${cy - 18} ${cx + 18},${cy + 2} ${cx + 4},${cy + 10}" fill="#4F3B23"/>
 
-    <!-- Trunk Bark Grain Lines -->
+    <!-- Bark Lines -->
     <line x1="${cx - 3}" y1="${cy - 14}" x2="${cx - 3}" y2="${cy + 6}" stroke="#543E23" stroke-width="1.2"/>
     <line x1="${cx + 11}" y1="${cy - 14}" x2="${cx + 11}" y2="${cy + 6}" stroke="#3D2E18" stroke-width="1.2"/>
 
-    <!-- Cubic Foliage - Lower Big Cluster -->
+    <!-- Cubic Foliage Lower Cluster -->
     <polygon points="${cx},${cy - 72} ${cx + 44},${cy - 50} ${cx},${cy - 28} ${cx - 44},${cy - 50}" fill="#4C802E"/>
     <polygon points="${cx - 44},${cy - 50} ${cx},${cy - 28} ${cx},${cy - 4} ${cx - 44},${cy - 26}" fill="#386420"/>
     <polygon points="${cx},${cy - 28} ${cx + 44},${cy - 50} ${cx + 44},${cy - 26} ${cx},${cy - 4}" fill="#264714"/>
 
-    <!-- Cubic Foliage - Top Crown Cluster -->
+    <!-- Cubic Foliage Crown -->
     <polygon points="${cx},${cy - 96} ${cx + 28},${cy - 82} ${cx},${cy - 68} ${cx - 28},${cy - 82}" fill="#5FA33A"/>
     <polygon points="${cx - 28},${cy - 82} ${cx},${cy - 68} ${cx},${cy - 48} ${cx - 28},${cy - 62}" fill="#4C802E"/>
     <polygon points="${cx},${cy - 68} ${cx + 28},${cy - 82} ${cx + 28},${cy - 62} ${cx},${cy - 48}" fill="#386420"/>
   </g>`;
 }
 
-// Authentic Minecraft Wooden Starter Chest at (5, 5)
+// Authentic Wooden Starter Chest
 function renderAuthenticChest(cx, cy) {
   const roofY = cy - 24;
   return `
   <!-- Starter Wooden Chest -->
   <g class="starter-chest">
-    <!-- Box Body -->
     <polygon points="${cx - 16},${roofY} ${cx},${roofY + 8} ${cx},${cy + 6} ${cx - 16},${cy - 2}" fill="#7D5127" stroke="#4A2F14" stroke-width="1"/>
     <polygon points="${cx},${roofY + 8} ${cx + 16},${roofY} ${cx + 16},${cy - 2} ${cx},${cy + 6}" fill="#5A3A1C" stroke="#3D2611" stroke-width="1"/>
     <polygon points="${cx},${roofY - 8} ${cx + 16},${roofY} ${cx},${roofY + 8} ${cx - 16},${roofY}" fill="#9E6732" stroke="#4A2F14" stroke-width="1"/>
-
-    <!-- Black Chest Trim -->
     <line x1="${cx - 16}" y1="${roofY + 3}" x2="${cx}" y2="${roofY + 11}" stroke="#1E1E1E" stroke-width="1.2"/>
     <line x1="${cx}" y1="${roofY + 11}" x2="${cx + 16}" y2="${roofY + 3}" stroke="#1E1E1E" stroke-width="1.2"/>
-
-    <!-- Front Iron Latch -->
     <rect x="${cx - 2.5}" y="${roofY + 5}" width="5" height="7" rx="1" fill="#E0E0E0" stroke="#000000" stroke-width="0.8"/>
   </g>`;
 }
 
-// Steve Solo Survivor Rig (EMPTY HANDED)
-function renderSoloSteve(cx, cy) {
+// Steve Solo Survivor (Centered in Viewport)
+function renderSoloSteve(cx, cy, inventory = []) {
+  // Check if Steve has a held tool in slot 1 or pickaxe
+  const heldPick = inventory.find(i => i.id === 'diamond_pickaxe' || i.id === 'stone_pickaxe' || i.id === 'pickaxe');
+
   return `
-  <!-- Steve (Solo Survivor - Empty Handed) -->
+  <!-- Steve (Locked to Camera Center) -->
   <g class="steve-actor" data-character="steve">
     <!-- Contact Shadow -->
     <ellipse cx="${cx}" cy="${cy + 4}" rx="20" ry="9" fill="#000000" opacity="0.4"/>
@@ -305,22 +307,22 @@ function renderSoloSteve(cx, cy) {
     <polygon points="${cx + 4},${cy + 2} ${cx + 11},${cy - 2} ${cx + 11},${cy - 12} ${cx + 4},${cy - 8}" fill="#3A3A3A"/>
     <polygon points="${cx + 11},${cy - 2} ${cx + 17},${cy - 5} ${cx + 17},${cy - 15} ${cx + 11},${cy - 12}" fill="#242424"/>
 
-    <!-- Blue Denim Pants -->
+    <!-- Pants -->
     <polygon points="${cx - 9},${cy - 11} ${cx - 1},${cy - 7} ${cx - 1},${cy - 26} ${cx - 9},${cy - 30}" fill="#2B3CA3"/>
     <polygon points="${cx + 2},${cy - 7} ${cx + 11},${cy - 11} ${cx + 11},${cy - 30} ${cx + 2},${cy - 26}" fill="#1B266B"/>
 
-    <!-- Cyan Shirt / Torso -->
+    <!-- Cyan Torso -->
     <polygon points="${cx},${cy - 54} ${cx + 16},${cy - 46} ${cx},${cy - 38} ${cx - 16},${cy - 46}" fill="#00BDBD"/>
     <polygon points="${cx - 16},${cy - 46} ${cx},${cy - 38} ${cx},${cy - 24} ${cx - 16},${cy - 32}" fill="#008E8E"/>
     <polygon points="${cx},${cy - 38} ${cx + 16},${cy - 46} ${cx + 16},${cy - 32} ${cx},${cy - 24}" fill="#006363"/>
 
-    <!-- Cubic Head -->
+    <!-- Head -->
     <polygon points="${cx},${cy - 74} ${cx + 13},${cy - 68} ${cx},${cy - 62} ${cx - 13},${cy - 68}" fill="#4A3018"/>
     <polygon points="${cx - 13},${cy - 68} ${cx},${cy - 62} ${cx},${cy - 45} ${cx - 13},${cy - 51}" fill="#BD8B72"/>
     <polygon points="${cx - 13},${cy - 68} ${cx},${cy - 62} ${cx},${cy - 58} ${cx - 13},${cy - 64}" fill="#4A3018"/>
     <polygon points="${cx},${cy - 62} ${cx + 13},${cy - 68} ${cx + 13},${cy - 51} ${cx},${cy - 45}" fill="#996D57"/>
 
-    <!-- Pixel Eyes -->
+    <!-- Eyes -->
     <rect x="${cx - 10}" y="${cy - 57}" width="4" height="3" fill="#FFFFFF"/>
     <rect x="${cx - 6}" y="${cy - 57}" width="3" height="3" fill="#2B3CA3"/>
 
@@ -328,10 +330,15 @@ function renderSoloSteve(cx, cy) {
     <polygon points="${cx - 18},${cy - 45} ${cx - 13},${cy - 42} ${cx - 13},${cy - 26} ${cx - 18},${cy - 29}" fill="#008E8E"/>
     <polygon points="${cx - 18},${cy - 29} ${cx - 13},${cy - 26} ${cx - 13},${cy - 18} ${cx - 18},${cy - 21}" fill="#BD8B72"/>
 
-    <!-- Right Arm (EMPTY HANDED, swinging naturally) -->
+    <!-- Right Arm -->
     <g class="steve-arm">
       <polygon points="${cx + 13},${cy - 42} ${cx + 18},${cy - 45} ${cx + 18},${cy - 29} ${cx + 13},${cy - 26}" fill="#006363"/>
       <polygon points="${cx + 13},${cy - 26} ${cx + 18},${cy - 29} ${cx + 18},${cy - 21} ${cx + 13},${cy - 18}" fill="#BD8B72"/>
+      ${heldPick ? `
+      <!-- Pickaxe Tool in Hand -->
+      <line x1="${cx + 15}" y1="${cy - 24}" x2="${cx + 34}" y2="${cy - 45}" stroke="#866043" stroke-width="3" stroke-linecap="round"/>
+      <polygon points="${cx + 27},${cy - 50} ${cx + 39},${cy - 41} ${cx + 37},${cy - 38} ${cx + 25},${cy - 47}" fill="#00FFFF"/>
+      ` : ''}
     </g>
   </g>`;
 }
@@ -343,7 +350,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     const state = JSON.parse(rawData);
     const svgContent = renderWorldSvg(state);
     fs.writeFileSync(SVG_OUTPUT, svgContent, 'utf-8');
-    console.log(`[SVG Engine] Successfully rendered Minecraft Skyblock to: ${SVG_OUTPUT}`);
+    console.log(`[SVG Engine] Successfully rendered Minecraft Skyblock with Camera Anchoring to: ${SVG_OUTPUT}`);
   } catch (err) {
     console.error(`[SVG Engine Error]:`, err);
     process.exit(1);

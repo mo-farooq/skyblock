@@ -13,10 +13,8 @@ const README_FILE = path.join(ROOT_DIR, 'README.md');
 // Helper to test if a tile (r, c) is on the authentic 27-block Skyblock L-island or an existing bridge
 function isWalkable(r, c, state) {
   if (r < 0 || c < 0 || r > 8 || c > 8) return false;
-  // Authentic 27-block Skyblock island
   const onIsland = (r < 3 && c < 3) || (r >= 3 && c < 6);
   if (onIsland) return true;
-  // Bridges built into the void
   if (state.bridges && state.bridges.some(b => b.row === r && b.col === c)) return true;
   return false;
 }
@@ -41,15 +39,15 @@ async function main() {
   // Save updated state
   fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 2), 'utf-8');
 
-  // Render SVG
+  // Render SVG with camera anchoring
   const svgContent = renderWorldSvg(state);
   fs.writeFileSync(SVG_OUTPUT, svgContent, 'utf-8');
-  console.log(`🎨 Rendered world-3d.svg successfully.`);
+  console.log(`🎨 Rendered world-3d.svg with camera anchoring successfully.`);
 
-  // Generate dynamic README with dynamically appearing & disappearing buttons
+  // Generate dynamic README with gamepad layout & dynamic crafting bench
   const dynamicReadme = generateGamepadReadme(state, context.repoOwner, context.repoName);
   fs.writeFileSync(README_FILE, dynamicReadme, 'utf-8');
-  console.log(`📜 Dynamic README updated with appearing/disappearing Gamepad buttons.`);
+  console.log(`📜 Dynamic README updated with Gamepad & Crafting Bench.`);
 
   // Comment & close issue if running in GitHub Actions
   if (process.env.GITHUB_TOKEN && context.issueNumber && context.repoOwner && context.repoName) {
@@ -71,7 +69,7 @@ export function processSkyblockAction(state, title, username, hasStarred) {
       addItem(state.inventory, 'bread', 'Bread', '🍞', 3);
       actionSummary = `@${username} opened the Starter Chest! Looted 1 Lava Bucket, 1 Ice Block, and 3 Bread.`;
     } else {
-      actionSummary = `@${username} opened the Starter Chest, but it was already looted!`;
+      actionSummary = `@${username} peeked into the Starter Chest, but it was already looted!`;
     }
     state.stats.chestsOpened = (state.stats.chestsOpened || 0) + 1;
   }
@@ -81,20 +79,56 @@ export function processSkyblockAction(state, title, username, hasStarred) {
     if (state.tree.hp <= 0) {
       state.tree.hp = state.tree.maxHp;
       addItem(state.inventory, 'oak_log', 'Oak Log', '🪵', 4);
-      addItem(state.inventory, 'oak_planks', 'Oak Planks', '🪵', 8);
-      actionSummary = `@${username} felled the Oak Tree! Harvested 4 Oak Logs and 8 Planks, replanting the sapling.`;
+      actionSummary = `@${username} felled the Oak Tree! Harvested 4 Oak Logs and replanted the sapling.`;
     } else {
       addItem(state.inventory, 'oak_log', 'Oak Log', '🪵', 1);
-      actionSummary = `@${username} punched the Oak Tree! (${state.tree.hp}/${state.tree.maxHp} HP remaining). +1 Log gathered.`;
+      actionSummary = `@${username} punched the Oak Tree! (${state.tree.hp}/${state.tree.maxHp} HP). +1 Log gathered.`;
     }
     state.stats.treesHarvested = (state.stats.treesHarvested || 0) + 1;
   }
-  // 3. DIRECTIONAL MOVEMENT (FORWARD / BACKWARD / LEFT / RIGHT)
+  // 3. CRAFTING RECIPES (SIMPLIFIED & DYNAMIC)
+  else if (lower.includes('craft 4 planks') || lower.includes('craft planks')) {
+    if (deductItem(state.inventory, 'oak_log', 1)) {
+      addItem(state.inventory, 'oak_planks', 'Oak Planks', '🪵', 4);
+      actionSummary = `@${username} crafted 4 Oak Planks from 1 Oak Log!`;
+    } else {
+      actionSummary = `@${username} tried to craft planks, but has no Oak Logs!`;
+    }
+  } else if (lower.includes('craft 4 sticks') || lower.includes('craft sticks')) {
+    if (deductItem(state.inventory, 'oak_planks', 2)) {
+      addItem(state.inventory, 'stick', 'Stick', '🥢', 4);
+      actionSummary = `@${username} crafted 4 Wooden Sticks from 2 Planks!`;
+    } else {
+      actionSummary = `@${username} tried to craft sticks, but has insufficient Planks!`;
+    }
+  } else if (lower.includes('craft crafting table') || lower.includes('craft bench')) {
+    if (deductItem(state.inventory, 'oak_planks', 4)) {
+      addItem(state.inventory, 'crafting_table', 'Crafting Table', '🪚', 1);
+      actionSummary = `@${username} crafted a Crafting Table from 4 Planks!`;
+    } else {
+      actionSummary = `@${username} tried to craft a Crafting Table, but has insufficient Planks!`;
+    }
+  } else if (lower.includes('craft stone pickaxe') || lower.includes('craft pickaxe')) {
+    if (deductItem(state.inventory, 'cobblestone', 3) && deductItem(state.inventory, 'stick', 2)) {
+      addItem(state.inventory, 'stone_pickaxe', 'Stone Pickaxe', '⛏️', 1);
+      actionSummary = `@${username} crafted a Stone Pickaxe from 3 Cobblestone and 2 Sticks!`;
+    } else {
+      actionSummary = `@${username} tried to craft a Pickaxe, but lacks Cobblestone or Sticks!`;
+    }
+  } else if (lower.includes('craft furnace')) {
+    if (deductItem(state.inventory, 'cobblestone', 8)) {
+      addItem(state.inventory, 'furnace', 'Furnace', '♨️', 1);
+      actionSummary = `@${username} crafted a Stone Furnace from 8 Cobblestone!`;
+    } else {
+      actionSummary = `@${username} tried to craft a Furnace, but lacks 8 Cobblestone!`;
+    }
+  }
+  // 4. DIRECTIONAL MOVEMENT
   else if (lower.includes('forward') || lower.includes('north') || lower.includes('up')) {
     const targetRow = state.steve.row - 1;
     if (isWalkable(targetRow, state.steve.col, state)) {
       state.steve.row = targetRow;
-      actionSummary = `@${username} moved Steve Forward to [${state.steve.row}, ${state.steve.col}].`;
+      actionSummary = `@${username} moved Steve Forward to [${state.steve.row}, ${state.steve.col}]. Camera centered!`;
     } else {
       actionSummary = `@${username} tried to move Forward, but reached the island edge facing the void!`;
     }
@@ -102,7 +136,7 @@ export function processSkyblockAction(state, title, username, hasStarred) {
     const targetRow = state.steve.row + 1;
     if (isWalkable(targetRow, state.steve.col, state)) {
       state.steve.row = targetRow;
-      actionSummary = `@${username} moved Steve Backward to [${state.steve.row}, ${state.steve.col}].`;
+      actionSummary = `@${username} moved Steve Backward to [${state.steve.row}, ${state.steve.col}]. Camera centered!`;
     } else {
       actionSummary = `@${username} tried to move Backward, but reached the island edge facing the void!`;
     }
@@ -110,7 +144,7 @@ export function processSkyblockAction(state, title, username, hasStarred) {
     const targetCol = state.steve.col + 1;
     if (isWalkable(state.steve.row, targetCol, state)) {
       state.steve.col = targetCol;
-      actionSummary = `@${username} moved Steve Right to [${state.steve.row}, ${state.steve.col}].`;
+      actionSummary = `@${username} moved Steve Right to [${state.steve.row}, ${state.steve.col}]. Camera centered!`;
     } else {
       actionSummary = `@${username} tried to move Right, but reached the island edge facing the void!`;
     }
@@ -118,21 +152,21 @@ export function processSkyblockAction(state, title, username, hasStarred) {
     const targetCol = state.steve.col - 1;
     if (isWalkable(state.steve.row, targetCol, state)) {
       state.steve.col = targetCol;
-      actionSummary = `@${username} moved Steve Left to [${state.steve.row}, ${state.steve.col}].`;
+      actionSummary = `@${username} moved Steve Left to [${state.steve.row}, ${state.steve.col}]. Camera centered!`;
     } else {
       actionSummary = `@${username} tried to move Left, but reached the island edge facing the void!`;
     }
   }
-  // 4. PLACE PLANK BRIDGE
+  // 5. PLACE PLANK BRIDGE
   else if (lower.includes('bridge') || lower.includes('plank')) {
-    if (deductItem(state.inventory, 'oak_planks', 1) || deductItem(state.inventory, 'oak_log', 1)) {
+    if (deductItem(state.inventory, 'oak_planks', 1)) {
       const bridgeRow = state.steve.row + 1;
       const bridgeCol = state.steve.col;
       state.bridges = state.bridges || [];
       state.bridges.push({ row: bridgeRow, col: bridgeCol, type: hasStarred ? 'diamond' : 'oak_planks', builder: username });
       actionSummary = `@${username} placed a bridge block at [${bridgeRow}, ${bridgeCol}] expanding the island!`;
     } else {
-      actionSummary = `@${username} tried to bridge, but has no planks or wood in inventory!`;
+      actionSummary = `@${username} tried to bridge, but has no planks in inventory!`;
     }
   } else {
     actionSummary = `@${username} surveyed the Skyblock realm!`;
@@ -161,12 +195,17 @@ function deductItem(inventory, id, count) {
   const slot = inventory.find(i => i.id === id);
   if (slot && slot.count >= count) {
     slot.count -= count;
+    if (slot.count === 0) {
+      // Remove empty item slot
+      const index = inventory.indexOf(slot);
+      if (index > -1) inventory.splice(index, 1);
+    }
     return true;
   }
   return false;
 }
 
-// Generate Gamepad Controller Layout with DYNAMICALLY APPEARING & DISAPPEARING BUTTONS
+// Generate Gamepad Controller Layout with DYNAMIC CRAFTING BENCH
 export function generateGamepadReadme(state, repoOwner = 'mo-farooq', repoName = 'skyblock') {
   const { steve, tree, chest, inventory } = state;
 
@@ -192,30 +231,49 @@ export function generateGamepadReadme(state, repoOwner = 'mo-farooq', repoName =
     ? `<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Move%3A+Step+Right&body=Moving+Steve+Right"><img src="https://img.shields.io/badge/➡️_RIGHT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Right"/></a>`
     : `<em>(Void)</em>`;
 
-  // 2. Dynamic Action Buttons (Appear ONLY when in range or inventory permits!)
+  // 2. Dynamic Action Buttons (Appear ONLY when in range!)
   const isBesideTree = Math.abs(steve.row - tree.row) <= 1 && Math.abs(steve.col - tree.col) <= 1;
   const isBesideChest = Math.abs(steve.row - chest.row) <= 1 && Math.abs(steve.col - chest.col) <= 1;
-  const hasPlanks = inventory.some(i => (i.id === 'oak_planks' || i.id === 'oak_log') && i.count > 0);
+  const hasPlanks = inventory.some(i => i.id === 'oak_planks' && i.count > 0);
 
   const actionButtons = [];
-
-  // [A] Punch Tree: APPEARS ONLY when beside the tree!
   if (isBesideTree) {
     actionButtons.push(`<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Punch+Oak+Tree&body=Punching+the+solitary+oak+tree+for+wood%21"><img src="https://img.shields.io/badge/🪓_[A]_PUNCH_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Punch Tree"/></a>`);
   }
-
-  // [B] Open Chest: APPEARS ONLY when beside the chest!
-  if (isBesideChest) {
+  if (isBesideChest && !chest.opened) {
     actionButtons.push(`<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Open+Starter+Chest&body=Opening+the+starter+chest+for+lava+and+ice%21"><img src="https://img.shields.io/badge/📦_[B]_OPEN_CHEST-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Open Chest"/></a>`);
   }
-
-  // [X] Bridge Planks: APPEARS ONLY if player has planks in inventory!
   if (hasPlanks) {
     actionButtons.push(`<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Bridge+Planks&body=Placing+plank+bridge+into+the+void%21"><img src="https://img.shields.io/badge/🪵_[X]_BRIDGE_VOID-D84315?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Bridge Void"/></a>`);
   }
-
-  // [Y] VIP Star: Always present
   actionButtons.push(`<a href="https://github.com/${repoOwner}/${repoName}/stargazers"><img src="https://img.shields.io/badge/⭐_[Y]_VIP_STAR-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="42" alt="VIP Star"/></a>`);
+
+  // 3. Dynamic Crafting Recipes (Appear ONLY when Steve holds the exact ingredients!)
+  const logCount = (inventory.find(i => i.id === 'oak_log') || {}).count || 0;
+  const plankCount = (inventory.find(i => i.id === 'oak_planks') || {}).count || 0;
+  const stickCount = (inventory.find(i => i.id === 'stick') || {}).count || 0;
+  const cobbleCount = (inventory.find(i => i.id === 'cobblestone') || {}).count || 0;
+
+  const craftButtons = [];
+  if (logCount >= 1) {
+    craftButtons.push(`<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Craft+4+Planks&body=Crafting+4+Oak+Planks+from+1+Oak+Log"><img src="https://img.shields.io/badge/🔨_CRAFT_4_PLANKS-B88746?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Planks"/></a>`);
+  }
+  if (plankCount >= 2) {
+    craftButtons.push(`<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Craft+4+Sticks&body=Crafting+4+Sticks+from+2+Planks"><img src="https://img.shields.io/badge/🔨_CRAFT_4_STICKS-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Sticks"/></a>`);
+  }
+  if (plankCount >= 4) {
+    craftButtons.push(`<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Craft+Crafting+Table&body=Crafting+Crafting+Table+from+4+Planks"><img src="https://img.shields.io/badge/🔨_CRAFT_TABLE-A67038?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Table"/></a>`);
+  }
+  if (cobbleCount >= 3 && stickCount >= 2) {
+    craftButtons.push(`<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Craft+Stone+Pickaxe&body=Crafting+Stone+Pickaxe+from+3+Cobblestone+and+2+Sticks"><img src="https://img.shields.io/badge/⛏️_CRAFT_PICKAXE-78909C?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Pickaxe"/></a>`);
+  }
+  if (cobbleCount >= 8) {
+    craftButtons.push(`<a href="https://github.com/${repoOwner}/${repoName}/issues/new?title=Action%3A+Craft+Furnace&body=Crafting+Furnace+from+8+Cobblestone"><img src="https://img.shields.io/badge/♨️_CRAFT_FURNACE-455A64?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Furnace"/></a>`);
+  }
+
+  const craftSection = craftButtons.length > 0
+    ? `### 🔨 Available Crafting Recipes (Based on Current Inventory)\n<p>\n  ${craftButtons.join(' &nbsp; ')}\n</p>`
+    : `### 🔨 Crafting Bench\n<em>(Inventory has no craftable ingredients. Punch the Oak Tree or loot the Starter Chest to gather materials!)</em>`;
 
   return `# 🏝️ Minecraft Skyblock Survival
 
@@ -226,7 +284,7 @@ export function generateGamepadReadme(state, repoOwner = 'mo-farooq', repoName =
 <div align="center">
 
 ## 🎮 Dynamic Gamepad Controller: Make Your Move!
-*Steve is at **Tile [${steve.row}, ${steve.col}]**. Buttons appear and disappear dynamically based on available moves!*
+*Steve is at **Tile [${steve.row}, ${steve.col}]**. The camera is locked to Steve, and buttons update in real-time!*
 
 <table>
   <tr>
@@ -267,6 +325,8 @@ export function generateGamepadReadme(state, repoOwner = 'mo-farooq', repoName =
   </tr>
 </table>
 
+${craftSection}
+
 </div>
 
 ---
@@ -274,12 +334,9 @@ export function generateGamepadReadme(state, repoOwner = 'mo-farooq', repoName =
 ## ⚡ How It Works
 
 - **Authentic Minecraft SkyBlock**: Faithfully modeled on Noobcrew's classic 2011 27-block L-island layout with 4 vertical dirt layers and a bedrock cornerstone.
-- **Empty-Handed Start**: Steve spawns completely empty-handed with 0 inventory items. Players must navigate to the solitary oak tree to punch wood and reach the starter chest for supplies!
-- **Dynamic Appearing & Disappearing Gamepad**:
-  - **FORWARD, BACKWARD, LEFT, and RIGHT** only appear if the target tile exists on the island. If facing the void, the step button disappears and displays *(Void)*.
-  - **[A] PUNCH TREE** appears **only** when Steve walks beside the tree at [0, 1].
-  - **[B] OPEN CHEST** appears **only** when Steve walks beside the starter chest at [5, 5].
-  - **[X] BRIDGE VOID** appears **only** once wood planks have been gathered into inventory.
+- **Camera-Anchored Viewport**: Steve is locked permanently at the center of the screen; the floating platform translates smoothly beneath him as he navigates across the void!
+- **Dynamic Crafting Bench**: Recipe buttons only appear when Steve holds the exact ingredients in his hotbar pack.
+- **Empty-Handed Start**: Steve spawns with 0 inventory items. Gather oak logs to craft planks, sticks, and tools!
 
 ---
 

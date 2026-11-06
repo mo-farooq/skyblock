@@ -2,11 +2,11 @@
   "game": "Minecraft Skyblock Solo Survival",
   "season": 1,
   "steve": {
-    "row": 1,
+    "row": 3,
     "col": 2,
     "facing": "south",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq moved Steve Forward to [1, 2]."
+    "lastAction": "Spawned on Skyblock Island (Empty-Handed)"
   },
   "tree": {
     "row": 0,
@@ -18,29 +18,14 @@
   "chest": {
     "row": 5,
     "col": 5,
-    "opened": false,
-    "items": [
-      {
-        "id": "lava_bucket",
-        "name": "Lava Bucket",
-        "emoji": "🌋",
-        "count": 1
-      },
-      {
-        "id": "ice_block",
-        "name": "Ice Block",
-        "emoji": "🧊",
-        "count": 1
-      }
-    ]
+    "opened": false
   },
   "inventory": [],
   "stats": {
-    "totalMoves": 2,
+    "totalMoves": 0,
     "treesHarvested": 0,
     "chestsOpened": 0,
-    "cobbleMined": 0,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-06T21:05:22.106Z"
+    "updatedAt": "2026-11-06T21:15:00.000Z"
   }
 }

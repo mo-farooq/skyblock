@@ -7,7 +7,7 @@
 <div align="center">
 
 ## 🎮 Dynamic Gamepad Controller: Make Your Move!
-*Steve is at **Tile [1, 2]**. Buttons appear and disappear dynamically based on available moves!*
+*Steve is at **Tile [3, 2]**. The camera is locked to Steve, and buttons update in real-time!*
 
 <table>
   <tr>
@@ -23,7 +23,7 @@
     <td></td>
     <td></td>
     <td align="center" rowspan="3">
-      <a href="https://github.com/mo-farooq/skyblock/issues/new?title=Action%3A+Punch+Oak+Tree&body=Punching+the+solitary+oak+tree+for+wood%21"><img src="https://img.shields.io/badge/🪓_[A]_PUNCH_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Punch Tree"/></a><br><br><a href="https://github.com/mo-farooq/skyblock/stargazers"><img src="https://img.shields.io/badge/⭐_[Y]_VIP_STAR-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="42" alt="VIP Star"/></a>
+      <a href="https://github.com/mo-farooq/skyblock/stargazers"><img src="https://img.shields.io/badge/⭐_[Y]_VIP_STAR-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="42" alt="VIP Star"/></a>
     </td>
   </tr>
   <tr>
@@ -34,7 +34,7 @@
       <img src="https://img.shields.io/badge/🕹️_STEVE-000000?style=for-the-badge&logoColor=white" height="38"/>
     </td>
     <td align="center">
-      <em>(Void)</em>
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?title=Move%3A+Step+Right&body=Moving+Steve+Right"><img src="https://img.shields.io/badge/➡️_RIGHT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Right"/></a>
     </td>
     <td></td>
   </tr>
@@ -48,6 +48,9 @@
   </tr>
 </table>
 
+### 🔨 Crafting Bench
+<em>(Inventory has no craftable ingredients. Punch the Oak Tree or loot the Starter Chest to gather materials!)</em>
+
 </div>
 
 ---
@@ -55,12 +58,9 @@
 ## ⚡ How It Works
 
 - **Authentic Minecraft SkyBlock**: Faithfully modeled on Noobcrew's classic 2011 27-block L-island layout with 4 vertical dirt layers and a bedrock cornerstone.
-- **Empty-Handed Start**: Steve spawns completely empty-handed with 0 inventory items. Players must navigate to the solitary oak tree to punch wood and reach the starter chest for supplies!
-- **Dynamic Appearing & Disappearing Gamepad**:
-  - **FORWARD, BACKWARD, LEFT, and RIGHT** only appear if the target tile exists on the island. If facing the void, the step button disappears and displays *(Void)*.
-  - **[A] PUNCH TREE** appears **only** when Steve walks beside the tree at [0, 1].
-  - **[B] OPEN CHEST** appears **only** when Steve walks beside the starter chest at [5, 5].
-  - **[X] BRIDGE VOID** appears **only** once wood planks have been gathered into inventory.
+- **Camera-Anchored Viewport**: Steve is locked permanently at the center of the screen; the floating platform translates smoothly beneath him as he navigates across the void!
+- **Dynamic Crafting Bench**: Recipe buttons only appear when Steve holds the exact ingredients in his hotbar pack.
+- **Empty-Handed Start**: Steve spawns with 0 inventory items. Gather oak logs to craft planks, sticks, and tools!
 
 ---
 
