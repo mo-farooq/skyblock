@@ -2,11 +2,11 @@
   "game": "Minecraft Skyblock Solo Survival",
   "season": 1,
   "steve": {
-    "row": 3,
+    "row": 2,
     "col": 1,
     "facing": "south",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq moved Steve Left to [3, 1]. Camera centered!"
+    "lastAction": "@mo-farooq moved Steve Forward to [2, 1]. Camera centered!"
   },
   "tree": {
     "row": 0,
@@ -22,10 +22,10 @@
   },
   "inventory": [],
   "stats": {
-    "totalMoves": 1,
+    "totalMoves": 2,
     "treesHarvested": 0,
     "chestsOpened": 0,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-06T22:07:02.227Z"
+    "updatedAt": "2026-11-06T22:11:10.669Z"
   }
 }
