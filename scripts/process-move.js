@@ -19,10 +19,11 @@ function isWalkable(r, c, state) {
   return false;
 }
 
-// Generate standard GitHub Issue URL with template and clean encoding
-function createIssueUrl(repoOwner, repoName, title) {
-  const enc = encodeURIComponent(title);
-  return `https://github.com/${repoOwner}/${repoName}/issues/new?template=turn.yml&title=${enc}&command=${enc}`;
+// Generate standard GitHub Issue URL with clean title and body encoding
+function createIssueUrl(repoOwner, repoName, title, body) {
+  const encTitle = encodeURIComponent(title);
+  const encBody = encodeURIComponent(body || 'Click "Submit new issue" to execute this turn on the live Skyblock realm!');
+  return `https://github.com/${repoOwner}/${repoName}/issues/new?title=${encTitle}&body=${encBody}`;
 }
 
 async function main() {
