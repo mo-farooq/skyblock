@@ -52,7 +52,7 @@
 
   <!-- Title & Mode -->
   <text x="84" y="38" fill="#FFFFFF" class="font-mc" font-size="13" font-weight="700">MINECRAFT SKYBLOCK</text>
-  <text x="84" y="55" fill="#55FF55" class="font-mc" font-size="9">STEVE AT TILE [1, 1] • FACING WEST</text>
+  <text x="84" y="55" fill="#55FF55" class="font-mc" font-size="9">STEVE AT TILE [2, 1] • FACING SOUTH</text>
 
   <!-- Hearts & Hunger Bars -->
   <g transform="translate(550, 28)">
@@ -65,7 +65,7 @@
   <!-- Level Badge -->
   <g transform="translate(760, 23)">
     <rect width="128" height="40" rx="3" fill="#1A1B1C" stroke="#55FF55" stroke-width="1.5"/>
-    <text x="64" y="16" fill="#AAAAAA" class="font-mc" font-size="7" text-anchor="middle">TURN #9</text>
+    <text x="64" y="16" fill="#AAAAAA" class="font-mc" font-size="7" text-anchor="middle">TURN #10</text>
     <text x="64" y="33" fill="#55FF55" class="font-mc" font-size="12" font-weight="700" text-anchor="middle">LEVEL 3</text>
   </g>
 
@@ -87,7 +87,7 @@
       <rect width="856" height="26" rx="3" fill="#10141D" opacity="0.85" stroke="#353D4D" stroke-width="1"/>
       <circle cx="16" cy="13" r="4" fill="#55FF55"/>
       <text x="28" y="17" fill="#FFAA00" class="font-mc" font-size="8" font-weight="700">LATEST MOVE:</text>
-      <text x="145" y="17" fill="#FFFFFF" class="font-mc" font-size="8">@mo-farooq stepped Left to [1, 1]!</text>
+      <text x="145" y="17" fill="#FFFFFF" class="font-mc" font-size="8">@mo-farooq stepped Backward to [2, 1]!</text>
     </g>
 
     <!-- The Floating Platform (Anchored Isometric World) -->
@@ -155,8 +155,6 @@
       <!-- Grass Tile [1, 1] -->
       <polygon points="460,213 496,231 460,249 424,231" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
       <polygon points="460,221 478,230 460,239 442,230" fill="#6E9F3D" opacity="0.6"/>
-      <!-- Steve Active Tile Selector -->
-      <polygon points="460,213 496,231 460,249 424,231" fill="rgba(255, 255, 85, 0.22)" stroke="#FFFF55" stroke-width="2.5" stroke-dasharray="6,3"/>
       <!-- Grass Tile [2, 0] -->
       <polygon points="388,213 424,231 388,249 352,231" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
       <polygon points="388,221 406,230 388,239 370,230" fill="#6E9F3D" opacity="0.6"/>
@@ -176,6 +174,8 @@
     <polygon points="424,239 442,248 424,257 406,248" fill="#AAFFFF" opacity="0.7"/>
     
   </g>
+      <!-- Steve Active Tile Selector -->
+      <polygon points="424,231 460,249 424,267 388,249" fill="rgba(255, 255, 85, 0.22)" stroke="#FFFF55" stroke-width="2.5" stroke-dasharray="6,3"/>
       <!-- Grass Tile [3, 0] -->
       <polygon points="352,231 388,249 352,267 316,249" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
       <polygon points="352,239 370,248 352,257 334,248" fill="#6E9F3D" opacity="0.6"/>
@@ -271,51 +271,51 @@
     </g>
   </g>
 
-  <!-- Steve Solo Survivor (Facing: west) -->
-  <g class="steve-actor" data-character="steve" data-facing="west" transform="translate(920, 0) scale(-1, 1)">
+  <!-- Steve Solo Survivor (Facing: south) -->
+  <g class="steve-actor" data-character="steve" data-facing="south" >
     <!-- Contact Shadow -->
-    <ellipse cx="460" cy="235" rx="18" ry="8" fill="#000000" opacity="0.45"/>
+    <ellipse cx="424" cy="253" rx="18" ry="8" fill="#000000" opacity="0.45"/>
 
     <!-- Boots -->
-    <polygon points="450,229 457,233 457,223 450,219" fill="#3A3A3A"/>
-    <polygon points="457,233 463,229 463,219 457,223" fill="#242424"/>
-    <polygon points="464,233 471,229 471,219 464,223" fill="#3A3A3A"/>
-    <polygon points="471,229 477,226 477,216 471,219" fill="#242424"/>
+    <polygon points="414,247 421,251 421,241 414,237" fill="#3A3A3A"/>
+    <polygon points="421,251 427,247 427,237 421,241" fill="#242424"/>
+    <polygon points="428,251 435,247 435,237 428,241" fill="#3A3A3A"/>
+    <polygon points="435,247 441,244 441,234 435,237" fill="#242424"/>
 
     <!-- Pants -->
-    <polygon points="451,220 459,224 459,205 451,201" fill="#2B3CA3"/>
-    <polygon points="462,224 471,220 471,201 462,205" fill="#1B266B"/>
+    <polygon points="415,238 423,242 423,223 415,219" fill="#2B3CA3"/>
+    <polygon points="426,242 435,238 435,219 426,223" fill="#1B266B"/>
 
     <!-- Cyan Torso -->
-    <polygon points="460,177 476,185 460,193 444,185" fill="#00BDBD"/>
-    <polygon points="444,185 460,193 460,207 444,199" fill="#008E8E"/>
-    <polygon points="460,193 476,185 476,199 460,207" fill="#006363"/>
+    <polygon points="424,195 440,203 424,211 408,203" fill="#00BDBD"/>
+    <polygon points="408,203 424,211 424,225 408,217" fill="#008E8E"/>
+    <polygon points="424,211 440,203 440,217 424,225" fill="#006363"/>
 
     <!-- Head -->
-    <polygon points="460,157 473,163 460,169 447,163" fill="#4A3018"/>
-    <polygon points="447,163 460,169 460,186 447,180" fill="#BD8B72"/>
-    <polygon points="447,163 460,169 460,173 447,167" fill="#4A3018"/>
-    <polygon points="460,169 473,163 473,180 460,186" fill="#996D57"/>
+    <polygon points="424,175 437,181 424,187 411,181" fill="#4A3018"/>
+    <polygon points="411,181 424,187 424,204 411,198" fill="#BD8B72"/>
+    <polygon points="411,181 424,187 424,191 411,185" fill="#4A3018"/>
+    <polygon points="424,187 437,181 437,198 424,204" fill="#996D57"/>
 
     
     <!-- Eyes -->
-    <rect x="450" y="174" width="4" height="3" fill="#FFFFFF"/>
-    <rect x="454" y="174" width="3" height="3" fill="#2B3CA3"/>
+    <rect x="414" y="192" width="4" height="3" fill="#FFFFFF"/>
+    <rect x="418" y="192" width="3" height="3" fill="#2B3CA3"/>
     
 
     <!-- Left Arm -->
-    <polygon points="442,186 447,189 447,205 442,202" fill="#008E8E"/>
-    <polygon points="442,202 447,205 447,213 442,210" fill="#BD8B72"/>
+    <polygon points="406,204 411,207 411,223 406,220" fill="#008E8E"/>
+    <polygon points="406,220 411,223 411,231 406,228" fill="#BD8B72"/>
 
     <!-- Right Arm (Fixed: Naturally attached to shoulder, no detached sky swinging) -->
     <g>
-      <polygon points="473,189 478,186 478,202 473,205" fill="#006363"/>
-      <polygon points="473,205 478,202 478,210 473,213" fill="#BD8B72"/>
+      <polygon points="437,207 442,204 442,220 437,223" fill="#006363"/>
+      <polygon points="437,223 442,220 442,228 437,231" fill="#BD8B72"/>
       
     </g>
 
     <!-- Minecraft Multiplayer Nametag -->
-    <g transform="translate(460, 149)">
+    <g transform="translate(424, 167)">
       <rect x="-46" y="-12" width="92" height="15" rx="2" fill="#000000" opacity="0.65"/>
       <text x="0" y="-1" fill="#FFFFFF" class="font-mc" font-size="7.5" text-anchor="middle">@mo-farooq</text>
     </g>

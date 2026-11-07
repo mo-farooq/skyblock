@@ -2,11 +2,11 @@
   "game": "Minecraft Skyblock Solo Survival",
   "season": 1,
   "steve": {
-    "row": 1,
+    "row": 2,
     "col": 1,
-    "facing": "west",
+    "facing": "south",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq stepped Left to [1, 1]!"
+    "lastAction": "@mo-farooq stepped Backward to [2, 1]!"
   },
   "tree": {
     "row": 0,
@@ -37,11 +37,11 @@
     }
   ],
   "stats": {
-    "totalMoves": 9,
+    "totalMoves": 10,
     "treesHarvested": 2,
     "chestsOpened": 0,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-07T10:18:39.841Z"
+    "updatedAt": "2026-11-07T10:38:59.779Z"
   },
   "bridges": [
     {
