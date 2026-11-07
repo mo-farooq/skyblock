@@ -21,8 +21,8 @@ function isWalkable(r, c, state) {
 
 // Generate standard GitHub Issue URL with template and clean encoding
 function createIssueUrl(repoOwner, repoName, title) {
-  const encTitle = encodeURIComponent(title);
-  return `https://github.com/${repoOwner}/${repoName}/issues/new?template=skyblock-move.md&title=${encTitle}`;
+  const enc = encodeURIComponent(title);
+  return `https://github.com/${repoOwner}/${repoName}/issues/new?template=turn.yml&title=${enc}&command=${enc}`;
 }
 
 async function main() {
