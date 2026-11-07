@@ -7,7 +7,7 @@
 <div align="center">
 
 ## 🎮 Dynamic Gamepad Controller: Make Your Move!
-*Steve is at **Tile [1, 1]**. The camera is locked to Steve, and buttons update in real-time!*
+*Steve is at **Tile [1, 2]**. The camera is locked to Steve, and buttons update in real-time!*
 
 > 💡 **How to Play:** Click any button below &rarr; click the green **"Create"** button on GitHub &rarr; Steve moves & the island updates in ~15s!
 
@@ -36,7 +36,7 @@
       <img src="https://img.shields.io/badge/🕹️_STEVE-000000?style=for-the-badge&logoColor=white" height="38"/>
     </td>
     <td align="center">
-      <a href="https://www.github.com/mo-farooq/skyblock/issues/new?title=Move%3A%20Step%20Right&body=%23%23%23%20%F0%9F%95%B9%EF%B8%8F%20Skyblock%20Realm%20Turn%3A%20Move%3A%20Step%20Right%0A%0A%3E%20**Click%20the%20green%20%22Create%22%20button%20below%20to%20execute%20this%20turn!**%0A%0AMoving%20Steve%20Right%20on%20the%20Skyblock%20Island." data-turbo="false"><img src="https://img.shields.io/badge/➡️_RIGHT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Right"/></a>
+      <em>(Void)</em>
     </td>
     <td></td>
   </tr>

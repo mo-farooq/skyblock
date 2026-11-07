@@ -3,10 +3,10 @@
   "season": 1,
   "steve": {
     "row": 1,
-    "col": 1,
+    "col": 2,
     "facing": "south",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq punched the Oak Tree! (2/4 HP). +1 Log gathered."
+    "lastAction": "@mo-farooq moved Steve Right to [1, 2]. Camera centered!"
   },
   "tree": {
     "row": 0,
@@ -37,11 +37,11 @@
     }
   ],
   "stats": {
-    "totalMoves": 7,
+    "totalMoves": 8,
     "treesHarvested": 2,
     "chestsOpened": 0,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-07T09:53:05.951Z"
+    "updatedAt": "2026-11-07T09:53:38.769Z"
   },
   "bridges": [
     {
