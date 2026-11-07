@@ -52,7 +52,7 @@
 
   <!-- Title & Mode -->
   <text x="84" y="38" fill="#FFFFFF" class="font-mc" font-size="13" font-weight="700">MINECRAFT SKYBLOCK</text>
-  <text x="84" y="55" fill="#55FF55" class="font-mc" font-size="9">CAMERA LOCKED ON STEVE • TILE [1, 1]</text>
+  <text x="84" y="55" fill="#55FF55" class="font-mc" font-size="9">STEVE AT TILE [1, 1] • FACING WEST</text>
 
   <!-- Hearts & Hunger Bars -->
   <g transform="translate(550, 28)">
@@ -87,258 +87,256 @@
       <rect width="856" height="26" rx="3" fill="#10141D" opacity="0.85" stroke="#353D4D" stroke-width="1"/>
       <circle cx="16" cy="13" r="4" fill="#55FF55"/>
       <text x="28" y="17" fill="#FFAA00" class="font-mc" font-size="8" font-weight="700">LATEST MOVE:</text>
-      <text x="145" y="17" fill="#FFFFFF" class="font-mc" font-size="8">@mo-farooq moved Steve Left to [1, 1]. Camera centered!</text>
+      <text x="145" y="17" fill="#FFFFFF" class="font-mc" font-size="8">@mo-farooq stepped Left to [1, 1]!</text>
     </g>
 
-    <!-- The Floating Platform (Translates dynamically beneath camera) -->
+    <!-- The Floating Platform (Anchored Isometric World) -->
     <g class="mc-island" filter="url(#islandShadow)">
 
       <!-- Bedrock Tip -->
       
-  <polygon points="368,354 408,354 388,370" fill="#2E2E2E"/>
-  <polygon points="368,354 388,370 378,360" fill="#1F1F1F"/>
+  <polygon points="368,345 408,345 388,361" fill="#2E2E2E"/>
+  <polygon points="368,345 388,361 378,351" fill="#1F1F1F"/>
 
       <!-- Front Cliff Faces (Dirt Extrusions) -->
       
-    <polygon points="244,294 280,312 280,356 244,338" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
-    <polygon points="244,294 280,312 280,318 262,312 244,300" fill="#4C7026"/>
-    <line x1="262" y1="316" x2="262" y2="330" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="280,312 316,330 316,374 280,356" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
-    <polygon points="280,312 316,330 316,336 298,330 280,318" fill="#4C7026"/>
-    <line x1="298" y1="334" x2="298" y2="348" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="316,330 352,348 352,392 316,374" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
-    <polygon points="316,330 352,348 352,354 334,348 316,336" fill="#4C7026"/>
-    <line x1="334" y1="352" x2="334" y2="366" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="352,348 388,366 388,410 352,392" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
-    <polygon points="352,348 388,366 388,372 370,366 352,354" fill="#4C7026"/>
-    <line x1="370" y1="370" x2="370" y2="384" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="388,366 424,384 424,428 388,410" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
-    <polygon points="388,366 424,384 424,390 406,384 388,372" fill="#4C7026"/>
-    <line x1="406" y1="388" x2="406" y2="402" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="424,384 460,402 460,446 424,428" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
-    <polygon points="424,384 460,402 460,408 442,402 424,390" fill="#4C7026"/>
-    <line x1="442" y1="406" x2="442" y2="420" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="244,285 280,303 280,347 244,329" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
+    <polygon points="244,285 280,303 280,309 262,303 244,291" fill="#4C7026"/>
+    <line x1="262" y1="307" x2="262" y2="321" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="280,303 316,321 316,365 280,347" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
+    <polygon points="280,303 316,321 316,327 298,321 280,309" fill="#4C7026"/>
+    <line x1="298" y1="325" x2="298" y2="339" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="316,321 352,339 352,383 316,365" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
+    <polygon points="316,321 352,339 352,345 334,339 316,327" fill="#4C7026"/>
+    <line x1="334" y1="343" x2="334" y2="357" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="352,339 388,357 388,401 352,383" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
+    <polygon points="352,339 388,357 388,363 370,357 352,345" fill="#4C7026"/>
+    <line x1="370" y1="361" x2="370" y2="375" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="388,357 424,375 424,419 388,401" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
+    <polygon points="388,357 424,375 424,381 406,375 388,363" fill="#4C7026"/>
+    <line x1="406" y1="379" x2="406" y2="393" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="424,375 460,393 460,437 424,419" fill="#866043" stroke="#66462C" stroke-width="0.8"/>
+    <polygon points="424,375 460,393 460,399 442,393 424,381" fill="#4C7026"/>
+    <line x1="442" y1="397" x2="442" y2="411" stroke="#6E4E33" stroke-width="1.5" opacity="0.5"/>
       
-    <polygon points="532,258 568,240 568,284 532,302" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
-    <polygon points="532,258 568,240 568,246 550,258 532,264" fill="#3D5A1E"/>
-    <line x1="550" y1="262" x2="550" y2="276" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="496,276 532,258 532,302 496,320" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
-    <polygon points="496,276 532,258 532,264 514,276 496,282" fill="#3D5A1E"/>
-    <line x1="514" y1="280" x2="514" y2="294" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="460,294 496,276 496,320 460,338" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
-    <polygon points="460,294 496,276 496,282 478,294 460,300" fill="#3D5A1E"/>
-    <line x1="478" y1="298" x2="478" y2="312" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="532,366 568,348 568,392 532,410" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
-    <polygon points="532,366 568,348 568,354 550,366 532,372" fill="#3D5A1E"/>
-    <line x1="550" y1="370" x2="550" y2="384" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="496,384 532,366 532,410 496,428" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
-    <polygon points="496,384 532,366 532,372 514,384 496,390" fill="#3D5A1E"/>
-    <line x1="514" y1="388" x2="514" y2="402" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
-    <polygon points="460,402 496,384 496,428 460,446" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
-    <polygon points="460,402 496,384 496,390 478,402 460,408" fill="#3D5A1E"/>
-    <line x1="478" y1="406" x2="478" y2="420" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="532,249 568,231 568,275 532,293" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
+    <polygon points="532,249 568,231 568,237 550,249 532,255" fill="#3D5A1E"/>
+    <line x1="550" y1="253" x2="550" y2="267" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="496,267 532,249 532,293 496,311" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
+    <polygon points="496,267 532,249 532,255 514,267 496,273" fill="#3D5A1E"/>
+    <line x1="514" y1="271" x2="514" y2="285" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="460,285 496,267 496,311 460,329" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
+    <polygon points="460,285 496,267 496,273 478,285 460,291" fill="#3D5A1E"/>
+    <line x1="478" y1="289" x2="478" y2="303" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="532,357 568,339 568,383 532,401" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
+    <polygon points="532,357 568,339 568,345 550,357 532,363" fill="#3D5A1E"/>
+    <line x1="550" y1="361" x2="550" y2="375" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="496,375 532,357 532,401 496,419" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
+    <polygon points="496,375 532,357 532,363 514,375 496,381" fill="#3D5A1E"/>
+    <line x1="514" y1="379" x2="514" y2="393" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
+    <polygon points="460,393 496,375 496,419 460,437" fill="#694B32" stroke="#4F3622" stroke-width="0.8"/>
+    <polygon points="460,393 496,375 496,381 478,393 460,399" fill="#3D5A1E"/>
+    <line x1="478" y1="397" x2="478" y2="411" stroke="#523924" stroke-width="1.5" opacity="0.5"/>
 
       <!-- Island Surface & Bridge Tiles -->
       
       <!-- Grass Tile [0, 0] -->
-      <polygon points="460,186 496,204 460,222 424,204" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="460,194 478,203 460,212 442,203" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="460,177 496,195 460,213 424,195" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="460,185 478,194 460,203 442,194" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [0, 1] -->
-      <polygon points="496,204 532,222 496,240 460,222" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="496,212 514,221 496,230 478,221" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="496,195 532,213 496,231 460,213" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="496,203 514,212 496,221 478,212" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [1, 0] -->
-      <polygon points="424,204 460,222 424,240 388,222" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="424,212 442,221 424,230 406,221" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="424,195 460,213 424,231 388,213" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="424,203 442,212 424,221 406,212" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [0, 2] -->
-      <polygon points="532,222 568,240 532,258 496,240" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="532,230 550,239 532,248 514,239" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="532,213 568,231 532,249 496,231" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="532,221 550,230 532,239 514,230" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [1, 1] -->
-      <polygon points="460,222 496,240 460,258 424,240" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="460,230 478,239 460,248 442,239" fill="#6E9F3D" opacity="0.6"/>
-      <!-- Steve Current Tile Selector -->
-      <polygon points="460,222 496,240 460,258 424,240" fill="rgba(255, 255, 85, 0.22)" stroke="#FFFF55" stroke-width="2.5" stroke-dasharray="6,3"/>
+      <polygon points="460,213 496,231 460,249 424,231" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="460,221 478,230 460,239 442,230" fill="#6E9F3D" opacity="0.6"/>
+      <!-- Steve Active Tile Selector -->
+      <polygon points="460,213 496,231 460,249 424,231" fill="rgba(255, 255, 85, 0.22)" stroke="#FFFF55" stroke-width="2.5" stroke-dasharray="6,3"/>
       <!-- Grass Tile [2, 0] -->
-      <polygon points="388,222 424,240 388,258 352,240" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="388,230 406,239 388,248 370,239" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="388,213 424,231 388,249 352,231" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="388,221 406,230 388,239 370,230" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [1, 2] -->
-      <polygon points="496,240 532,258 496,276 460,258" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="496,248 514,257 496,266 478,257" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="496,231 532,249 496,267 460,249" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="496,239 514,248 496,257 478,248" fill="#6E9F3D" opacity="0.6"/>
   <!-- Bridge Block (diamond) -->
   <g class="bridge-block">
     <!-- Left Face -->
-    <polygon points="388,258 424,276 424,292 388,274" fill="#00CCCC" stroke="#008888" stroke-width="0.8"/>
+    <polygon points="388,249 424,267 424,283 388,265" fill="#00CCCC" stroke="#008888" stroke-width="0.8"/>
     <!-- Right Face -->
-    <polygon points="424,276 460,258 460,274 424,292" fill="#009999" stroke="#006666" stroke-width="0.8"/>
+    <polygon points="424,267 460,249 460,265 424,283" fill="#009999" stroke="#006666" stroke-width="0.8"/>
     <!-- Top Face -->
-    <polygon points="424,240 460,258 424,276 388,258" fill="#55FFFF" stroke="#00AAAA" stroke-width="0.8"/>
+    <polygon points="424,231 460,249 424,267 388,249" fill="#55FFFF" stroke="#00AAAA" stroke-width="0.8"/>
     <!-- Texture Detail -->
     
-    <polygon points="424,248 442,257 424,266 406,257" fill="#AAFFFF" opacity="0.7"/>
+    <polygon points="424,239 442,248 424,257 406,248" fill="#AAFFFF" opacity="0.7"/>
     
   </g>
       <!-- Grass Tile [3, 0] -->
-      <polygon points="352,240 388,258 352,276 316,258" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="352,248 370,257 352,266 334,257" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="352,231 388,249 352,267 316,249" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="352,239 370,248 352,257 334,248" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [2, 2] -->
-      <polygon points="460,258 496,276 460,294 424,276" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="460,266 478,275 460,284 442,275" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="460,249 496,267 460,285 424,267" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="460,257 478,266 460,275 442,266" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [3, 1] -->
-      <polygon points="388,258 424,276 388,294 352,276" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="388,266 406,275 388,284 370,275" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="388,249 424,267 388,285 352,267" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="388,257 406,266 388,275 370,266" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [4, 0] -->
-      <polygon points="316,258 352,276 316,294 280,276" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="316,266 334,275 316,284 298,275" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="316,249 352,267 316,285 280,267" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="316,257 334,266 316,275 298,266" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [3, 2] -->
-      <polygon points="424,276 460,294 424,312 388,294" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="424,284 442,293 424,302 406,293" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="424,267 460,285 424,303 388,285" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="424,275 442,284 424,293 406,284" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [4, 1] -->
-      <polygon points="352,276 388,294 352,312 316,294" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="352,284 370,293 352,302 334,293" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="352,267 388,285 352,303 316,285" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="352,275 370,284 352,293 334,284" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [5, 0] -->
-      <polygon points="280,276 316,294 280,312 244,294" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="280,284 298,293 280,302 262,293" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="280,267 316,285 280,303 244,285" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="280,275 298,284 280,293 262,284" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [3, 3] -->
-      <polygon points="460,294 496,312 460,330 424,312" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="460,302 478,311 460,320 442,311" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="460,285 496,303 460,321 424,303" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="460,293 478,302 460,311 442,302" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [4, 2] -->
-      <polygon points="388,294 424,312 388,330 352,312" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="388,302 406,311 388,320 370,311" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="388,285 424,303 388,321 352,303" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="388,293 406,302 388,311 370,302" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [5, 1] -->
-      <polygon points="316,294 352,312 316,330 280,312" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="316,302 334,311 316,320 298,311" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="316,285 352,303 316,321 280,303" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="316,293 334,302 316,311 298,302" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [3, 4] -->
-      <polygon points="496,312 532,330 496,348 460,330" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="496,320 514,329 496,338 478,329" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="496,303 532,321 496,339 460,321" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="496,311 514,320 496,329 478,320" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [4, 3] -->
-      <polygon points="424,312 460,330 424,348 388,330" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="424,320 442,329 424,338 406,329" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="424,303 460,321 424,339 388,321" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="424,311 442,320 424,329 406,320" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [5, 2] -->
-      <polygon points="352,312 388,330 352,348 316,330" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="352,320 370,329 352,338 334,329" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="352,303 388,321 352,339 316,321" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="352,311 370,320 352,329 334,320" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [3, 5] -->
-      <polygon points="532,330 568,348 532,366 496,348" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="532,338 550,347 532,356 514,347" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="532,321 568,339 532,357 496,339" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="532,329 550,338 532,347 514,338" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [4, 4] -->
-      <polygon points="460,330 496,348 460,366 424,348" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="460,338 478,347 460,356 442,347" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="460,321 496,339 460,357 424,339" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="460,329 478,338 460,347 442,338" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [5, 3] -->
-      <polygon points="388,330 424,348 388,366 352,348" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="388,338 406,347 388,356 370,347" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="388,321 424,339 388,357 352,339" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="388,329 406,338 388,347 370,338" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [4, 5] -->
-      <polygon points="496,348 532,366 496,384 460,366" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="496,356 514,365 496,374 478,365" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="496,339 532,357 496,375 460,357" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="496,347 514,356 496,365 478,356" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [5, 4] -->
-      <polygon points="424,348 460,366 424,384 388,366" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="424,356 442,365 424,374 406,365" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="424,339 460,357 424,375 388,357" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="424,347 442,356 424,365 406,356" fill="#6E9F3D" opacity="0.6"/>
       <!-- Grass Tile [5, 5] -->
-      <polygon points="460,366 496,384 460,402 424,384" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-      <polygon points="460,374 478,383 460,392 442,383" fill="#6E9F3D" opacity="0.6"/>
+      <polygon points="460,357 496,375 460,393 424,375" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="460,365 478,374 460,383 442,374" fill="#6E9F3D" opacity="0.6"/>
 
-      <!-- Solitary Oak Tree at (0, 1) -->
+      <!-- Depth-Sorted Actors (Oak Tree, Starter Chest, Steve) -->
       
   <!-- Authentic Skyblock Oak Tree -->
   <g class="oak-tree">
     <!-- Tree Trunk -->
-    <polygon points="486,204 500,212 500,232 486,224" fill="#6B5130"/>
-    <polygon points="500,212 514,204 514,224 500,232" fill="#4F3B23"/>
+    <polygon points="486,195 500,203 500,223 486,215" fill="#6B5130"/>
+    <polygon points="500,203 514,195 514,215 500,223" fill="#4F3B23"/>
 
     <!-- Bark Lines -->
-    <line x1="493" y1="208" x2="493" y2="228" stroke="#543E23" stroke-width="1.2"/>
-    <line x1="507" y1="208" x2="507" y2="228" stroke="#3D2E18" stroke-width="1.2"/>
+    <line x1="493" y1="199" x2="493" y2="219" stroke="#543E23" stroke-width="1.2"/>
+    <line x1="507" y1="199" x2="507" y2="219" stroke="#3D2E18" stroke-width="1.2"/>
 
     <!-- Wood Punching Decals (Cracks appear when tree is damaged) -->
     
-    <line x1="490" y1="212" x2="497" y2="220" stroke="#1E140A" stroke-width="2.2" stroke-linecap="round"/>
-    <line x1="497" y1="220" x2="493" y2="228" stroke="#1E140A" stroke-width="2.2" stroke-linecap="round"/>
-    <line x1="502" y1="214" x2="508" y2="222" stroke="#1E140A" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="490" y1="203" x2="497" y2="211" stroke="#1E140A" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="497" y1="211" x2="493" y2="219" stroke="#1E140A" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="502" y1="205" x2="508" y2="213" stroke="#1E140A" stroke-width="2.2" stroke-linecap="round"/>
     
     
 
     <!-- Cubic Foliage Lower Cluster -->
-    <polygon points="496,150 540,172 496,194 452,172" fill="#4C802E"/>
-    <polygon points="452,172 496,194 496,218 452,196" fill="#386420"/>
-    <polygon points="496,194 540,172 540,196 496,218" fill="#264714"/>
+    <polygon points="496,141 540,163 496,185 452,163" fill="#4C802E"/>
+    <polygon points="452,163 496,185 496,209 452,187" fill="#386420"/>
+    <polygon points="496,185 540,163 540,187 496,209" fill="#264714"/>
 
     <!-- Cubic Foliage Crown -->
-    <polygon points="496,126 524,140 496,154 468,140" fill="#5FA33A"/>
-    <polygon points="468,140 496,154 496,174 468,160" fill="#4C802E"/>
-    <polygon points="496,154 524,140 524,160 496,174" fill="#386420"/>
+    <polygon points="496,117 524,131 496,145 468,131" fill="#5FA33A"/>
+    <polygon points="468,131 496,145 496,165 468,151" fill="#4C802E"/>
+    <polygon points="496,145 524,131 524,151 496,165" fill="#386420"/>
 
     <!-- Tree HP Floating Durability Badge -->
-    <g transform="translate(496, 116)">
+    <g transform="translate(496, 107)">
       <rect x="-34" y="-12" width="68" height="15" rx="2" fill="#000000" opacity="0.65"/>
       <text x="0" y="-1" fill="#FFAA00" class="font-mc" font-size="7" text-anchor="middle">🪵 2/4 HP</text>
     </g>
   </g>
 
-      <!-- Starter Wooden Chest at (5, 5) -->
-      
-  <!-- Starter Wooden Chest -->
-  <g class="starter-chest">
-    
-    <!-- Closed Chest -->
-    <polygon points="444,360 460,368 460,390 444,382" fill="#7D5127" stroke="#4A2F14" stroke-width="1"/>
-    <polygon points="460,368 476,360 476,382 460,390" fill="#5A3A1C" stroke="#3D2611" stroke-width="1"/>
-    <polygon points="460,352 476,360 460,368 444,360" fill="#9E6732" stroke="#4A2F14" stroke-width="1"/>
-    <line x1="444" y1="363" x2="460" y2="371" stroke="#1E1E1E" stroke-width="1.2"/>
-    <line x1="460" y1="371" x2="476" y2="363" stroke="#1E1E1E" stroke-width="1.2"/>
-    <rect x="457.5" y="365" width="5" height="7" rx="1" fill="#E0E0E0" stroke="#000000" stroke-width="0.8"/>
-    <!-- Starter Chest Badge -->
-    <g transform="translate(460, 348)">
-      <rect x="-32" y="-11" width="64" height="14" rx="2" fill="#000000" opacity="0.6"/>
-      <text x="0" y="-1" fill="#55FF55" class="font-mc" font-size="6.5" text-anchor="middle">📦 STARTER</text>
-    </g>
-    
-  </g>
-
-      <!-- Steve (Permanently Centered in Camera with Nametag) -->
-      
-  <!-- Steve (Locked to Camera Center) -->
-  <g class="steve-actor" data-character="steve">
+  <!-- Steve Solo Survivor (Facing: west) -->
+  <g class="steve-actor" data-character="steve" data-facing="west" transform="translate(920, 0) scale(-1, 1)">
     <!-- Contact Shadow -->
-    <ellipse cx="460" cy="244" rx="20" ry="9" fill="#000000" opacity="0.4"/>
+    <ellipse cx="460" cy="235" rx="18" ry="8" fill="#000000" opacity="0.45"/>
 
     <!-- Boots -->
-    <polygon points="450,238 457,242 457,232 450,228" fill="#3A3A3A"/>
-    <polygon points="457,242 463,238 463,228 457,232" fill="#242424"/>
-    <polygon points="464,242 471,238 471,228 464,232" fill="#3A3A3A"/>
-    <polygon points="471,238 477,235 477,225 471,228" fill="#242424"/>
+    <polygon points="450,229 457,233 457,223 450,219" fill="#3A3A3A"/>
+    <polygon points="457,233 463,229 463,219 457,223" fill="#242424"/>
+    <polygon points="464,233 471,229 471,219 464,223" fill="#3A3A3A"/>
+    <polygon points="471,229 477,226 477,216 471,219" fill="#242424"/>
 
     <!-- Pants -->
-    <polygon points="451,229 459,233 459,214 451,210" fill="#2B3CA3"/>
-    <polygon points="462,233 471,229 471,210 462,214" fill="#1B266B"/>
+    <polygon points="451,220 459,224 459,205 451,201" fill="#2B3CA3"/>
+    <polygon points="462,224 471,220 471,201 462,205" fill="#1B266B"/>
 
     <!-- Cyan Torso -->
-    <polygon points="460,186 476,194 460,202 444,194" fill="#00BDBD"/>
-    <polygon points="444,194 460,202 460,216 444,208" fill="#008E8E"/>
-    <polygon points="460,202 476,194 476,208 460,216" fill="#006363"/>
+    <polygon points="460,177 476,185 460,193 444,185" fill="#00BDBD"/>
+    <polygon points="444,185 460,193 460,207 444,199" fill="#008E8E"/>
+    <polygon points="460,193 476,185 476,199 460,207" fill="#006363"/>
 
     <!-- Head -->
-    <polygon points="460,166 473,172 460,178 447,172" fill="#4A3018"/>
-    <polygon points="447,172 460,178 460,195 447,189" fill="#BD8B72"/>
-    <polygon points="447,172 460,178 460,182 447,176" fill="#4A3018"/>
-    <polygon points="460,178 473,172 473,189 460,195" fill="#996D57"/>
+    <polygon points="460,157 473,163 460,169 447,163" fill="#4A3018"/>
+    <polygon points="447,163 460,169 460,186 447,180" fill="#BD8B72"/>
+    <polygon points="447,163 460,169 460,173 447,167" fill="#4A3018"/>
+    <polygon points="460,169 473,163 473,180 460,186" fill="#996D57"/>
 
+    
     <!-- Eyes -->
-    <rect x="450" y="183" width="4" height="3" fill="#FFFFFF"/>
-    <rect x="454" y="183" width="3" height="3" fill="#2B3CA3"/>
+    <rect x="450" y="174" width="4" height="3" fill="#FFFFFF"/>
+    <rect x="454" y="174" width="3" height="3" fill="#2B3CA3"/>
+    
 
     <!-- Left Arm -->
-    <polygon points="442,195 447,198 447,214 442,211" fill="#008E8E"/>
-    <polygon points="442,211 447,214 447,222 442,219" fill="#BD8B72"/>
+    <polygon points="442,186 447,189 447,205 442,202" fill="#008E8E"/>
+    <polygon points="442,202 447,205 447,213 442,210" fill="#BD8B72"/>
 
     <!-- Right Arm (Fixed: Naturally attached to shoulder, no detached sky swinging) -->
     <g>
-      <polygon points="473,198 478,195 478,211 473,214" fill="#006363"/>
-      <polygon points="473,214 478,211 478,219 473,222" fill="#BD8B72"/>
+      <polygon points="473,189 478,186 478,202 473,205" fill="#006363"/>
+      <polygon points="473,205 478,202 478,210 473,213" fill="#BD8B72"/>
       
     </g>
 
     <!-- Minecraft Multiplayer Nametag -->
-    <g transform="translate(460, 158)">
+    <g transform="translate(460, 149)">
       <rect x="-46" y="-12" width="92" height="15" rx="2" fill="#000000" opacity="0.65"/>
       <text x="0" y="-1" fill="#FFFFFF" class="font-mc" font-size="7.5" text-anchor="middle">@mo-farooq</text>
     </g>
+  </g>
+
+  <!-- Starter Wooden Chest -->
+  <g class="starter-chest">
+    
+    <!-- Closed Chest -->
+    <polygon points="444,351 460,359 460,381 444,373" fill="#7D5127" stroke="#4A2F14" stroke-width="1"/>
+    <polygon points="460,359 476,351 476,373 460,381" fill="#5A3A1C" stroke="#3D2611" stroke-width="1"/>
+    <polygon points="460,343 476,351 460,359 444,351" fill="#9E6732" stroke="#4A2F14" stroke-width="1"/>
+    <line x1="444" y1="354" x2="460" y2="362" stroke="#1E1E1E" stroke-width="1.2"/>
+    <line x1="460" y1="362" x2="476" y2="354" stroke="#1E1E1E" stroke-width="1.2"/>
+    <rect x="457.5" y="356" width="5" height="7" rx="1" fill="#E0E0E0" stroke="#000000" stroke-width="0.8"/>
+    <!-- Starter Chest Badge -->
+    <g transform="translate(460, 339)">
+      <rect x="-32" y="-11" width="64" height="14" rx="2" fill="#000000" opacity="0.6"/>
+      <text x="0" y="-1" fill="#55FF55" class="font-mc" font-size="6.5" text-anchor="middle">📦 STARTER</text>
+    </g>
+    
   </g>
 
     </g>

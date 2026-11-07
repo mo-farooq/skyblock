@@ -1,13 +1,13 @@
 # 🏝️ Minecraft Skyblock Survival
 
 <p align="center">
-  <img src="./world-3d.svg?v=1794046719843" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
+  <img src="./world-3d.svg?v=1794047798492" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
 </p>
 
 <div align="center">
 
 ## 🎮 Dynamic Gamepad Controller: Make Your Move!
-*Steve is at **Tile [1, 1]**. The camera is locked to Steve, and buttons update in real-time!*
+*Steve is at **Tile [1, 1]** (Facing **WEST**). Explore the island, harvest the tree, and bridge into the void!*
 
 > 💡 **How to Play:** Click any button below &rarr; click the green **"Create"** button on GitHub &rarr; Steve moves & the island updates in ~15s!
 
@@ -62,7 +62,7 @@
 ## ⚡ How It Works
 
 - **Authentic Minecraft SkyBlock**: Faithfully modeled on Noobcrew's classic 2011 27-block L-island layout with 4 vertical dirt layers and a bedrock cornerstone.
-- **Camera-Anchored Viewport**: Steve is locked permanently at the center of the screen; the floating platform translates smoothly beneath him as he navigates across the void!
+- **Anchored Isometric World**: Faithfully modeled on classic SkyBlock; Steve physically traverses from tile to tile across the diamond island as turns execute!
 - **Dynamic Crafting Bench**: Recipe buttons only appear when Steve holds the exact ingredients in his hotbar pack.
 - **Empty-Handed Start**: Steve spawns with 0 inventory items. Gather oak logs to craft planks, sticks, and tools!
 

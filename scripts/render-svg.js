@@ -20,7 +20,7 @@ function escapeXml(str) {
 
 export function renderWorldSvg(stateData) {
   const {
-    steve = { row: 3, col: 2, lastMover: 'mo-farooq', lastAction: 'Welcome to Skyblock!' },
+    steve = { row: 1, col: 1, facing: 'south', lastMover: 'mo-farooq', lastAction: 'Welcome to Skyblock!' },
     tree = { row: 0, col: 1, hp: 4, maxHp: 4 },
     chest = { row: 5, col: 5, opened: false },
     inventory = [],
@@ -28,21 +28,15 @@ export function renderWorldSvg(stateData) {
     stats = { totalMoves: 1 }
   } = stateData;
 
-  // 🎥 CAMERA ANCHORING MATH
-  // Screen center: cx = 460, cy = 240
-  // Steve is locked at the exact visual center!
-  const viewCenterX = 460;
-  const viewCenterY = 240;
-
-  const steveIsoX = (steve.col - steve.row) * 36;
-  const steveIsoY = (steve.col + steve.row) * 18;
-
-  const camOffsetX = viewCenterX - steveIsoX;
-  const camOffsetY = viewCenterY - steveIsoY;
+  // 🏝️ ANCHORED ISOMETRIC WORLD COORDINATES MATH
+  // The Skyblock Island is anchored rock-solid in the center of the viewport (460, 195).
+  // Steve physically traverses tile by tile across the diamond grid!
+  const islandAnchorX = 460;
+  const islandAnchorY = 195;
 
   function getTileCenter(r, c) {
-    const cx = camOffsetX + (c - r) * 36;
-    const cy = camOffsetY + (c + r) * 18;
+    const cx = islandAnchorX + (c - r) * 36;
+    const cy = islandAnchorY + (c + r) * 18;
     return { cx, cy };
   }
 
@@ -84,7 +78,7 @@ export function renderWorldSvg(stateData) {
   // Sort surface tiles depth-wise: (r + c) ascending
   allTiles.sort((a, b) => (a.r + a.c) - (b.r + b.c));
 
-  // Render surface tiles
+  // Render surface tiles & Steve's active tile selector
   let tilesSvg = '';
   for (const t of allTiles) {
     const { cx, cy } = getTileCenter(t.r, t.c);
@@ -99,10 +93,10 @@ export function renderWorldSvg(stateData) {
       <polygon points="${cx},${cy - 10} ${cx + 18},${cy - 1} ${cx},${cy + 8} ${cx - 18},${cy - 1}" fill="#6E9F3D" opacity="0.6"/>`;
     }
 
-    // Active block selector ring under Steve's feet
+    // Active block selector ring under Steve's feet on his exact tile
     if (isSteveTile) {
       tilesSvg += `
-      <!-- Steve Current Tile Selector -->
+      <!-- Steve Active Tile Selector -->
       <polygon points="${cx},${cy - 18} ${cx + 36},${cy} ${cx},${cy + 18} ${cx - 36},${cy}" fill="rgba(255, 255, 85, 0.22)" stroke="#FFFF55" stroke-width="2.5" stroke-dasharray="6,3"/>`;
     }
   }
@@ -144,16 +138,28 @@ export function renderWorldSvg(stateData) {
   <polygon points="${spawnCenter.cx - 20},${spawnCenter.cy + 42} ${spawnCenter.cx + 20},${spawnCenter.cy + 42} ${spawnCenter.cx},${spawnCenter.cy + 58}" fill="#2E2E2E"/>
   <polygon points="${spawnCenter.cx - 20},${spawnCenter.cy + 42} ${spawnCenter.cx},${spawnCenter.cy + 58} ${spawnCenter.cx - 10},${spawnCenter.cy + 48}" fill="#1F1F1F"/>`;
 
-  // Solitary Oak Tree at (0, 1) with dynamic HP & breakage
+  // Landmark Tile Centers
   const treeTile = getTileCenter(tree.row ?? 0, tree.col ?? 1);
-  const treeSvg = renderAuthenticOakTree(treeTile.cx, treeTile.cy, tree.hp ?? 4, tree.maxHp ?? 4);
-
-  // Starter Chest at (5, 5) with open/closed state
   const chestTile = getTileCenter(chest.row ?? 5, chest.col ?? 5);
-  const chestSvg = renderAuthenticChest(chestTile.cx, chestTile.cy, chest.opened ?? false);
+  const steveTile = getTileCenter(steve.row ?? 1, steve.col ?? 1);
 
-  // Steve Rig at Camera Center (viewCenterX, viewCenterY) with Multiplayer Nametag
-  const steveSvg = renderSoloSteve(viewCenterX, viewCenterY, inventory, steve.lastMover);
+  // Depth-sorted actors (Tree, Chest, Steve) so Steve naturally renders behind or in front of landmarks!
+  const actors = [
+    {
+      depthKey: (tree.row ?? 0) + (tree.col ?? 1) + 0.2,
+      svg: renderAuthenticOakTree(treeTile.cx, treeTile.cy, tree.hp ?? 4, tree.maxHp ?? 4)
+    },
+    {
+      depthKey: (chest.row ?? 5) + (chest.col ?? 5) + 0.2,
+      svg: renderAuthenticChest(chestTile.cx, chestTile.cy, chest.opened ?? false)
+    },
+    {
+      depthKey: (steve.row ?? 1) + (steve.col ?? 1) + 0.5,
+      svg: renderSoloSteve(steveTile.cx, steveTile.cy, inventory, steve.lastMover, steve.facing)
+    }
+  ];
+  actors.sort((a, b) => a.depthKey - b.depthKey);
+  const actorsSvg = actors.map(a => a.svg).join('\n');
 
   // Hotbar Inventory Slots - Real-Time Reflection of Inventory State!
   const slotWidth = 46;
@@ -233,7 +239,7 @@ export function renderWorldSvg(stateData) {
 
   <!-- Title & Mode -->
   <text x="84" y="38" fill="#FFFFFF" class="font-mc" font-size="13" font-weight="700">MINECRAFT SKYBLOCK</text>
-  <text x="84" y="55" fill="#55FF55" class="font-mc" font-size="9">CAMERA LOCKED ON STEVE • TILE [${steve.row}, ${steve.col}]</text>
+  <text x="84" y="55" fill="#55FF55" class="font-mc" font-size="9">STEVE AT TILE [${steve.row}, ${steve.col}] • FACING ${(steve.facing || 'south').toUpperCase()}</text>
 
   <!-- Hearts & Hunger Bars -->
   <g transform="translate(550, 28)">
@@ -271,7 +277,7 @@ export function renderWorldSvg(stateData) {
       <text x="145" y="17" fill="#FFFFFF" class="font-mc" font-size="8">${safeActionText}</text>
     </g>
 
-    <!-- The Floating Platform (Translates dynamically beneath camera) -->
+    <!-- The Floating Platform (Anchored Isometric World) -->
     <g class="mc-island" filter="url(#islandShadow)">
 
       <!-- Bedrock Tip -->
@@ -284,14 +290,8 @@ export function renderWorldSvg(stateData) {
       <!-- Island Surface & Bridge Tiles -->
       ${tilesSvg}
 
-      <!-- Solitary Oak Tree at (0, 1) -->
-      ${treeSvg}
-
-      <!-- Starter Wooden Chest at (5, 5) -->
-      ${chestSvg}
-
-      <!-- Steve (Permanently Centered in Camera with Nametag) -->
-      ${steveSvg}
+      <!-- Depth-Sorted Actors (Oak Tree, Starter Chest, Steve) -->
+      ${actorsSvg}
 
     </g>
   </g>
@@ -422,16 +422,21 @@ function renderAuthenticChest(cx, cy, opened = false) {
   </g>`;
 }
 
-// Steve Solo Survivor (Centered in Viewport) with Multiplayer Nametag & Clean Arms
-function renderSoloSteve(cx, cy, inventory = [], lastMover = 'mo-farooq') {
+// Steve Solo Survivor with Directional Facing & Minecraft Multiplayer Nametag
+function renderSoloSteve(cx, cy, inventory = [], lastMover = 'mo-farooq', facing = 'south') {
   // Check if Steve has a held tool in slot 1 or pickaxe
   const heldPick = inventory.find(i => i.id === 'diamond_pickaxe' || i.id === 'stone_pickaxe' || i.id === 'pickaxe');
+  const isFacingNorth = facing === 'north';
+  const isFacingWest = facing === 'west';
+
+  // If facing west, mirror Steve horizontally across cx
+  const mirrorTransform = isFacingWest ? `transform="translate(${2 * cx}, 0) scale(-1, 1)"` : '';
 
   return `
-  <!-- Steve (Locked to Camera Center) -->
-  <g class="steve-actor" data-character="steve">
+  <!-- Steve Solo Survivor (Facing: ${facing}) -->
+  <g class="steve-actor" data-character="steve" data-facing="${facing}" ${mirrorTransform}>
     <!-- Contact Shadow -->
-    <ellipse cx="${cx}" cy="${cy + 4}" rx="20" ry="9" fill="#000000" opacity="0.4"/>
+    <ellipse cx="${cx}" cy="${cy + 4}" rx="18" ry="8" fill="#000000" opacity="0.45"/>
 
     <!-- Boots -->
     <polygon points="${cx - 10},${cy - 2} ${cx - 3},${cy + 2} ${cx - 3},${cy - 8} ${cx - 10},${cy - 12}" fill="#3A3A3A"/>
@@ -450,13 +455,15 @@ function renderSoloSteve(cx, cy, inventory = [], lastMover = 'mo-farooq') {
 
     <!-- Head -->
     <polygon points="${cx},${cy - 74} ${cx + 13},${cy - 68} ${cx},${cy - 62} ${cx - 13},${cy - 68}" fill="#4A3018"/>
-    <polygon points="${cx - 13},${cy - 68} ${cx},${cy - 62} ${cx},${cy - 45} ${cx - 13},${cy - 51}" fill="#BD8B72"/>
+    <polygon points="${cx - 13},${cy - 68} ${cx},${cy - 62} ${cx},${cy - 45} ${cx - 13},${cy - 51}" fill="${isFacingNorth ? '#4A3018' : '#BD8B72'}"/>
     <polygon points="${cx - 13},${cy - 68} ${cx},${cy - 62} ${cx},${cy - 58} ${cx - 13},${cy - 64}" fill="#4A3018"/>
-    <polygon points="${cx},${cy - 62} ${cx + 13},${cy - 68} ${cx + 13},${cy - 51} ${cx},${cy - 45}" fill="#996D57"/>
+    <polygon points="${cx},${cy - 62} ${cx + 13},${cy - 68} ${cx + 13},${cy - 51} ${cx},${cy - 45}" fill="${isFacingNorth ? '#3D2611' : '#996D57'}"/>
 
+    ${!isFacingNorth ? `
     <!-- Eyes -->
     <rect x="${cx - 10}" y="${cy - 57}" width="4" height="3" fill="#FFFFFF"/>
     <rect x="${cx - 6}" y="${cy - 57}" width="3" height="3" fill="#2B3CA3"/>
+    ` : ''}
 
     <!-- Left Arm -->
     <polygon points="${cx - 18},${cy - 45} ${cx - 13},${cy - 42} ${cx - 13},${cy - 26} ${cx - 18},${cy - 29}" fill="#008E8E"/>

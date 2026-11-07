@@ -4,9 +4,9 @@
   "steve": {
     "row": 1,
     "col": 1,
-    "facing": "south",
+    "facing": "west",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq moved Steve Left to [1, 1]. Camera centered!"
+    "lastAction": "@mo-farooq stepped Left to [1, 1]!"
   },
   "tree": {
     "row": 0,

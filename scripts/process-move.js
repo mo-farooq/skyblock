@@ -135,45 +135,64 @@ export function processSkyblockAction(state, title, username, hasStarred) {
   // 4. DIRECTIONAL MOVEMENT
   else if (lower.includes('forward') || lower.includes('north') || lower.includes('up')) {
     const targetRow = state.steve.row - 1;
+    state.steve.facing = 'north';
     if (isWalkable(targetRow, state.steve.col, state)) {
       state.steve.row = targetRow;
-      actionSummary = `@${username} moved Steve Forward to [${state.steve.row}, ${state.steve.col}]. Camera centered!`;
+      actionSummary = `@${username} stepped Forward to [${state.steve.row}, ${state.steve.col}]!`;
     } else {
-      actionSummary = `@${username} tried to move Forward, but reached the island edge facing the void!`;
+      actionSummary = `@${username} faced North, but reached the island edge facing the void!`;
     }
   } else if (lower.includes('backward') || lower.includes('south') || lower.includes('down')) {
     const targetRow = state.steve.row + 1;
+    state.steve.facing = 'south';
     if (isWalkable(targetRow, state.steve.col, state)) {
       state.steve.row = targetRow;
-      actionSummary = `@${username} moved Steve Backward to [${state.steve.row}, ${state.steve.col}]. Camera centered!`;
+      actionSummary = `@${username} stepped Backward to [${state.steve.row}, ${state.steve.col}]!`;
     } else {
-      actionSummary = `@${username} tried to move Backward, but reached the island edge facing the void!`;
+      actionSummary = `@${username} faced South, but reached the island edge facing the void!`;
     }
   } else if (lower.includes('right') || lower.includes('east')) {
     const targetCol = state.steve.col + 1;
+    state.steve.facing = 'east';
     if (isWalkable(state.steve.row, targetCol, state)) {
       state.steve.col = targetCol;
-      actionSummary = `@${username} moved Steve Right to [${state.steve.row}, ${state.steve.col}]. Camera centered!`;
+      actionSummary = `@${username} stepped Right to [${state.steve.row}, ${state.steve.col}]!`;
     } else {
-      actionSummary = `@${username} tried to move Right, but reached the island edge facing the void!`;
+      actionSummary = `@${username} faced East, but reached the island edge facing the void!`;
     }
   } else if (lower.includes('left') || lower.includes('west')) {
     const targetCol = state.steve.col - 1;
+    state.steve.facing = 'west';
     if (isWalkable(state.steve.row, targetCol, state)) {
       state.steve.col = targetCol;
-      actionSummary = `@${username} moved Steve Left to [${state.steve.row}, ${state.steve.col}]. Camera centered!`;
+      actionSummary = `@${username} stepped Left to [${state.steve.row}, ${state.steve.col}]!`;
     } else {
-      actionSummary = `@${username} tried to move Left, but reached the island edge facing the void!`;
+      actionSummary = `@${username} faced West, but reached the island edge facing the void!`;
     }
   }
   // 5. PLACE PLANK BRIDGE
   else if (lower.includes('bridge') || lower.includes('plank')) {
     if (deductItem(state.inventory, 'oak_planks', 1)) {
-      const bridgeRow = state.steve.row + 1;
-      const bridgeCol = state.steve.col;
       state.bridges = state.bridges || [];
-      state.bridges.push({ row: bridgeRow, col: bridgeCol, type: hasStarred ? 'diamond' : 'oak_planks', builder: username });
-      actionSummary = `@${username} placed a bridge block at [${bridgeRow}, ${bridgeCol}] expanding the island!`;
+      const facing = state.steve.facing || 'south';
+      let dRow = 0;
+      let dCol = 0;
+      if (facing === 'north') dRow = -1;
+      else if (facing === 'south') dRow = 1;
+      else if (facing === 'east') dCol = 1;
+      else if (facing === 'west') dCol = -1;
+
+      // Find first unbuilt void tile in facing direction
+      let bridgeRow = state.steve.row + dRow;
+      let bridgeCol = state.steve.col + dCol;
+      while (isWalkable(bridgeRow, bridgeCol, state) && bridgeRow >= 0 && bridgeRow <= 8 && bridgeCol >= 0 && bridgeCol <= 8) {
+        bridgeRow += dRow;
+        bridgeCol += dCol;
+      }
+
+      const bridgeType = hasStarred ? 'diamond' : 'oak_planks';
+      state.bridges.push({ row: bridgeRow, col: bridgeCol, type: bridgeType, builder: username });
+      actionSummary = `@${username} placed a ${hasStarred ? 'Diamond' : 'Wood Plank'} bridge block at [${bridgeRow}, ${bridgeCol}] expanding the island!`;
     } else {
       actionSummary = `@${username} tried to bridge, but has no planks in inventory!`;
     }
@@ -306,7 +325,7 @@ export function generateGamepadReadme(state, repoOwner = 'mo-farooq', repoName =
 <div align="center">
 
 ## 🎮 Dynamic Gamepad Controller: Make Your Move!
-*Steve is at **Tile [${steve.row}, ${steve.col}]**. The camera is locked to Steve, and buttons update in real-time!*
+*Steve is at **Tile [${steve.row}, ${steve.col}]** (Facing **${(steve.facing || 'south').toUpperCase()}**). Explore the island, harvest the tree, and bridge into the void!*
 
 > 💡 **How to Play:** Click any button below &rarr; click the green **"Create"** button on GitHub &rarr; Steve moves & the island updates in ~15s!
 
@@ -358,7 +377,7 @@ ${craftSection}
 ## ⚡ How It Works
 
 - **Authentic Minecraft SkyBlock**: Faithfully modeled on Noobcrew's classic 2011 27-block L-island layout with 4 vertical dirt layers and a bedrock cornerstone.
-- **Camera-Anchored Viewport**: Steve is locked permanently at the center of the screen; the floating platform translates smoothly beneath him as he navigates across the void!
+- **Anchored Isometric World**: Faithfully modeled on classic SkyBlock; Steve physically traverses from tile to tile across the diamond island as turns execute!
 - **Dynamic Crafting Bench**: Recipe buttons only appear when Steve holds the exact ingredients in his hotbar pack.
 - **Empty-Handed Start**: Steve spawns with 0 inventory items. Gather oak logs to craft planks, sticks, and tools!
 
