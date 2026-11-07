@@ -47,7 +47,7 @@ function isWalkable(r, c, state) {
 // Generate standard GitHub Issue URL that bypasses Turbo and guarantees prefilled title and body
 function createIssueUrl(repoOwner, repoName, title, actionDetails) {
   const encTitle = encodeURIComponent(title);
-  const bodyText = `### 🕹️ Skyblock Realm Turn: ${title}\n\n> **Click the green "Create" button below to execute this turn!**\n\n${actionDetails || 'Executing turn on the Skyblock realm.'}`;
+  const bodyText = `### 🕹️ Skyblock Realm Turn: ${title}\n\n> **Click the green "Create" button below to execute this turn!**\n> 🌐 [Return to Skyblock Realm](https://github.com/${repoOwner}/${repoName}#readme)\n\n${actionDetails || 'Executing turn on the Skyblock realm.'}`;
   const encBody = encodeURIComponent(bodyText);
   return `https://www.github.com/${repoOwner}/${repoName}/issues/new?title=${encTitle}&body=${encBody}`;
 }
@@ -357,10 +357,16 @@ export function generateGamepadReadme(state, repoOwner = 'mo-farooq', repoName =
 
 <div align="center">
 
+<p align="center">
+  <a href="https://github.com/${repoOwner}/${repoName}/actions/workflows/update-world.yml"><img src="https://github.com/${repoOwner}/${repoName}/actions/workflows/update-world.yml/badge.svg" alt="Engine Status" /></a> &nbsp;
+  <a href="https://github.com/${repoOwner}/${repoName}"><img src="https://img.shields.io/badge/TURN-%23${turnNum}-FFD700?style=flat-square" alt="Turn Counter" /></a> &nbsp;
+  <a href="https://github.com/${repoOwner}/${repoName}"><img src="https://img.shields.io/badge/STEVE-%5B${steve.row}%2C_${steve.col}%5D-55FF55?style=flat-square" alt="Steve Coordinates" /></a>
+</p>
+
 ## 🎮 Dynamic Gamepad Controller: Make Your Move!
 *Steve is at **Tile [${steve.row}, ${steve.col}]** (Facing **${(steve.facing || 'south').toUpperCase()}**). Explore the island, harvest the tree, and bridge into the void!*
 
-> 💡 **How to Play:** Click any button below &rarr; click the green **"Create"** button on GitHub &rarr; Steve moves & the island updates in ~15s!
+> 💡 **How to Play:** Click any button below &rarr; click green **"Create"** &rarr; engine auto-executes turn!
 
 <table>
   <tr>
@@ -536,6 +542,10 @@ Greetings **@${username}**! Your move has been executed on the live server:
 > *"${actionSummary}"*
 
 ---
+
+---
+
+### 🕹️ [👉 Click Here to Return to Skyblock Realm](https://github.com/${repoOwner}/${repoName}#readme)
 
 #### 📍 Server Telemetry:
 - **Steve Location:** \`[Row ${state.steve.row}, Col ${state.steve.col}]\`

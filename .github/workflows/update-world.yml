@@ -46,6 +46,7 @@ jobs:
         run: |
           git config --global user.name "Skyblock Bot"
           git config --global user.email "skyblock-bot@mo-farooq.github"
+          git config --global commit.gpgSign false
           git add world-3d.svg renders/ data/world-state.json README.md
           git commit -m "🏝️ Skyblock Turn #${{ github.event.issue.number }} executed by @${{ github.event.issue.user.login }} [skip ci]" || echo "No changes to commit"
-          git push origin main
+          git push --atomic origin main
