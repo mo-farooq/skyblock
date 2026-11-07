@@ -495,7 +495,16 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     const state = JSON.parse(rawData);
     const svgContent = renderWorldSvg(state);
     fs.writeFileSync(SVG_OUTPUT, svgContent, 'utf-8');
-    console.log(`[SVG Engine] Successfully rendered Minecraft Skyblock with Camera Anchoring to: ${SVG_OUTPUT}`);
+
+    const RENDERS_DIR = path.join(ROOT_DIR, 'renders');
+    if (!fs.existsSync(RENDERS_DIR)) {
+      fs.mkdirSync(RENDERS_DIR, { recursive: true });
+    }
+    const turnNum = state.stats?.totalMoves || 1;
+    const turnSvgOutput = path.join(RENDERS_DIR, `world-turn-${turnNum}.svg`);
+    fs.writeFileSync(turnSvgOutput, svgContent, 'utf-8');
+
+    console.log(`[SVG Engine] Successfully rendered Minecraft Skyblock to ${SVG_OUTPUT} and ${turnSvgOutput}`);
   } catch (err) {
     console.error(`[SVG Engine Error]:`, err);
     process.exit(1);

@@ -1,7 +1,7 @@
 # 🏝️ Minecraft Skyblock Survival
 
 <p align="center">
-  <img src="./world-3d.svg?v=1794049084082" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
+  <img src="./renders/world-turn-11.svg" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
 </p>
 
 <div align="center">

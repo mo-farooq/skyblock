@@ -8,7 +8,32 @@ const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 const STATE_FILE = path.join(ROOT_DIR, 'data', 'world-state.json');
 const SVG_OUTPUT = path.join(ROOT_DIR, 'world-3d.svg');
+const RENDERS_DIR = path.join(ROOT_DIR, 'renders');
 const README_FILE = path.join(ROOT_DIR, 'README.md');
+
+// Clean up old turn SVGs to prevent infinite repository bloat, keeping only recent turns
+function cleanOldRenders(rendersDir, keepCount = 10) {
+  if (!fs.existsSync(rendersDir)) return;
+  try {
+    const files = fs.readdirSync(rendersDir);
+    const turnFiles = [];
+    for (const file of files) {
+      const match = file.match(/^world-turn-(\d+)\.svg$/);
+      if (match) {
+        turnFiles.push({ file, turn: parseInt(match[1], 10) });
+      }
+    }
+    turnFiles.sort((a, b) => a.turn - b.turn);
+    if (turnFiles.length > keepCount) {
+      const toDelete = turnFiles.slice(0, turnFiles.length - keepCount);
+      for (const item of toDelete) {
+        fs.unlinkSync(path.join(rendersDir, item.file));
+      }
+    }
+  } catch (err) {
+    console.warn(`[Warning] Could not clean old renders:`, err.message);
+  }
+}
 
 // Helper to test if a tile (r, c) is on the authentic 27-block Skyblock L-island or an existing bridge
 function isWalkable(r, c, state) {
@@ -50,7 +75,15 @@ async function main() {
   // Render SVG with camera anchoring
   const svgContent = renderWorldSvg(state);
   fs.writeFileSync(SVG_OUTPUT, svgContent, 'utf-8');
-  console.log(`🎨 Rendered world-3d.svg with camera anchoring successfully.`);
+
+  // Path-based turn versioning: write renders/world-turn-<totalMoves>.svg
+  if (!fs.existsSync(RENDERS_DIR)) {
+    fs.mkdirSync(RENDERS_DIR, { recursive: true });
+  }
+  const turnSvgOutput = path.join(RENDERS_DIR, `world-turn-${state.stats?.totalMoves || 1}.svg`);
+  fs.writeFileSync(turnSvgOutput, svgContent, 'utf-8');
+  cleanOldRenders(RENDERS_DIR, 10);
+  console.log(`🎨 Rendered world-3d.svg and ${turnSvgOutput} successfully.`);
 
   // Generate dynamic README with gamepad layout & dynamic crafting bench
   const dynamicReadme = generateGamepadReadme(state, context.repoOwner, context.repoName);
@@ -315,11 +348,11 @@ export function generateGamepadReadme(state, repoOwner = 'mo-farooq', repoName =
     ? `### 🔨 Available Crafting Recipes (Based on Current Inventory)\n<p>\n  ${craftButtons.join(' &nbsp; ')}\n</p>`
     : `### 🔨 Crafting Bench\n<em>(Inventory has no craftable ingredients. Punch the Oak Tree or loot the Starter Chest to gather materials!)</em>`;
 
-  const cacheBust = Date.now();
+  const turnNum = state.stats?.totalMoves || 1;
   return `# 🏝️ Minecraft Skyblock Survival
 
 <p align="center">
-  <img src="./world-3d.svg?v=${cacheBust}" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
+  <img src="./renders/world-turn-${turnNum}.svg" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
 </p>
 
 <div align="center">
