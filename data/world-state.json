@@ -3,10 +3,10 @@
   "season": 1,
   "steve": {
     "row": 1,
-    "col": 2,
+    "col": 1,
     "facing": "south",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq moved Steve Right to [1, 2]. Camera centered!"
+    "lastAction": "@mo-farooq moved Steve Left to [1, 1]. Camera centered!"
   },
   "tree": {
     "row": 0,
@@ -37,11 +37,11 @@
     }
   ],
   "stats": {
-    "totalMoves": 8,
+    "totalMoves": 9,
     "treesHarvested": 2,
     "chestsOpened": 0,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-07T09:53:38.769Z"
+    "updatedAt": "2026-11-07T10:18:39.841Z"
   },
   "bridges": [
     {
