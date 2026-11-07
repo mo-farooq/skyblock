@@ -6,12 +6,12 @@
     "col": 1,
     "facing": "south",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq placed a bridge block at [2, 1] expanding the island!"
+    "lastAction": "@mo-farooq punched the Oak Tree! (2/4 HP). +1 Log gathered."
   },
   "tree": {
     "row": 0,
     "col": 1,
-    "hp": 3,
+    "hp": 2,
     "maxHp": 4,
     "mature": true
   },
@@ -27,14 +27,21 @@
       "name": "Oak Planks",
       "emoji": "🪵",
       "count": 3
+    },
+    {
+      "slot": 2,
+      "id": "oak_log",
+      "name": "Oak Log",
+      "emoji": "🪵",
+      "count": 1
     }
   ],
   "stats": {
-    "totalMoves": 6,
-    "treesHarvested": 1,
+    "totalMoves": 7,
+    "treesHarvested": 2,
     "chestsOpened": 0,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-06T22:17:46.968Z"
+    "updatedAt": "2026-11-07T09:53:05.951Z"
   },
   "bridges": [
     {

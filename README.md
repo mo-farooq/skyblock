@@ -52,7 +52,7 @@
 
 ### 🔨 Available Crafting Recipes (Based on Current Inventory)
 <p>
-  <a href="https://www.github.com/mo-farooq/skyblock/issues/new?title=Action%3A%20Craft%204%20Sticks&body=%23%23%23%20%F0%9F%95%B9%EF%B8%8F%20Skyblock%20Realm%20Turn%3A%20Action%3A%20Craft%204%20Sticks%0A%0A%3E%20**Click%20the%20green%20%22Create%22%20button%20below%20to%20execute%20this%20turn!**%0A%0ACrafting%204%20Wooden%20Sticks%20from%202%20Planks." data-turbo="false"><img src="https://img.shields.io/badge/🔨_CRAFT_4_STICKS-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Sticks"/></a>
+  <a href="https://www.github.com/mo-farooq/skyblock/issues/new?title=Action%3A%20Craft%204%20Planks&body=%23%23%23%20%F0%9F%95%B9%EF%B8%8F%20Skyblock%20Realm%20Turn%3A%20Action%3A%20Craft%204%20Planks%0A%0A%3E%20**Click%20the%20green%20%22Create%22%20button%20below%20to%20execute%20this%20turn!**%0A%0ACrafting%204%20Oak%20Planks%20from%201%20Oak%20Log." data-turbo="false"><img src="https://img.shields.io/badge/🔨_CRAFT_4_PLANKS-B88746?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Planks"/></a> &nbsp; <a href="https://www.github.com/mo-farooq/skyblock/issues/new?title=Action%3A%20Craft%204%20Sticks&body=%23%23%23%20%F0%9F%95%B9%EF%B8%8F%20Skyblock%20Realm%20Turn%3A%20Action%3A%20Craft%204%20Sticks%0A%0A%3E%20**Click%20the%20green%20%22Create%22%20button%20below%20to%20execute%20this%20turn!**%0A%0ACrafting%204%20Wooden%20Sticks%20from%202%20Planks." data-turbo="false"><img src="https://img.shields.io/badge/🔨_CRAFT_4_STICKS-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Sticks"/></a>
 </p>
 
 </div>
