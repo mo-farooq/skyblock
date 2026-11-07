@@ -19,11 +19,12 @@ function isWalkable(r, c, state) {
   return false;
 }
 
-// Generate standard GitHub Issue URL with clean title and body encoding
-function createIssueUrl(repoOwner, repoName, title, body) {
+// Generate standard GitHub Issue URL that bypasses Turbo and guarantees prefilled title and body
+function createIssueUrl(repoOwner, repoName, title, actionDetails) {
   const encTitle = encodeURIComponent(title);
-  const encBody = encodeURIComponent(body || 'Click "Submit new issue" to execute this turn on the live Skyblock realm!');
-  return `https://github.com/${repoOwner}/${repoName}/issues/new?title=${encTitle}&body=${encBody}`;
+  const bodyText = `### 🕹️ Skyblock Realm Turn: ${title}\n\n> **Click the green "Create" button below to execute this turn!**\n\n${actionDetails || 'Executing turn on the Skyblock realm.'}`;
+  const encBody = encodeURIComponent(bodyText);
+  return `https://www.github.com/${repoOwner}/${repoName}/issues/new?title=${encTitle}&body=${encBody}`;
 }
 
 async function main() {
