@@ -28,15 +28,10 @@ jobs:
       startsWith(github.event.issue.title, 'build')
 
     steps:
-      - name: Checkout Repository
+      - name: Fast Shallow Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
+          fetch-depth: 1
 
       - name: Process Skyblock Turn & Re-render World
         env:
@@ -53,5 +48,4 @@ jobs:
           git config --global user.email "skyblock-bot@mo-farooq.github"
           git add world-3d.svg renders/ data/world-state.json README.md
           git commit -m "🏝️ Skyblock Turn #${{ github.event.issue.number }} executed by @${{ github.event.issue.user.login }} [skip ci]" || echo "No changes to commit"
-          git pull --rebase origin main || true
           git push origin main

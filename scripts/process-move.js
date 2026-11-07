@@ -59,11 +59,11 @@ async function main() {
   console.log(`👤 Player: @${context.username}`);
   console.log(`📋 Issue #${context.issueNumber}: "${context.issueTitle}"`);
 
-  const hasStarred = await checkUserStar(context.repoOwner, context.repoName, context.username);
-  console.log(`⭐ Star Status: ${hasStarred ? 'Verified VIP Stargazer!' : 'Citizen Miner'}`);
-
   const rawState = fs.readFileSync(STATE_FILE, 'utf-8');
   const state = JSON.parse(rawState);
+
+  const hasStarred = await checkUserStar(context.repoOwner, context.repoName, context.username, state);
+  console.log(`⭐ Star Status: ${hasStarred ? 'Verified VIP Stargazer!' : 'Citizen Miner'}`);
 
   // Process the action
   const turnResult = processSkyblockAction(state, context.issueTitle, context.username, hasStarred);
@@ -432,19 +432,60 @@ npm run test-build
 `;
 }
 
-async function checkUserStar(owner, repo, username) {
+async function checkUserStar(owner, repo, username, state) {
+  if (!username) return false;
+  const userLower = username.toLowerCase();
+  const ownerLower = (owner || '').toLowerCase();
+
+  // Instant owner bypass: repo owner is always VIP!
+  if (userLower === ownerLower) return true;
+
+  // Cached VIP Stargazer check: 0ms network latency
+  if (state?.vipUsers && Array.isArray(state.vipUsers) && state.vipUsers.includes(userLower)) {
+    return true;
+  }
+
   if (!process.env.GITHUB_TOKEN) return false;
   try {
-    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/stargazers`, {
+    // Fast check: HTTP 204 = starred, HTTP 404 = not starred
+    const res = await fetch(`https://api.github.com/users/${username}/starred/${owner}/${repo}`, {
       headers: {
         'Accept': 'application/vnd.github.v3+json',
         'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
         'User-Agent': 'Skyblock-Engine'
       }
     });
-    if (!res.ok) return false;
-    const stargazers = await res.json();
-    return Array.isArray(stargazers) && stargazers.some(s => s.login?.toLowerCase() === username?.toLowerCase());
+
+    if (res.status === 204) {
+      if (state) {
+        state.vipUsers = state.vipUsers || [];
+        if (!state.vipUsers.includes(userLower)) {
+          state.vipUsers.push(userLower);
+        }
+      }
+      return true;
+    }
+
+    if (res.status === 404) return false;
+
+    // Fallback against stargazer list
+    const fallbackRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/stargazers`, {
+      headers: {
+        'Accept': 'application/vnd.github.v3+json',
+        'Authorization': `Bearer ${process.env.GITHUB_TOKEN}`,
+        'User-Agent': 'Skyblock-Engine'
+      }
+    });
+    if (!fallbackRes.ok) return false;
+    const stargazers = await fallbackRes.json();
+    const isStar = Array.isArray(stargazers) && stargazers.some(s => s.login?.toLowerCase() === userLower);
+    if (isStar && state) {
+      state.vipUsers = state.vipUsers || [];
+      if (!state.vipUsers.includes(userLower)) {
+        state.vipUsers.push(userLower);
+      }
+    }
+    return isStar;
   } catch (err) {
     return false;
   }
@@ -505,7 +546,7 @@ Greetings **@${username}**! Your move has been executed on the live server:
 View Steve's updated position on [mo-farooq/skyblock](https://github.com/${repoOwner}/${repoName})!`;
 
   try {
-    await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues/${issueNumber}/comments`, {
+    const commentPromise = fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues/${issueNumber}/comments`, {
       method: 'POST',
       headers: {
         'Accept': 'application/vnd.github.v3+json',
@@ -516,7 +557,7 @@ View Steve's updated position on [mo-farooq/skyblock](https://github.com/${repoO
       body: JSON.stringify({ body: comment })
     });
 
-    await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues/${issueNumber}`, {
+    const closePromise = fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/issues/${issueNumber}`, {
       method: 'PATCH',
       headers: {
         'Accept': 'application/vnd.github.v3+json',
@@ -526,6 +567,8 @@ View Steve's updated position on [mo-farooq/skyblock](https://github.com/${repoO
       },
       body: JSON.stringify({ state: 'closed' })
     });
+
+    await Promise.allSettled([commentPromise, closePromise]);
   } catch (err) {
     console.error('Failed replying to issue:', err.message);
   }

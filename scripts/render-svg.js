@@ -18,6 +18,14 @@ function escapeXml(str) {
     .replace(/'/g, '&apos;');
 }
 
+export function minifySvg(rawSvg) {
+  if (!rawSvg) return '';
+  return rawSvg
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/>\s+</g, '><')
+    .trim();
+}
+
 export function renderWorldSvg(stateData) {
   const {
     steve = { row: 1, col: 1, facing: 'south', lastMover: 'mo-farooq', lastAction: 'Welcome to Skyblock!' },
@@ -185,7 +193,7 @@ export function renderWorldSvg(stateData) {
   const currentLevel = Math.floor(currentTurn / 3);
   const safeActionText = escapeXml(steve.lastAction || 'Steve entered the Skyblock realm!');
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" width="100%" height="100%">
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" width="100%" height="100%">
   <defs>
     <!-- Sky Void Gradient -->
     <linearGradient id="skyVoid" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -305,6 +313,8 @@ export function renderWorldSvg(stateData) {
     ${hotbarSvg}
   </g>
 </svg>`;
+
+  return minifySvg(svg);
 }
 
 // Placed Bridge Block (Oak Planks or Diamond)
