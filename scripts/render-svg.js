@@ -8,13 +8,24 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 const STATE_FILE = path.join(ROOT_DIR, 'data', 'world-state.json');
 const SVG_OUTPUT = path.join(ROOT_DIR, 'world-3d.svg');
 
+function escapeXml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 export function renderWorldSvg(stateData) {
   const {
-    steve = { row: 3, col: 2, lastMover: 'mo-farooq' },
+    steve = { row: 3, col: 2, lastMover: 'mo-farooq', lastAction: 'Welcome to Skyblock!' },
     tree = { row: 0, col: 1, hp: 4, maxHp: 4 },
-    chest = { row: 5, col: 5 },
+    chest = { row: 5, col: 5, opened: false },
     inventory = [],
-    bridges = []
+    bridges = [],
+    stats = { totalMoves: 1 }
   } = stateData;
 
   // 🎥 CAMERA ANCHORING MATH
@@ -35,26 +46,65 @@ export function renderWorldSvg(stateData) {
     return { cx, cy };
   }
 
-  // Authentic 27-block classic SkyBlock L-island surface coordinates
-  const surfaceTiles = [];
+  // 1. Surface island tiles (Authentic 27-block classic SkyBlock L-island)
+  const islandTiles = [];
   for (let r = 0; r < 6; r++) {
     for (let c = 0; c < 6; c++) {
       if ((r < 3 && c < 3) || (r >= 3 && c < 6)) {
-        surfaceTiles.push({ r, c });
+        islandTiles.push({ r, c, type: 'grass' });
       }
     }
   }
 
-  // Sort surface tiles depth-wise: (r + c) ascending
-  surfaceTiles.sort((a, b) => (a.r + a.c) - (b.r + b.c));
+  // 2. Incorporate placed bridge blocks (Oak Planks or Diamond)
+  const bridgeMap = new Map();
+  if (Array.isArray(bridges)) {
+    for (const b of bridges) {
+      bridgeMap.set(`${b.row},${b.col}`, b.type || 'oak_planks');
+    }
+  }
 
-  // Render top grass diamond for each tile
-  let grassTilesSvg = '';
-  for (const t of surfaceTiles) {
+  const allTiles = [];
+  for (const t of islandTiles) {
+    const key = `${t.r},${t.c}`;
+    if (bridgeMap.has(key)) {
+      allTiles.push({ r: t.r, c: t.c, type: bridgeMap.get(key), isBridge: true });
+      bridgeMap.delete(key);
+    } else {
+      allTiles.push(t);
+    }
+  }
+
+  // Any bridges extending into the void beyond original island
+  for (const [key, type] of bridgeMap.entries()) {
+    const [r, c] = key.split(',').map(Number);
+    allTiles.push({ r, c, type, isBridge: true, isVoidBridge: true });
+  }
+
+  // Sort surface tiles depth-wise: (r + c) ascending
+  allTiles.sort((a, b) => (a.r + a.c) - (b.r + b.c));
+
+  // Render surface tiles
+  let tilesSvg = '';
+  for (const t of allTiles) {
     const { cx, cy } = getTileCenter(t.r, t.c);
-    grassTilesSvg += `
-    <polygon points="${cx},${cy - 18} ${cx + 36},${cy} ${cx},${cy + 18} ${cx - 36},${cy}" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
-    <polygon points="${cx},${cy - 10} ${cx + 18},${cy - 1} ${cx},${cy + 8} ${cx - 18},${cy - 1}" fill="#6E9F3D" opacity="0.6"/>`;
+    const isSteveTile = t.r === steve.row && t.c === steve.col;
+
+    if (t.isBridge) {
+      tilesSvg += renderBridgeBlock(cx, cy, t.type);
+    } else {
+      tilesSvg += `
+      <!-- Grass Tile [${t.r}, ${t.c}] -->
+      <polygon points="${cx},${cy - 18} ${cx + 36},${cy} ${cx},${cy + 18} ${cx - 36},${cy}" fill="#5B8731" stroke="#4C7026" stroke-width="0.8"/>
+      <polygon points="${cx},${cy - 10} ${cx + 18},${cy - 1} ${cx},${cy + 8} ${cx - 18},${cy - 1}" fill="#6E9F3D" opacity="0.6"/>`;
+    }
+
+    // Active block selector ring under Steve's feet
+    if (isSteveTile) {
+      tilesSvg += `
+      <!-- Steve Current Tile Selector -->
+      <polygon points="${cx},${cy - 18} ${cx + 36},${cy} ${cx},${cy + 18} ${cx - 36},${cy}" fill="rgba(255, 255, 85, 0.22)" stroke="#FFFF55" stroke-width="2.5" stroke-dasharray="6,3"/>`;
+    }
   }
 
   // Cliff face extrusions (4 blocks deep = 44px)
@@ -94,16 +144,16 @@ export function renderWorldSvg(stateData) {
   <polygon points="${spawnCenter.cx - 20},${spawnCenter.cy + 42} ${spawnCenter.cx + 20},${spawnCenter.cy + 42} ${spawnCenter.cx},${spawnCenter.cy + 58}" fill="#2E2E2E"/>
   <polygon points="${spawnCenter.cx - 20},${spawnCenter.cy + 42} ${spawnCenter.cx},${spawnCenter.cy + 58} ${spawnCenter.cx - 10},${spawnCenter.cy + 48}" fill="#1F1F1F"/>`;
 
-  // Solitary Oak Tree at (0, 1)
+  // Solitary Oak Tree at (0, 1) with dynamic HP & breakage
   const treeTile = getTileCenter(tree.row ?? 0, tree.col ?? 1);
-  const treeSvg = renderAuthenticOakTree(treeTile.cx, treeTile.cy);
+  const treeSvg = renderAuthenticOakTree(treeTile.cx, treeTile.cy, tree.hp ?? 4, tree.maxHp ?? 4);
 
-  // Starter Chest at (5, 5)
+  // Starter Chest at (5, 5) with open/closed state
   const chestTile = getTileCenter(chest.row ?? 5, chest.col ?? 5);
-  const chestSvg = renderAuthenticChest(chestTile.cx, chestTile.cy);
+  const chestSvg = renderAuthenticChest(chestTile.cx, chestTile.cy, chest.opened ?? false);
 
-  // Steve Rig at Camera Center (viewCenterX, viewCenterY)!
-  const steveSvg = renderSoloSteve(viewCenterX, viewCenterY, inventory);
+  // Steve Rig at Camera Center (viewCenterX, viewCenterY) with Multiplayer Nametag
+  const steveSvg = renderSoloSteve(viewCenterX, viewCenterY, inventory, steve.lastMover);
 
   // Hotbar Inventory Slots - Real-Time Reflection of Inventory State!
   const slotWidth = 46;
@@ -124,6 +174,10 @@ export function renderWorldSvg(stateData) {
     ${item && item.count > 1 ? `<text x="${x + 36}" y="${hotbarY + 41}" fill="#FFFFFF" class="font-mc" font-size="8.5" font-weight="700" text-anchor="end">${item.count}</text>` : ''}
     `;
   }
+
+  const currentTurn = stats.totalMoves || 1;
+  const currentLevel = Math.floor(currentTurn / 3);
+  const safeActionText = escapeXml(steve.lastAction || 'Steve entered the Skyblock realm!');
 
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" width="100%" height="100%">
   <defs>
@@ -150,15 +204,10 @@ export function renderWorldSvg(stateData) {
 
     @keyframes floatIsland {
       0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-6px); }
-    }
-    @keyframes armSwing {
-      0%, 100% { transform: rotate(0deg); }
-      50% { transform: rotate(-18deg); }
+      50% { transform: translateY(-4px); }
     }
 
     .mc-island { animation: floatIsland 5s ease-in-out infinite; }
-    .steve-arm { animation: armSwing 2s ease-in-out infinite; transform-origin: 34px 42px; }
   </style>
 
   <!-- ================= CANVAS BACKGROUND ================= -->
@@ -187,7 +236,7 @@ export function renderWorldSvg(stateData) {
   <text x="84" y="55" fill="#55FF55" class="font-mc" font-size="9">CAMERA LOCKED ON STEVE • TILE [${steve.row}, ${steve.col}]</text>
 
   <!-- Hearts & Hunger Bars -->
-  <g transform="translate(560, 28)">
+  <g transform="translate(550, 28)">
     <text x="0" y="15" font-size="14">❤️❤️❤️❤️❤️</text>
     <text x="86" y="15" font-size="14">🍗🍗🍗🍗🍗</text>
     <text x="0" y="32" fill="#FFAA00" class="font-mc" font-size="8">FULL HEALTH</text>
@@ -197,8 +246,8 @@ export function renderWorldSvg(stateData) {
   <!-- Level Badge -->
   <g transform="translate(760, 23)">
     <rect width="128" height="40" rx="3" fill="#1A1B1C" stroke="#55FF55" stroke-width="1.5"/>
-    <text x="64" y="18" fill="#AAAAAA" class="font-mc" font-size="7.5" text-anchor="middle">EXPERIENCE</text>
-    <text x="64" y="34" fill="#55FF55" class="font-mc" font-size="13" font-weight="700" text-anchor="middle">LEVEL 0</text>
+    <text x="64" y="16" fill="#AAAAAA" class="font-mc" font-size="7" text-anchor="middle">TURN #${currentTurn}</text>
+    <text x="64" y="33" fill="#55FF55" class="font-mc" font-size="12" font-weight="700" text-anchor="middle">LEVEL ${currentLevel}</text>
   </g>
 
   <!-- ================= 2. 3D SKY VIEWPORT (CAMERA LOCKED ON STEVE) ================= -->
@@ -214,6 +263,14 @@ export function renderWorldSvg(stateData) {
     <rect x="650" y="115" width="200" height="28" fill="#FFFFFF" opacity="0.8" rx="2"/>
     <rect x="740" y="105" width="110" height="28" fill="#FFFFFF" opacity="0.8" rx="2"/>
 
+    <!-- Turn & Action Live Ticker Banner -->
+    <g transform="translate(32, 90)">
+      <rect width="856" height="26" rx="3" fill="#10141D" opacity="0.85" stroke="#353D4D" stroke-width="1"/>
+      <circle cx="16" cy="13" r="4" fill="#55FF55"/>
+      <text x="28" y="17" fill="#FFAA00" class="font-mc" font-size="8" font-weight="700">LATEST MOVE:</text>
+      <text x="145" y="17" fill="#FFFFFF" class="font-mc" font-size="8">${safeActionText}</text>
+    </g>
+
     <!-- The Floating Platform (Translates dynamically beneath camera) -->
     <g class="mc-island" filter="url(#islandShadow)">
 
@@ -224,8 +281,8 @@ export function renderWorldSvg(stateData) {
       ${leftCliffSvg}
       ${rightCliffSvg}
 
-      <!-- Top Grass Surface (27 Tiles) -->
-      ${grassTilesSvg}
+      <!-- Island Surface & Bridge Tiles -->
+      ${tilesSvg}
 
       <!-- Solitary Oak Tree at (0, 1) -->
       ${treeSvg}
@@ -233,7 +290,7 @@ export function renderWorldSvg(stateData) {
       <!-- Starter Wooden Chest at (5, 5) -->
       ${chestSvg}
 
-      <!-- Steve (Permanently Centered in Camera) -->
+      <!-- Steve (Permanently Centered in Camera with Nametag) -->
       ${steveSvg}
 
     </g>
@@ -250,8 +307,45 @@ export function renderWorldSvg(stateData) {
 </svg>`;
 }
 
-// Authentic Minecraft Oak Tree
-function renderAuthenticOakTree(cx, cy) {
+// Placed Bridge Block (Oak Planks or Diamond)
+function renderBridgeBlock(cx, cy, type = 'oak_planks') {
+  const isDiamond = type === 'diamond';
+  const topFill = isDiamond ? '#55FFFF' : '#B88746';
+  const topStroke = isDiamond ? '#00AAAA' : '#8D5B28';
+  const leftFill = isDiamond ? '#00CCCC' : '#9E6E32';
+  const leftStroke = isDiamond ? '#008888' : '#73481D';
+  const rightFill = isDiamond ? '#009999' : '#7D4F1C';
+  const rightStroke = isDiamond ? '#006666' : '#59340F';
+  const depth = 16;
+
+  return `
+  <!-- Bridge Block (${type}) -->
+  <g class="bridge-block">
+    <!-- Left Face -->
+    <polygon points="${cx - 36},${cy} ${cx},${cy + 18} ${cx},${cy + 18 + depth} ${cx - 36},${cy + depth}" fill="${leftFill}" stroke="${leftStroke}" stroke-width="0.8"/>
+    <!-- Right Face -->
+    <polygon points="${cx},${cy + 18} ${cx + 36},${cy} ${cx + 36},${cy + depth} ${cx},${cy + 18 + depth}" fill="${rightFill}" stroke="${rightStroke}" stroke-width="0.8"/>
+    <!-- Top Face -->
+    <polygon points="${cx},${cy - 18} ${cx + 36},${cy} ${cx},${cy + 18} ${cx - 36},${cy}" fill="${topFill}" stroke="${topStroke}" stroke-width="0.8"/>
+    <!-- Texture Detail -->
+    ${!isDiamond ? `
+    <line x1="${cx - 18}" y1="${cy - 9}" x2="${cx}" y2="${cy}" stroke="#73481D" stroke-width="0.8" opacity="0.6"/>
+    <line x1="${cx}" y1="${cy}" x2="${cx + 18}" y2="${cy + 9}" stroke="#73481D" stroke-width="0.8" opacity="0.6"/>
+    <line x1="${cx - 18}" y1="${cy + 9}" x2="${cx}" y2="${cy + 18}" stroke="#59340F" stroke-width="0.8" opacity="0.6"/>
+    ` : `
+    <polygon points="${cx},${cy - 10} ${cx + 18},${cy - 1} ${cx},${cy + 8} ${cx - 18},${cy - 1}" fill="#AAFFFF" opacity="0.7"/>
+    `}
+  </g>`;
+}
+
+// Authentic Minecraft Oak Tree with Visual Breaking Decals & Floating HP Bar
+function renderAuthenticOakTree(cx, cy, hp = 4, maxHp = 4) {
+  const hpPercent = hp / maxHp;
+  let hpColor = '#55FF55';
+  if (hpPercent <= 0.25) hpColor = '#FF5555';
+  else if (hpPercent <= 0.5) hpColor = '#FFAA00';
+  else if (hpPercent <= 0.75) hpColor = '#FFFF55';
+
   return `
   <!-- Authentic Skyblock Oak Tree -->
   <g class="oak-tree">
@@ -263,6 +357,17 @@ function renderAuthenticOakTree(cx, cy) {
     <line x1="${cx - 3}" y1="${cy - 14}" x2="${cx - 3}" y2="${cy + 6}" stroke="#543E23" stroke-width="1.2"/>
     <line x1="${cx + 11}" y1="${cy - 14}" x2="${cx + 11}" y2="${cy + 6}" stroke="#3D2E18" stroke-width="1.2"/>
 
+    <!-- Wood Punching Decals (Cracks appear when tree is damaged) -->
+    ${hp < maxHp ? `
+    <line x1="${cx - 6}" y1="${cy - 10}" x2="${cx + 1}" y2="${cy - 2}" stroke="#1E140A" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="${cx + 1}" y1="${cy - 2}" x2="${cx - 3}" y2="${cy + 6}" stroke="#1E140A" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="${cx + 6}" y1="${cy - 8}" x2="${cx + 12}" y2="${cy}" stroke="#1E140A" stroke-width="2.2" stroke-linecap="round"/>
+    ` : ''}
+    ${hp <= 1 ? `
+    <line x1="${cx - 8}" y1="${cy - 2}" x2="${cx + 2}" y2="${cy - 6}" stroke="#140D07" stroke-width="2.5"/>
+    <line x1="${cx + 2}" y1="${cy - 6}" x2="${cx + 15}" y2="${cy - 3}" stroke="#140D07" stroke-width="2.5"/>
+    ` : ''}
+
     <!-- Cubic Foliage Lower Cluster -->
     <polygon points="${cx},${cy - 72} ${cx + 44},${cy - 50} ${cx},${cy - 28} ${cx - 44},${cy - 50}" fill="#4C802E"/>
     <polygon points="${cx - 44},${cy - 50} ${cx},${cy - 28} ${cx},${cy - 4} ${cx - 44},${cy - 26}" fill="#386420"/>
@@ -272,26 +377,53 @@ function renderAuthenticOakTree(cx, cy) {
     <polygon points="${cx},${cy - 96} ${cx + 28},${cy - 82} ${cx},${cy - 68} ${cx - 28},${cy - 82}" fill="#5FA33A"/>
     <polygon points="${cx - 28},${cy - 82} ${cx},${cy - 68} ${cx},${cy - 48} ${cx - 28},${cy - 62}" fill="#4C802E"/>
     <polygon points="${cx},${cy - 68} ${cx + 28},${cy - 82} ${cx + 28},${cy - 62} ${cx},${cy - 48}" fill="#386420"/>
+
+    <!-- Tree HP Floating Durability Badge -->
+    <g transform="translate(${cx}, ${cy - 106})">
+      <rect x="-34" y="-12" width="68" height="15" rx="2" fill="#000000" opacity="0.65"/>
+      <text x="0" y="-1" fill="${hpColor}" class="font-mc" font-size="7" text-anchor="middle">🪵 ${hp}/${maxHp} HP</text>
+    </g>
   </g>`;
 }
 
-// Authentic Wooden Starter Chest
-function renderAuthenticChest(cx, cy) {
+// Authentic Wooden Starter Chest with Open/Closed State
+function renderAuthenticChest(cx, cy, opened = false) {
   const roofY = cy - 24;
   return `
   <!-- Starter Wooden Chest -->
   <g class="starter-chest">
+    ${opened ? `
+    <!-- Open Chest Lid tilted back -->
+    <polygon points="${cx - 16},${roofY - 14} ${cx},${roofY - 6} ${cx},${roofY + 2} ${cx - 16},${roofY - 6}" fill="#9E6732" stroke="#4A2F14" stroke-width="1"/>
+    <polygon points="${cx},${roofY - 6} ${cx + 16},${roofY - 14} ${cx + 16},${roofY - 6} ${cx},${roofY + 2}" fill="#7D5127" stroke="#4A2F14" stroke-width="1"/>
+    <!-- Chest Base Interior (Gold glow) -->
+    <polygon points="${cx - 16},${roofY} ${cx},${roofY + 8} ${cx},${cy + 6} ${cx - 16},${cy - 2}" fill="#5A3A1C" stroke="#3D2611" stroke-width="1"/>
+    <polygon points="${cx},${roofY + 8} ${cx + 16},${roofY} ${cx + 16},${cy - 2} ${cx},${cy + 6}" fill="#4A2F14" stroke="#3D2611" stroke-width="1"/>
+    <polygon points="${cx},${roofY - 4} ${cx + 14},${roofY + 3} ${cx},${roofY + 10} ${cx - 14},${roofY + 3}" fill="#FFAA00" opacity="0.4"/>
+    <!-- Looted Badge -->
+    <g transform="translate(${cx}, ${cy - 36})">
+      <rect x="-30" y="-11" width="60" height="14" rx="2" fill="#000000" opacity="0.6"/>
+      <text x="0" y="-1" fill="#FFAA00" class="font-mc" font-size="6.5" text-anchor="middle">📦 LOOTED</text>
+    </g>
+    ` : `
+    <!-- Closed Chest -->
     <polygon points="${cx - 16},${roofY} ${cx},${roofY + 8} ${cx},${cy + 6} ${cx - 16},${cy - 2}" fill="#7D5127" stroke="#4A2F14" stroke-width="1"/>
     <polygon points="${cx},${roofY + 8} ${cx + 16},${roofY} ${cx + 16},${cy - 2} ${cx},${cy + 6}" fill="#5A3A1C" stroke="#3D2611" stroke-width="1"/>
     <polygon points="${cx},${roofY - 8} ${cx + 16},${roofY} ${cx},${roofY + 8} ${cx - 16},${roofY}" fill="#9E6732" stroke="#4A2F14" stroke-width="1"/>
     <line x1="${cx - 16}" y1="${roofY + 3}" x2="${cx}" y2="${roofY + 11}" stroke="#1E1E1E" stroke-width="1.2"/>
     <line x1="${cx}" y1="${roofY + 11}" x2="${cx + 16}" y2="${roofY + 3}" stroke="#1E1E1E" stroke-width="1.2"/>
     <rect x="${cx - 2.5}" y="${roofY + 5}" width="5" height="7" rx="1" fill="#E0E0E0" stroke="#000000" stroke-width="0.8"/>
+    <!-- Starter Chest Badge -->
+    <g transform="translate(${cx}, ${cy - 36})">
+      <rect x="-32" y="-11" width="64" height="14" rx="2" fill="#000000" opacity="0.6"/>
+      <text x="0" y="-1" fill="#55FF55" class="font-mc" font-size="6.5" text-anchor="middle">📦 STARTER</text>
+    </g>
+    `}
   </g>`;
 }
 
-// Steve Solo Survivor (Centered in Viewport)
-function renderSoloSteve(cx, cy, inventory = []) {
+// Steve Solo Survivor (Centered in Viewport) with Multiplayer Nametag & Clean Arms
+function renderSoloSteve(cx, cy, inventory = [], lastMover = 'mo-farooq') {
   // Check if Steve has a held tool in slot 1 or pickaxe
   const heldPick = inventory.find(i => i.id === 'diamond_pickaxe' || i.id === 'stone_pickaxe' || i.id === 'pickaxe');
 
@@ -330,8 +462,8 @@ function renderSoloSteve(cx, cy, inventory = []) {
     <polygon points="${cx - 18},${cy - 45} ${cx - 13},${cy - 42} ${cx - 13},${cy - 26} ${cx - 18},${cy - 29}" fill="#008E8E"/>
     <polygon points="${cx - 18},${cy - 29} ${cx - 13},${cy - 26} ${cx - 13},${cy - 18} ${cx - 18},${cy - 21}" fill="#BD8B72"/>
 
-    <!-- Right Arm -->
-    <g class="steve-arm">
+    <!-- Right Arm (Fixed: Naturally attached to shoulder, no detached sky swinging) -->
+    <g>
       <polygon points="${cx + 13},${cy - 42} ${cx + 18},${cy - 45} ${cx + 18},${cy - 29} ${cx + 13},${cy - 26}" fill="#006363"/>
       <polygon points="${cx + 13},${cy - 26} ${cx + 18},${cy - 29} ${cx + 18},${cy - 21} ${cx + 13},${cy - 18}" fill="#BD8B72"/>
       ${heldPick ? `
@@ -339,6 +471,12 @@ function renderSoloSteve(cx, cy, inventory = []) {
       <line x1="${cx + 15}" y1="${cy - 24}" x2="${cx + 34}" y2="${cy - 45}" stroke="#866043" stroke-width="3" stroke-linecap="round"/>
       <polygon points="${cx + 27},${cy - 50} ${cx + 39},${cy - 41} ${cx + 37},${cy - 38} ${cx + 25},${cy - 47}" fill="#00FFFF"/>
       ` : ''}
+    </g>
+
+    <!-- Minecraft Multiplayer Nametag -->
+    <g transform="translate(${cx}, ${cy - 82})">
+      <rect x="-46" y="-12" width="92" height="15" rx="2" fill="#000000" opacity="0.65"/>
+      <text x="0" y="-1" fill="#FFFFFF" class="font-mc" font-size="7.5" text-anchor="middle">@${escapeXml(lastMover || 'mo-farooq')}</text>
     </g>
   </g>`;
 }

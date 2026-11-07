@@ -296,10 +296,11 @@ export function generateGamepadReadme(state, repoOwner = 'mo-farooq', repoName =
     ? `### 🔨 Available Crafting Recipes (Based on Current Inventory)\n<p>\n  ${craftButtons.join(' &nbsp; ')}\n</p>`
     : `### 🔨 Crafting Bench\n<em>(Inventory has no craftable ingredients. Punch the Oak Tree or loot the Starter Chest to gather materials!)</em>`;
 
+  const cacheBust = Date.now();
   return `# 🏝️ Minecraft Skyblock Survival
 
 <p align="center">
-  <img src="./world-3d.svg" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
+  <img src="./world-3d.svg?v=${cacheBust}" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
 </p>
 
 <div align="center">
