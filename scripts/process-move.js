@@ -227,19 +227,19 @@ export function generateGamepadReadme(state, repoOwner = 'mo-farooq', repoName =
   const rightUrl = createIssueUrl(repoOwner, repoName, 'Move: Step Right', 'Moving Steve Right on the Skyblock Island.');
 
   const forwardBtn = canGoNorth
-    ? `<a href="${forwardUrl}"><img src="https://img.shields.io/badge/⬆️_FORWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Forward"/></a>`
+    ? `<a href="${forwardUrl}" data-turbo="false"><img src="https://img.shields.io/badge/⬆️_FORWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Forward"/></a>`
     : `<em>(Void)</em>`;
 
   const backwardBtn = canGoSouth
-    ? `<a href="${backwardUrl}"><img src="https://img.shields.io/badge/⬇️_BACKWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Backward"/></a>`
+    ? `<a href="${backwardUrl}" data-turbo="false"><img src="https://img.shields.io/badge/⬇️_BACKWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Backward"/></a>`
     : `<em>(Void)</em>`;
 
   const leftBtn = canGoWest
-    ? `<a href="${leftUrl}"><img src="https://img.shields.io/badge/⬅️_LEFT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Left"/></a>`
+    ? `<a href="${leftUrl}" data-turbo="false"><img src="https://img.shields.io/badge/⬅️_LEFT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Left"/></a>`
     : `<em>(Void)</em>`;
 
   const rightBtn = canGoEast
-    ? `<a href="${rightUrl}"><img src="https://img.shields.io/badge/➡️_RIGHT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Right"/></a>`
+    ? `<a href="${rightUrl}" data-turbo="false"><img src="https://img.shields.io/badge/➡️_RIGHT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Right"/></a>`
     : `<em>(Void)</em>`;
 
   // 2. Dynamic Action Buttons (Appear ONLY when in range!)
@@ -250,15 +250,15 @@ export function generateGamepadReadme(state, repoOwner = 'mo-farooq', repoName =
   const actionButtons = [];
   if (isBesideTree) {
     const punchUrl = createIssueUrl(repoOwner, repoName, 'Action: Punch Oak Tree', 'Punching the solitary oak tree to harvest wood logs!');
-    actionButtons.push(`<a href="${punchUrl}"><img src="https://img.shields.io/badge/🪓_[A]_PUNCH_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Punch Tree"/></a>`);
+    actionButtons.push(`<a href="${punchUrl}" data-turbo="false"><img src="https://img.shields.io/badge/🪓_[A]_PUNCH_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Punch Tree"/></a>`);
   }
   if (isBesideChest && !chest.opened) {
     const chestUrl = createIssueUrl(repoOwner, repoName, 'Action: Open Starter Chest', 'Opening the starter chest to loot lava and ice blocks!');
-    actionButtons.push(`<a href="${chestUrl}"><img src="https://img.shields.io/badge/📦_[B]_OPEN_CHEST-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Open Chest"/></a>`);
+    actionButtons.push(`<a href="${chestUrl}" data-turbo="false"><img src="https://img.shields.io/badge/📦_[B]_OPEN_CHEST-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Open Chest"/></a>`);
   }
   if (hasPlanks) {
     const bridgeUrl = createIssueUrl(repoOwner, repoName, 'Action: Bridge Planks', 'Placing an oak plank bridge block into the void!');
-    actionButtons.push(`<a href="${bridgeUrl}"><img src="https://img.shields.io/badge/🪵_[X]_BRIDGE_VOID-D84315?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Bridge Void"/></a>`);
+    actionButtons.push(`<a href="${bridgeUrl}" data-turbo="false"><img src="https://img.shields.io/badge/🪵_[X]_BRIDGE_VOID-D84315?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Bridge Void"/></a>`);
   }
   actionButtons.push(`<a href="https://github.com/${repoOwner}/${repoName}/stargazers"><img src="https://img.shields.io/badge/⭐_[Y]_VIP_STAR-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="42" alt="VIP Star"/></a>`);
 
@@ -271,23 +271,23 @@ export function generateGamepadReadme(state, repoOwner = 'mo-farooq', repoName =
   const craftButtons = [];
   if (logCount >= 1) {
     const url = createIssueUrl(repoOwner, repoName, 'Action: Craft 4 Planks', 'Crafting 4 Oak Planks from 1 Oak Log.');
-    craftButtons.push(`<a href="${url}"><img src="https://img.shields.io/badge/🔨_CRAFT_4_PLANKS-B88746?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Planks"/></a>`);
+    craftButtons.push(`<a href="${url}" data-turbo="false"><img src="https://img.shields.io/badge/🔨_CRAFT_4_PLANKS-B88746?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Planks"/></a>`);
   }
   if (plankCount >= 2) {
     const url = createIssueUrl(repoOwner, repoName, 'Action: Craft 4 Sticks', 'Crafting 4 Wooden Sticks from 2 Planks.');
-    craftButtons.push(`<a href="${url}"><img src="https://img.shields.io/badge/🔨_CRAFT_4_STICKS-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Sticks"/></a>`);
+    craftButtons.push(`<a href="${url}" data-turbo="false"><img src="https://img.shields.io/badge/🔨_CRAFT_4_STICKS-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Sticks"/></a>`);
   }
   if (plankCount >= 4) {
     const url = createIssueUrl(repoOwner, repoName, 'Action: Craft Crafting Table', 'Crafting a Crafting Table from 4 Planks.');
-    craftButtons.push(`<a href="${url}"><img src="https://img.shields.io/badge/🔨_CRAFT_TABLE-A67038?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Table"/></a>`);
+    craftButtons.push(`<a href="${url}" data-turbo="false"><img src="https://img.shields.io/badge/🔨_CRAFT_TABLE-A67038?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Table"/></a>`);
   }
   if (cobbleCount >= 3 && stickCount >= 2) {
     const url = createIssueUrl(repoOwner, repoName, 'Action: Craft Stone Pickaxe', 'Crafting a Stone Pickaxe from 3 Cobblestone and 2 Sticks.');
-    craftButtons.push(`<a href="${url}"><img src="https://img.shields.io/badge/⛏️_CRAFT_PICKAXE-78909C?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Pickaxe"/></a>`);
+    craftButtons.push(`<a href="${url}" data-turbo="false"><img src="https://img.shields.io/badge/⛏️_CRAFT_PICKAXE-78909C?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Pickaxe"/></a>`);
   }
   if (cobbleCount >= 8) {
     const url = createIssueUrl(repoOwner, repoName, 'Action: Craft Furnace', 'Crafting a Stone Furnace from 8 Cobblestone.');
-    craftButtons.push(`<a href="${url}"><img src="https://img.shields.io/badge/♨️_CRAFT_FURNACE-455A64?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Furnace"/></a>`);
+    craftButtons.push(`<a href="${url}" data-turbo="false"><img src="https://img.shields.io/badge/♨️_CRAFT_FURNACE-455A64?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Furnace"/></a>`);
   }
 
   const craftSection = craftButtons.length > 0

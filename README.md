@@ -20,30 +20,30 @@
   <tr>
     <td></td>
     <td align="center">
-      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=turn.yml&title=Move%3A%20Step%20Forward&command=Move%3A%20Step%20Forward"><img src="https://img.shields.io/badge/⬆️_FORWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Forward"/></a>
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=turn.yml&title=Move%3A%20Step%20Forward&command=Move%3A%20Step%20Forward" data-turbo="false"><img src="https://img.shields.io/badge/⬆️_FORWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Forward"/></a>
     </td>
     <td></td>
     <td></td>
     <td align="center" rowspan="3">
-      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=turn.yml&title=Action%3A%20Punch%20Oak%20Tree&command=Action%3A%20Punch%20Oak%20Tree"><img src="https://img.shields.io/badge/🪓_[A]_PUNCH_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Punch Tree"/></a><br><br><a href="https://github.com/mo-farooq/skyblock/issues/new?template=turn.yml&title=Action%3A%20Bridge%20Planks&command=Action%3A%20Bridge%20Planks"><img src="https://img.shields.io/badge/🪵_[X]_BRIDGE_VOID-D84315?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Bridge Void"/></a><br><br><a href="https://github.com/mo-farooq/skyblock/stargazers"><img src="https://img.shields.io/badge/⭐_[Y]_VIP_STAR-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="42" alt="VIP Star"/></a>
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=turn.yml&title=Action%3A%20Punch%20Oak%20Tree&command=Action%3A%20Punch%20Oak%20Tree" data-turbo="false"><img src="https://img.shields.io/badge/🪓_[A]_PUNCH_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Punch Tree"/></a><br><br><a href="https://github.com/mo-farooq/skyblock/issues/new?template=turn.yml&title=Action%3A%20Bridge%20Planks&command=Action%3A%20Bridge%20Planks" data-turbo="false"><img src="https://img.shields.io/badge/🪵_[X]_BRIDGE_VOID-D84315?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Bridge Void"/></a><br><br><a href="https://github.com/mo-farooq/skyblock/stargazers"><img src="https://img.shields.io/badge/⭐_[Y]_VIP_STAR-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="42" alt="VIP Star"/></a>
     </td>
   </tr>
   <tr>
     <td align="center">
-      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=turn.yml&title=Move%3A%20Step%20Left&command=Move%3A%20Step%20Left"><img src="https://img.shields.io/badge/⬅️_LEFT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Left"/></a>
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=turn.yml&title=Move%3A%20Step%20Left&command=Move%3A%20Step%20Left" data-turbo="false"><img src="https://img.shields.io/badge/⬅️_LEFT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Left"/></a>
     </td>
     <td align="center">
       <img src="https://img.shields.io/badge/🕹️_STEVE-000000?style=for-the-badge&logoColor=white" height="38"/>
     </td>
     <td align="center">
-      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=turn.yml&title=Move%3A%20Step%20Right&command=Move%3A%20Step%20Right"><img src="https://img.shields.io/badge/➡️_RIGHT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Right"/></a>
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=turn.yml&title=Move%3A%20Step%20Right&command=Move%3A%20Step%20Right" data-turbo="false"><img src="https://img.shields.io/badge/➡️_RIGHT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Right"/></a>
     </td>
     <td></td>
   </tr>
   <tr>
     <td></td>
     <td align="center">
-      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=turn.yml&title=Move%3A%20Step%20Backward&command=Move%3A%20Step%20Backward"><img src="https://img.shields.io/badge/⬇️_BACKWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Backward"/></a>
+      <a href="https://github.com/mo-farooq/skyblock/issues/new?template=turn.yml&title=Move%3A%20Step%20Backward&command=Move%3A%20Step%20Backward" data-turbo="false"><img src="https://img.shields.io/badge/⬇️_BACKWARD-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Backward"/></a>
     </td>
     <td></td>
     <td></td>
@@ -52,7 +52,7 @@
 
 ### 🔨 Available Crafting Recipes (Based on Current Inventory)
 <p>
-  <a href="https://github.com/mo-farooq/skyblock/issues/new?template=turn.yml&title=Action%3A%20Craft%204%20Sticks&command=Action%3A%20Craft%204%20Sticks"><img src="https://img.shields.io/badge/🔨_CRAFT_4_STICKS-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Sticks"/></a>
+  <a href="https://github.com/mo-farooq/skyblock/issues/new?template=turn.yml&title=Action%3A%20Craft%204%20Sticks&command=Action%3A%20Craft%204%20Sticks" data-turbo="false"><img src="https://img.shields.io/badge/🔨_CRAFT_4_STICKS-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Sticks"/></a>
 </p>
 
 </div>
