@@ -1,19 +1,19 @@
 # 🏝️ Minecraft Skyblock Survival
 
 <p align="center">
-  <img src="./renders/world-turn-29.svg" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
+  <img src="./renders/world-turn-30.svg" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
 </p>
 
 <div align="center">
 
 <p align="center">
   <a href="https://github.com/mo-farooq/skyblock/actions/workflows/update-world.yml"><img src="https://github.com/mo-farooq/skyblock/actions/workflows/update-world.yml/badge.svg" alt="Engine Status" /></a> &nbsp;
-  <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/TURN-%2329-FFD700?style=flat-square" alt="Turn Counter" /></a> &nbsp;
-  <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/STEVE-%5B4%2C_6%5D-55FF55?style=flat-square" alt="Steve Coordinates" /></a>
+  <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/TURN-%2330-FFD700?style=flat-square" alt="Turn Counter" /></a> &nbsp;
+  <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/STEVE-%5B4%2C_7%5D-55FF55?style=flat-square" alt="Steve Coordinates" /></a>
 </p>
 
 ## 🎮 Dynamic Gamepad Controller: Make Your Move!
-*Steve is at **Tile [4, 6]** (Facing **EAST**). Explore the island, harvest the tree, and bridge into the void!*
+*Steve is at **Tile [4, 7]** (Facing **EAST**). Explore the island, harvest the tree, and bridge into the void!*
 
 > 💡 **How to Play:** Click any button below &rarr; click green **"Create"** &rarr; engine auto-executes turn!
 
@@ -42,7 +42,7 @@
       <img src="https://img.shields.io/badge/🕹️_STEVE-000000?style=for-the-badge&logoColor=white" height="38"/>
     </td>
     <td align="center">
-      <a href="https://www.github.com/mo-farooq/skyblock/issues/new?title=Move%3A%20Step%20Right&body=%23%23%23%20%F0%9F%95%B9%EF%B8%8F%20Skyblock%20Realm%20Turn%3A%20Move%3A%20Step%20Right%0A%0A%3E%20**Click%20the%20green%20%22Create%22%20button%20below%20to%20execute%20this%20turn!**%0A%3E%20%F0%9F%8C%90%20%5BReturn%20to%20Skyblock%20Realm%5D(https%3A%2F%2Fgithub.com%2Fmo-farooq%2Fskyblock%23readme)%0A%0AMoving%20Steve%20Right%20on%20the%20Skyblock%20Island." data-turbo="false"><img src="https://img.shields.io/badge/➡️_RIGHT-2E7D32?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Right"/></a>
+      <em>(Void)</em>
     </td>
     <td></td>
   </tr>
