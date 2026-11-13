@@ -3,10 +3,10 @@
   "season": 1,
   "steve": {
     "row": 4,
-    "col": 7,
-    "facing": "south",
+    "col": 6,
+    "facing": "west",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq faced South, but reached the island edge facing the void!"
+    "lastAction": "@mo-farooq stepped Left to [4, 6]!"
   },
   "tree": {
     "row": 0,
@@ -65,11 +65,11 @@
     }
   ],
   "stats": {
-    "totalMoves": 33,
+    "totalMoves": 35,
     "treesHarvested": 5,
     "chestsOpened": 1,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-13T13:37:32.076Z"
+    "updatedAt": "2026-11-13T13:38:27.883Z"
   },
   "bridges": [
     {
