@@ -3,10 +3,10 @@
   "season": 1,
   "steve": {
     "row": 4,
-    "col": 3,
+    "col": 4,
     "facing": "east",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq stepped Right to [4, 3]!"
+    "lastAction": "@mo-farooq stepped Right to [4, 4]!"
   },
   "tree": {
     "row": 0,
@@ -44,11 +44,11 @@
     }
   ],
   "stats": {
-    "totalMoves": 23,
+    "totalMoves": 24,
     "treesHarvested": 5,
     "chestsOpened": 0,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-13T13:10:44.620Z"
+    "updatedAt": "2026-11-13T13:11:08.101Z"
   },
   "bridges": [
     {
