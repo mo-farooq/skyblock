@@ -6,7 +6,7 @@
     "col": 4,
     "facing": "east",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq stepped Right to [4, 4]!"
+    "lastAction": "@mo-farooq opened the Starter Chest! Looted 1 Lava Bucket, 1 Ice Block, and 3 Bread."
   },
   "tree": {
     "row": 0,
@@ -18,7 +18,7 @@
   "chest": {
     "row": 5,
     "col": 5,
-    "opened": false
+    "opened": true
   },
   "inventory": [
     {
@@ -41,14 +41,35 @@
       "name": "Crafting Table",
       "emoji": "🪚",
       "count": 1
+    },
+    {
+      "slot": 4,
+      "id": "lava_bucket",
+      "name": "Lava Bucket",
+      "emoji": "🌋",
+      "count": 1
+    },
+    {
+      "slot": 5,
+      "id": "ice_block",
+      "name": "Ice Block",
+      "emoji": "🧊",
+      "count": 1
+    },
+    {
+      "slot": 6,
+      "id": "bread",
+      "name": "Bread",
+      "emoji": "🍞",
+      "count": 3
     }
   ],
   "stats": {
-    "totalMoves": 24,
+    "totalMoves": 25,
     "treesHarvested": 5,
-    "chestsOpened": 0,
+    "chestsOpened": 1,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-13T13:11:08.101Z"
+    "updatedAt": "2026-11-13T13:11:28.855Z"
   },
   "bridges": [
     {
