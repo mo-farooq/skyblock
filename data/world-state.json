@@ -6,7 +6,7 @@
     "col": 7,
     "facing": "east",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq stepped Right to [4, 7]!"
+    "lastAction": "@mo-farooq crafted 4 Oak Planks from 1 Oak Log!"
   },
   "tree": {
     "row": 0,
@@ -26,14 +26,14 @@
       "id": "oak_planks",
       "name": "Oak Planks",
       "emoji": "🪵",
-      "count": 4
+      "count": 8
     },
     {
       "slot": 2,
       "id": "oak_log",
       "name": "Oak Log",
       "emoji": "🪵",
-      "count": 7
+      "count": 6
     },
     {
       "slot": 3,
@@ -65,11 +65,11 @@
     }
   ],
   "stats": {
-    "totalMoves": 30,
+    "totalMoves": 31,
     "treesHarvested": 5,
     "chestsOpened": 1,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-13T13:13:35.370Z"
+    "updatedAt": "2026-11-13T13:14:09.401Z"
   },
   "bridges": [
     {
