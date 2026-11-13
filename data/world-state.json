@@ -6,7 +6,7 @@
     "col": 1,
     "facing": "north",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq punched the Oak Tree! (3/4 HP). +1 Log gathered."
+    "lastAction": "@mo-farooq crafted a Crafting Table from 4 Planks!"
   },
   "tree": {
     "row": 0,
@@ -26,7 +26,7 @@
       "id": "oak_planks",
       "name": "Oak Planks",
       "emoji": "🪵",
-      "count": 10
+      "count": 6
     },
     {
       "slot": 2,
@@ -34,14 +34,21 @@
       "name": "Oak Log",
       "emoji": "🪵",
       "count": 7
+    },
+    {
+      "slot": 3,
+      "id": "crafting_table",
+      "name": "Crafting Table",
+      "emoji": "🪚",
+      "count": 1
     }
   ],
   "stats": {
-    "totalMoves": 17,
+    "totalMoves": 18,
     "treesHarvested": 5,
     "chestsOpened": 0,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-13T13:07:13.315Z"
+    "updatedAt": "2026-11-13T13:08:11.901Z"
   },
   "bridges": [
     {
