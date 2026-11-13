@@ -3,10 +3,10 @@
   "season": 1,
   "steve": {
     "row": 1,
-    "col": 1,
-    "facing": "north",
+    "col": 2,
+    "facing": "east",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq crafted a Crafting Table from 4 Planks!"
+    "lastAction": "@mo-farooq stepped Right to [1, 2]!"
   },
   "tree": {
     "row": 0,
@@ -44,11 +44,11 @@
     }
   ],
   "stats": {
-    "totalMoves": 18,
+    "totalMoves": 19,
     "treesHarvested": 5,
     "chestsOpened": 0,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-13T13:08:11.901Z"
+    "updatedAt": "2026-11-13T13:08:47.201Z"
   },
   "bridges": [
     {
