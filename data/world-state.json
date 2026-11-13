@@ -6,7 +6,7 @@
     "col": 5,
     "facing": "east",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq stepped Right to [4, 5]!"
+    "lastAction": "@mo-farooq placed a Diamond bridge block at [4, 7] expanding the island!"
   },
   "tree": {
     "row": 0,
@@ -26,7 +26,7 @@
       "id": "oak_planks",
       "name": "Oak Planks",
       "emoji": "🪵",
-      "count": 5
+      "count": 4
     },
     {
       "slot": 2,
@@ -65,11 +65,11 @@
     }
   ],
   "stats": {
-    "totalMoves": 27,
+    "totalMoves": 28,
     "treesHarvested": 5,
     "chestsOpened": 1,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-13T13:12:31.276Z"
+    "updatedAt": "2026-11-13T13:12:52.452Z"
   },
   "bridges": [
     {
@@ -87,6 +87,12 @@
     {
       "row": 4,
       "col": 6,
+      "type": "diamond",
+      "builder": "mo-farooq"
+    },
+    {
+      "row": 4,
+      "col": 7,
       "type": "diamond",
       "builder": "mo-farooq"
     }

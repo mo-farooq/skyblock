@@ -1,14 +1,14 @@
 # 🏝️ Minecraft Skyblock Survival
 
 <p align="center">
-  <img src="./renders/world-turn-27.svg" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
+  <img src="./renders/world-turn-28.svg" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
 </p>
 
 <div align="center">
 
 <p align="center">
   <a href="https://github.com/mo-farooq/skyblock/actions/workflows/update-world.yml"><img src="https://github.com/mo-farooq/skyblock/actions/workflows/update-world.yml/badge.svg" alt="Engine Status" /></a> &nbsp;
-  <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/TURN-%2327-FFD700?style=flat-square" alt="Turn Counter" /></a> &nbsp;
+  <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/TURN-%2328-FFD700?style=flat-square" alt="Turn Counter" /></a> &nbsp;
   <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/STEVE-%5B4%2C_5%5D-55FF55?style=flat-square" alt="Steve Coordinates" /></a>
 </p>
 
