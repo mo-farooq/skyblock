@@ -4,9 +4,9 @@
   "steve": {
     "row": 4,
     "col": 7,
-    "facing": "east",
+    "facing": "south",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq crafted 4 Oak Planks from 1 Oak Log!"
+    "lastAction": "@mo-farooq faced South, but reached the island edge facing the void!"
   },
   "tree": {
     "row": 0,
@@ -65,11 +65,11 @@
     }
   ],
   "stats": {
-    "totalMoves": 31,
+    "totalMoves": 33,
     "treesHarvested": 5,
     "chestsOpened": 1,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-13T13:14:09.401Z"
+    "updatedAt": "2026-11-13T13:37:32.076Z"
   },
   "bridges": [
     {

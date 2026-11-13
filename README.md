@@ -1,19 +1,19 @@
 # 🏝️ Minecraft Skyblock Survival
 
 <p align="center">
-  <img src="./renders/world-turn-31.svg" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
+  <img src="./renders/world-turn-33.svg" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
 </p>
 
 <div align="center">
 
 <p align="center">
   <a href="https://github.com/mo-farooq/skyblock/actions/workflows/update-world.yml"><img src="https://github.com/mo-farooq/skyblock/actions/workflows/update-world.yml/badge.svg" alt="Engine Status" /></a> &nbsp;
-  <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/TURN-%2331-FFD700?style=flat-square" alt="Turn Counter" /></a> &nbsp;
+  <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/TURN-%2333-FFD700?style=flat-square" alt="Turn Counter" /></a> &nbsp;
   <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/STEVE-%5B4%2C_7%5D-55FF55?style=flat-square" alt="Steve Coordinates" /></a>
 </p>
 
 ## 🎮 Dynamic Gamepad Controller: Make Your Move!
-*Steve is at **Tile [4, 7]** (Facing **EAST**). Explore the island, harvest the tree, and bridge into the void!*
+*Steve is at **Tile [4, 7]** (Facing **SOUTH**). Explore the island, harvest the tree, and bridge into the void!*
 
 > 💡 **How to Play:** Click any button below &rarr; click green **"Create"** &rarr; engine auto-executes turn!
 
