@@ -1,19 +1,19 @@
 # 🏝️ Minecraft Skyblock Survival
 
 <p align="center">
-  <img src="./renders/world-turn-11.svg" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
+  <img src="./renders/world-turn-12.svg" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
 </p>
 
 <div align="center">
 
 <p align="center">
   <a href="https://github.com/mo-farooq/skyblock/actions/workflows/update-world.yml"><img src="https://github.com/mo-farooq/skyblock/actions/workflows/update-world.yml/badge.svg" alt="Engine Status" /></a> &nbsp;
-  <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/TURN-%2311-FFD700?style=flat-square" alt="Turn Counter" /></a> &nbsp;
-  <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/STEVE-%5B1%2C_1%5D-55FF55?style=flat-square" alt="Steve Coordinates" /></a>
+  <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/TURN-%2312-FFD700?style=flat-square" alt="Turn Counter" /></a> &nbsp;
+  <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/STEVE-%5B2%2C_1%5D-55FF55?style=flat-square" alt="Steve Coordinates" /></a>
 </p>
 
 ## 🎮 Dynamic Gamepad Controller: Make Your Move!
-*Steve is at **Tile [1, 1]** (Facing **NORTH**). Explore the island, harvest the tree, and bridge into the void!*
+*Steve is at **Tile [2, 1]** (Facing **SOUTH**). Explore the island, harvest the tree, and bridge into the void!*
 
 > 💡 **How to Play:** Click any button below &rarr; click green **"Create"** &rarr; engine auto-executes turn!
 
@@ -31,7 +31,7 @@
     <td></td>
     <td></td>
     <td align="center" rowspan="3">
-      <a href="https://www.github.com/mo-farooq/skyblock/issues/new?title=Action%3A%20Punch%20Oak%20Tree&body=%23%23%23%20%F0%9F%95%B9%EF%B8%8F%20Skyblock%20Realm%20Turn%3A%20Action%3A%20Punch%20Oak%20Tree%0A%0A%3E%20**Click%20the%20green%20%22Create%22%20button%20below%20to%20execute%20this%20turn!**%0A%3E%20%F0%9F%8C%90%20%5BReturn%20to%20Skyblock%20Realm%5D(https%3A%2F%2Fgithub.com%2Fmo-farooq%2Fskyblock%23readme)%0A%0APunching%20the%20solitary%20oak%20tree%20to%20harvest%20wood%20logs!" data-turbo="false"><img src="https://img.shields.io/badge/🪓_[A]_PUNCH_TREE-FF8F00?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Punch Tree"/></a><br><br><a href="https://www.github.com/mo-farooq/skyblock/issues/new?title=Action%3A%20Bridge%20Planks&body=%23%23%23%20%F0%9F%95%B9%EF%B8%8F%20Skyblock%20Realm%20Turn%3A%20Action%3A%20Bridge%20Planks%0A%0A%3E%20**Click%20the%20green%20%22Create%22%20button%20below%20to%20execute%20this%20turn!**%0A%3E%20%F0%9F%8C%90%20%5BReturn%20to%20Skyblock%20Realm%5D(https%3A%2F%2Fgithub.com%2Fmo-farooq%2Fskyblock%23readme)%0A%0APlacing%20an%20oak%20plank%20bridge%20block%20into%20the%20void!" data-turbo="false"><img src="https://img.shields.io/badge/🪵_[X]_BRIDGE_VOID-D84315?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Bridge Void"/></a><br><br><a href="https://github.com/mo-farooq/skyblock/stargazers"><img src="https://img.shields.io/badge/⭐_[Y]_VIP_STAR-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="42" alt="VIP Star"/></a>
+      <a href="https://www.github.com/mo-farooq/skyblock/issues/new?title=Action%3A%20Bridge%20Planks&body=%23%23%23%20%F0%9F%95%B9%EF%B8%8F%20Skyblock%20Realm%20Turn%3A%20Action%3A%20Bridge%20Planks%0A%0A%3E%20**Click%20the%20green%20%22Create%22%20button%20below%20to%20execute%20this%20turn!**%0A%3E%20%F0%9F%8C%90%20%5BReturn%20to%20Skyblock%20Realm%5D(https%3A%2F%2Fgithub.com%2Fmo-farooq%2Fskyblock%23readme)%0A%0APlacing%20an%20oak%20plank%20bridge%20block%20into%20the%20void!" data-turbo="false"><img src="https://img.shields.io/badge/🪵_[X]_BRIDGE_VOID-D84315?style=for-the-badge&logoColor=white&labelColor=1B2838" height="42" alt="Bridge Void"/></a><br><br><a href="https://github.com/mo-farooq/skyblock/stargazers"><img src="https://img.shields.io/badge/⭐_[Y]_VIP_STAR-00E5FF?style=for-the-badge&logoColor=black&labelColor=1B2838" height="42" alt="VIP Star"/></a>
     </td>
   </tr>
   <tr>
