@@ -3,10 +3,10 @@
   "season": 1,
   "steve": {
     "row": 4,
-    "col": 5,
+    "col": 6,
     "facing": "east",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq placed a Diamond bridge block at [4, 7] expanding the island!"
+    "lastAction": "@mo-farooq stepped Right to [4, 6]!"
   },
   "tree": {
     "row": 0,
@@ -65,11 +65,11 @@
     }
   ],
   "stats": {
-    "totalMoves": 28,
+    "totalMoves": 29,
     "treesHarvested": 5,
     "chestsOpened": 1,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-13T13:12:52.452Z"
+    "updatedAt": "2026-11-13T13:13:15.807Z"
   },
   "bridges": [
     {
