@@ -69,6 +69,12 @@ async function main() {
   const turnResult = processSkyblockAction(state, context.issueTitle, context.username, hasStarred);
   console.log(`🎮 Turn Result:`, turnResult);
 
+  // Immediately fire reply & issue closure concurrently with file writes
+  let replyPromise = Promise.resolve();
+  if (process.env.GITHUB_TOKEN && context.issueNumber && context.repoOwner && context.repoName) {
+    replyPromise = replyAndCloseIssue(context, turnResult, state, hasStarred);
+  }
+
   // Save updated state
   fs.writeFileSync(STATE_FILE, JSON.stringify(state, null, 2), 'utf-8');
 
@@ -90,10 +96,8 @@ async function main() {
   fs.writeFileSync(README_FILE, dynamicReadme, 'utf-8');
   console.log(`📜 Dynamic README updated with Gamepad & Crafting Bench.`);
 
-  // Comment & close issue if running in GitHub Actions
-  if (process.env.GITHUB_TOKEN && context.issueNumber && context.repoOwner && context.repoName) {
-    await replyAndCloseIssue(context, turnResult, state, hasStarred);
-  }
+  // Ensure reply and closure have completed
+  await replyPromise;
 }
 
 // Logic to parse and apply player actions
