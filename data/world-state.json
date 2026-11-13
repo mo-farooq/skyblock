@@ -6,12 +6,12 @@
     "col": 1,
     "facing": "north",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq punched the Oak Tree! (1/4 HP). +1 Log gathered."
+    "lastAction": "@mo-farooq felled the Oak Tree! Harvested 4 Oak Logs and 8 Planks, replanting the sapling."
   },
   "tree": {
     "row": 0,
     "col": 1,
-    "hp": 1,
+    "hp": 4,
     "maxHp": 4,
     "mature": true
   },
@@ -26,22 +26,22 @@
       "id": "oak_planks",
       "name": "Oak Planks",
       "emoji": "🪵",
-      "count": 2
+      "count": 10
     },
     {
       "slot": 2,
       "id": "oak_log",
       "name": "Oak Log",
       "emoji": "🪵",
-      "count": 2
+      "count": 6
     }
   ],
   "stats": {
-    "totalMoves": 15,
-    "treesHarvested": 3,
+    "totalMoves": 16,
+    "treesHarvested": 4,
     "chestsOpened": 0,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-13T13:06:40.469Z"
+    "updatedAt": "2026-11-13T13:07:00.135Z"
   },
   "bridges": [
     {

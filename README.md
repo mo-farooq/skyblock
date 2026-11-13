@@ -1,14 +1,14 @@
 # 🏝️ Minecraft Skyblock Survival
 
 <p align="center">
-  <img src="./renders/world-turn-15.svg" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
+  <img src="./renders/world-turn-16.svg" alt="Minecraft Skyblock 3D Isometric Island" width="100%" />
 </p>
 
 <div align="center">
 
 <p align="center">
   <a href="https://github.com/mo-farooq/skyblock/actions/workflows/update-world.yml"><img src="https://github.com/mo-farooq/skyblock/actions/workflows/update-world.yml/badge.svg" alt="Engine Status" /></a> &nbsp;
-  <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/TURN-%2315-FFD700?style=flat-square" alt="Turn Counter" /></a> &nbsp;
+  <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/TURN-%2316-FFD700?style=flat-square" alt="Turn Counter" /></a> &nbsp;
   <a href="https://github.com/mo-farooq/skyblock"><img src="https://img.shields.io/badge/STEVE-%5B1%2C_1%5D-55FF55?style=flat-square" alt="Steve Coordinates" /></a>
 </p>
 
@@ -58,7 +58,7 @@
 
 ### 🔨 Available Crafting Recipes (Based on Current Inventory)
 <p>
-  <a href="https://www.github.com/mo-farooq/skyblock/issues/new?title=Action%3A%20Craft%204%20Planks&body=%23%23%23%20%F0%9F%95%B9%EF%B8%8F%20Skyblock%20Realm%20Turn%3A%20Action%3A%20Craft%204%20Planks%0A%0A%3E%20**Click%20the%20green%20%22Create%22%20button%20below%20to%20execute%20this%20turn!**%0A%3E%20%F0%9F%8C%90%20%5BReturn%20to%20Skyblock%20Realm%5D(https%3A%2F%2Fgithub.com%2Fmo-farooq%2Fskyblock%23readme)%0A%0ACrafting%204%20Oak%20Planks%20from%201%20Oak%20Log." data-turbo="false"><img src="https://img.shields.io/badge/🔨_CRAFT_4_PLANKS-B88746?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Planks"/></a> &nbsp; <a href="https://www.github.com/mo-farooq/skyblock/issues/new?title=Action%3A%20Craft%204%20Sticks&body=%23%23%23%20%F0%9F%95%B9%EF%B8%8F%20Skyblock%20Realm%20Turn%3A%20Action%3A%20Craft%204%20Sticks%0A%0A%3E%20**Click%20the%20green%20%22Create%22%20button%20below%20to%20execute%20this%20turn!**%0A%3E%20%F0%9F%8C%90%20%5BReturn%20to%20Skyblock%20Realm%5D(https%3A%2F%2Fgithub.com%2Fmo-farooq%2Fskyblock%23readme)%0A%0ACrafting%204%20Wooden%20Sticks%20from%202%20Planks." data-turbo="false"><img src="https://img.shields.io/badge/🔨_CRAFT_4_STICKS-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Sticks"/></a>
+  <a href="https://www.github.com/mo-farooq/skyblock/issues/new?title=Action%3A%20Craft%204%20Planks&body=%23%23%23%20%F0%9F%95%B9%EF%B8%8F%20Skyblock%20Realm%20Turn%3A%20Action%3A%20Craft%204%20Planks%0A%0A%3E%20**Click%20the%20green%20%22Create%22%20button%20below%20to%20execute%20this%20turn!**%0A%3E%20%F0%9F%8C%90%20%5BReturn%20to%20Skyblock%20Realm%5D(https%3A%2F%2Fgithub.com%2Fmo-farooq%2Fskyblock%23readme)%0A%0ACrafting%204%20Oak%20Planks%20from%201%20Oak%20Log." data-turbo="false"><img src="https://img.shields.io/badge/🔨_CRAFT_4_PLANKS-B88746?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Planks"/></a> &nbsp; <a href="https://www.github.com/mo-farooq/skyblock/issues/new?title=Action%3A%20Craft%204%20Sticks&body=%23%23%23%20%F0%9F%95%B9%EF%B8%8F%20Skyblock%20Realm%20Turn%3A%20Action%3A%20Craft%204%20Sticks%0A%0A%3E%20**Click%20the%20green%20%22Create%22%20button%20below%20to%20execute%20this%20turn!**%0A%3E%20%F0%9F%8C%90%20%5BReturn%20to%20Skyblock%20Realm%5D(https%3A%2F%2Fgithub.com%2Fmo-farooq%2Fskyblock%23readme)%0A%0ACrafting%204%20Wooden%20Sticks%20from%202%20Planks." data-turbo="false"><img src="https://img.shields.io/badge/🔨_CRAFT_4_STICKS-8D6E63?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Sticks"/></a> &nbsp; <a href="https://www.github.com/mo-farooq/skyblock/issues/new?title=Action%3A%20Craft%20Crafting%20Table&body=%23%23%23%20%F0%9F%95%B9%EF%B8%8F%20Skyblock%20Realm%20Turn%3A%20Action%3A%20Craft%20Crafting%20Table%0A%0A%3E%20**Click%20the%20green%20%22Create%22%20button%20below%20to%20execute%20this%20turn!**%0A%3E%20%F0%9F%8C%90%20%5BReturn%20to%20Skyblock%20Realm%5D(https%3A%2F%2Fgithub.com%2Fmo-farooq%2Fskyblock%23readme)%0A%0ACrafting%20a%20Crafting%20Table%20from%204%20Planks." data-turbo="false"><img src="https://img.shields.io/badge/🔨_CRAFT_TABLE-A67038?style=for-the-badge&logoColor=white&labelColor=1B2838" height="38" alt="Craft Table"/></a>
 </p>
 
 </div>
