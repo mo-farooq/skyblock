@@ -6,7 +6,7 @@
     "col": 6,
     "facing": "west",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq stepped Left to [4, 6]!"
+    "lastAction": "@mo-farooq crafted 4 Wooden Sticks from 2 Planks!"
   },
   "tree": {
     "row": 0,
@@ -26,7 +26,7 @@
       "id": "oak_planks",
       "name": "Oak Planks",
       "emoji": "🪵",
-      "count": 8
+      "count": 6
     },
     {
       "slot": 2,
@@ -62,14 +62,21 @@
       "name": "Bread",
       "emoji": "🍞",
       "count": 3
+    },
+    {
+      "slot": 7,
+      "id": "stick",
+      "name": "Stick",
+      "emoji": "🥢",
+      "count": 4
     }
   ],
   "stats": {
-    "totalMoves": 35,
+    "totalMoves": 37,
     "treesHarvested": 5,
     "chestsOpened": 1,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-13T13:38:27.883Z"
+    "updatedAt": "2026-11-13T13:38:52.838Z"
   },
   "bridges": [
     {
