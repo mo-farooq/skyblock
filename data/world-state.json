@@ -6,7 +6,7 @@
     "col": 4,
     "facing": "east",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq opened the Starter Chest! Looted 1 Lava Bucket, 1 Ice Block, and 3 Bread."
+    "lastAction": "@mo-farooq placed a Diamond bridge block at [4, 6] expanding the island!"
   },
   "tree": {
     "row": 0,
@@ -26,7 +26,7 @@
       "id": "oak_planks",
       "name": "Oak Planks",
       "emoji": "🪵",
-      "count": 6
+      "count": 5
     },
     {
       "slot": 2,
@@ -65,11 +65,11 @@
     }
   ],
   "stats": {
-    "totalMoves": 25,
+    "totalMoves": 26,
     "treesHarvested": 5,
     "chestsOpened": 1,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-13T13:11:28.855Z"
+    "updatedAt": "2026-11-13T13:12:10.311Z"
   },
   "bridges": [
     {
@@ -81,6 +81,12 @@
     {
       "row": 9,
       "col": 1,
+      "type": "diamond",
+      "builder": "mo-farooq"
+    },
+    {
+      "row": 4,
+      "col": 6,
       "type": "diamond",
       "builder": "mo-farooq"
     }
