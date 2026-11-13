@@ -33,21 +33,7 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Check if already processed by Vercel Engine
-        id: check_status
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          STATUS=$(gh issue view ${{ github.event.issue.number }} --repo ${{ github.repository }} --json state -q .state 2>/dev/null || echo "OPEN")
-          if [ "$STATUS" = "CLOSED" ]; then
-            echo "⚡ Issue #${{ github.event.issue.number }} was already processed by Vercel in <1s!"
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "skip=false" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Process Skyblock Turn & Re-render World
-        if: steps.check_status.outputs.skip != 'true'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -57,7 +43,6 @@ jobs:
           node scripts/process-move.js
 
       - name: Commit and Push Updated Skyblock Realm
-        if: steps.check_status.outputs.skip != 'true'
         run: |
           git config --global user.name "Skyblock Bot"
           git config --global user.email "skyblock-bot@mo-farooq.github"
