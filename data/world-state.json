@@ -3,10 +3,10 @@
   "season": 1,
   "steve": {
     "row": 4,
-    "col": 6,
+    "col": 5,
     "facing": "west",
     "lastMover": "mo-farooq",
-    "lastAction": "@mo-farooq crafted 4 Wooden Sticks from 2 Planks!"
+    "lastAction": "@mo-farooq stepped Left to [4, 5]!"
   },
   "tree": {
     "row": 0,
@@ -72,11 +72,11 @@
     }
   ],
   "stats": {
-    "totalMoves": 37,
+    "totalMoves": 39,
     "treesHarvested": 5,
     "chestsOpened": 1,
     "lastBuilder": "mo-farooq",
-    "updatedAt": "2026-11-13T13:38:52.838Z"
+    "updatedAt": "2026-11-13T13:41:06.855Z"
   },
   "bridges": [
     {
